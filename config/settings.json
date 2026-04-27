@@ -1,0 +1,6 @@
+{
+    "app_name": "Gift Recommendation System",
+    "items_per_page": 10,
+    "welcome_message": "Cel mai tare sistem de recomandare de cadouri!",
+    "active_categories" : "all"
+}
