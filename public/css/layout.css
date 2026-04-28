@@ -127,7 +127,7 @@
 
 @media (min-width: 1024px) {
    .navbar {
-    max-width: none;
+      max-width: var(--container-xl);
   }
 }
 
@@ -148,6 +148,7 @@
   grid-template-columns: 1fr;
   gap: var(--space-8);
   margin-inline: auto;
+  max-width: var(--container-xl);
 }
 
 .site-footer__title {

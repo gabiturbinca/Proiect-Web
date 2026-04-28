@@ -22,12 +22,12 @@
 <body>
     <header class="site-header">
         <nav class="navbar" aria-label="Navigație Principală">
-        <a href="/index.php" class="navbar__logo" >Gift Manager</a>
+        <a href="/index.php" class="navbar__logo">Gift Manager</a>
 
          <button class="navbar__toggle" 
                     aria-expanded="false" 
                     aria-controls="primary-menu"
-                    aria-label="Open menu">
+                    aria-label="Deschide meniu">
                 <span></span>
                 <span></span>
                 <span></span>
