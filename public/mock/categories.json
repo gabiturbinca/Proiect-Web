@@ -1,0 +1,41 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "name": "Flori",
+      "description": "Buchete si aranjamente florale",
+      "image_url": "https://picsum.photos/seed/flori/400/300"
+
+    },
+    {
+      "id": 2,
+      "name": "Parfumuri",
+      "description": "Parfumuri pentru ea si el",
+      "image_url": "https://picsum.photos/seed/parfumuri/400/300"
+    },
+    {
+      "id": 3,
+      "name": "Jocuri Electronice",
+      "description": "Jocuri video",
+      "image_url": "https://picsum.photos/seed/jocuri/400/300"
+    },
+    {
+      "id": 4,
+      "name": "Articole Casnice",
+      "description": "Obiecte utile pentru casa",
+      "image_url": "https://picsum.photos/seed/casnice/400/300"
+    },
+    {
+      "id": 5,
+      "name": "Abonamente Spa",
+      "description": "Relaxare si ingrijire",
+      "image_url": "https://picsum.photos/seed/spa/400/300"
+    },
+    {
+      "id": 6,
+      "name": "Experiente",
+      "description": "Activitati si aventuri",
+      "image_url": "https://picsum.photos/seed/experiente/400/300"
+    }
+  ]
+}

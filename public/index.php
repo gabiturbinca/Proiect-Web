@@ -28,7 +28,20 @@
    </section>
 
    <section id="categories_cards" class ="categories_cards" >
+        <h2>Recomandări pe categorii:</h2>
+        <section id="categories_only_cards" class ="categories_only_cards">
+            <template id ="category-card-template">
+                    <a href ="" class ="card card__category">
+                    <img src="" alt="" class ="card__image">
+                    <p class="card__title"></p>
+                    <p class="card__desc"></p>
+                    <span class="btn btn--primary">Vezi cadourile</span>
+                </a>
+            </template>
+           
 
+
+        </section>
    </section>
 </section>
 

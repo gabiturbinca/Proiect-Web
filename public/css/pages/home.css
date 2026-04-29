@@ -2,7 +2,6 @@
   display: block;
 }
 
-
 .hero-section {
   display: flex;
   flex-direction: column;
@@ -17,6 +16,13 @@
               var(--color-accent-50) 0%,
               var(--color-primary-50) 100%);
   border-radius: var(--radius-lg);
+}
+
+.categories_cards{
+    display: block;
+    max-width: var(--container-xl);
+    margin-inline: auto;
+    padding: var(--space-8) var(--space-6);
 }
 
 .hero-section__text {
@@ -76,6 +82,14 @@
   height: auto;
 }
 
+.categories_only_cards{
+  margin-top: var(--space-12);
+  display: flex;
+  flex-wrap: wrap;
+  max-width:var(--container-xl);
+  justify-content:center;
+  gap: var(--space-4);
+}
 
 /* ---- Tablet (≥768px) ---- */
 
