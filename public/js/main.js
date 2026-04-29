@@ -17,7 +17,7 @@ async function getCategories() {
     throw new Error(`Failed to load categories: ${response.status}`);
   }
   const data = await response.json();
-  return data.categories;
+  return data.success;
   
 }
 
@@ -40,11 +40,12 @@ async function renderCategories(){
   if (!categoriesBox) return;
   try{
     const categories = await getCategories();
+    console.log(categories);
     const cards = categories.map(createCategoryCard);
     categoriesBox.replaceChildren(...cards);
   }
-  catch(error){
-    console.error(error);
+  catch(err){
+    console.error(err);
     categoriesBox.innerHTML='<p>Nu am putut incarca categoriile!</p>';
   }
 }
@@ -58,7 +59,7 @@ async function getFilters(){
           throw new Error(`Couldn't find the filters ${response.status}`);
 
       const data = await response.json();
-      return data;
+      return data.success;
 }
 
 function createCategoryLabel(category)
@@ -141,3 +142,5 @@ async function renderFilters(){
 }
 
 renderFilters();
+
+

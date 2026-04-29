@@ -22,7 +22,7 @@
 <body>
     <header class="site-header">
         <nav class="navbar" aria-label="Navigație Principală">
-        <a href="/index.php" class="navbar__logo">Gift Manager</a>
+        <a href="/home.php" class="navbar__logo">Gift Manager</a>
 
          <button class="navbar__toggle" 
                     aria-expanded="false" 

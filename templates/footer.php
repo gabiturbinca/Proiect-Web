@@ -20,12 +20,7 @@
                 <h3>Resurse</h3>
                 <ul>
                     <li><a href="https://github.com/gabiturbinca/Proiect-Web" rel="external">GitHub</a></li>
-                    <li><a href="/LICENSE">Licență MIT</a></li>
-                    <li>
-                        <a href="https://creativecommons.org/licenses/by/4.0/" rel="license">
-                            CC BY 4.0
-                        </a>
-                    </li>
+                  
                 </ul>
             </nav>
 

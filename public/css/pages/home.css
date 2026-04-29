@@ -28,7 +28,7 @@
 .hero-section__text {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items:flex-start;
   gap: var(--space-4);
   text-align: left;
   max-width: 100ch;
