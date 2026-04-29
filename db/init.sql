@@ -129,3 +129,4 @@ CREATE TABLE wishlist_items (
     UNIQUE (wishlist_id, gift_id)
 );
 
+ALTER TABLE categories ADD COLUMN IF NOT EXISTS image_url VARCHAR(255);
