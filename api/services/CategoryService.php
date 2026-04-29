@@ -14,4 +14,12 @@ class CategoryService {
     public function getCategoryById($id, $activeOnly = true) {
         return $this->categoryRepository->findById($id, $activeOnly);
     }
+
+    public function getShortCategories($activeOnly = true) {
+        return $this->categoryRepository->findShortCategories($activeOnly);
+    }
+
+    public function getIdNameCategories($activeOnly = true) {
+        return $this->categoryRepository->findIdNameCategories($activeOnly);
+    }
 }

@@ -36,4 +36,24 @@ class CategoryRepository {
         $stmt = $this->db->query($sql);
         return $stmt->fetchAll();
     }
+
+    public function findShortCategories($activeOnly = true) {
+        $sql = "SELECT id, name, description, image_url FROM categories";
+        if ($activeOnly) {
+            $sql .= " WHERE is_active = true";
+        }
+        $sql .= " ORDER BY sort_order ASC";
+        $stmt = $this->db->query($sql);
+        return $stmt->fetchAll();
+    }
+
+    public function findIdNameCategories($activeOnly = true) {
+        $sql = "SELECT id, name FROM categories";
+        if ($activeOnly) {
+            $sql .= " WHERE is_active = true";
+        }
+        $sql .= " ORDER BY sort_order ASC";
+        $stmt = $this->db->query($sql);
+        return $stmt->fetchAll();
+    }
 }

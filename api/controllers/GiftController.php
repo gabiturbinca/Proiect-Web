@@ -11,13 +11,13 @@ class GiftController {
         return $this->giftService->getGiftById($id);
     }
 
-    public function list() : array {
+    public function index() : array {
         $elemNumber = (int)($_GET['elemNumber'] ?? 10);
         $pageNumber = (int)($_GET['pageNumber'] ?? 1);
         return $this->giftService->getAllGifts($elemNumber, $pageNumber);
     }
 
-    public function listByCategory($categoryId) : array {
+    public function indexByCategory($categoryId) : array {
         $elemNumber = (int)($_GET['elemNumber'] ?? 10);
         $pageNumber = (int)($_GET['pageNumber'] ?? 1);
         return $this->giftService->getGiftsByCategoryId($categoryId, $elemNumber, $pageNumber);
