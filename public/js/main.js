@@ -8,8 +8,8 @@ toggle?.addEventListener('click', () => {
 });
 
 
-const CATEGORIES_URL="/mock/categories.json";
-const FILTERS_URL="/mock/filters.json";
+const CATEGORIES_URL="/api/categories-short";
+const FILTERS_URL="/api/forms";
 
 async function getCategories() {
   const response = await fetch(CATEGORIES_URL);
