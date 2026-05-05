@@ -15,7 +15,7 @@ function createCategoryCard(category)
   const template=document.getElementById("category-card-template");
   const card = template.content.firstElementChild.cloneNode(true);
 
-  card.href = `/recomandare.php?category_id=${category.id}`;
+  card.href = `/rezultate.php?category_id=${category.id}`;
   card.querySelector('.card__image').src=category.image_url;
   card.querySelector('.card__image').alt=category.name;
   card.querySelector('.card__title').textContent=category.name;
