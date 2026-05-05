@@ -1,6 +1,7 @@
 <?php
     $page_title = 'Form recomandare';
     $page_css   = 'recomandare';
+    $page_js = 'recomandare';
     require __DIR__ . '/../templates/header.php';
 ?>
 

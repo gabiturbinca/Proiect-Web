@@ -1,6 +1,7 @@
 <?php
     $page_title = 'Giw — Acasă';
     $page_css   = 'home';
+    $page_js = 'home';
     require __DIR__ . '/../templates/header.php';
 ?>
 
@@ -17,7 +18,7 @@
             </p>
 
             <div class="hero-section__actions">
-                <a href="/recomandare.php" class="btn btn--primary">Găsește cadou</a>
+                <a href="/rezultate.php" class="btn btn--primary">Găsește cadou</a>
                 <a href="#categories_cards" class="btn btn--ghost">Vezi exemple</a>
             </div>
         </div>

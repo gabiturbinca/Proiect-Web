@@ -1,6 +1,7 @@
 <?php
     $page_title = $page_title ?? 'Gift Web Manager';
     $page_css = $page_css ?? null;
+    $page_js=$page_js ?? null;
 ?>
 
 <!DOCTYPE html>
