@@ -7,30 +7,30 @@ class GiftRepository {
         $this->db = $db;
     }
 
-    private function hydrate(array $r): Gift {
-        $g = new Gift();
-        $g->id = (int)$r['id'];
-        $g->name = $r['name'];
-        $g->description = $r['description'];
-        $g->price = $r['price'];
-        $g->category_id = $r['category_id'] !== null ? (int)$r['category_id'] : null;
-        $g->specifications = $r['specifications'] !== null ? json_decode($r['specifications'], true) : null;
-        $g->created_at = $r['created_at'];
-        $g->brand_id = $r['brand_id'] !== null ? (int)$r['brand_id'] : null;
-        $g->image_url = $r['image_url'];
-        $g->score = $r['score'];
-        $g->chosen_count = (int)$r['chosen_count'];
-        $g->category_name = $r['category_name'] ?? null;
-        $g->brand_name = $r['brand_name'] ?? null;
-        return $g;
+    private function hydrate(array $row): Gift {
+        $gift = new Gift();
+        $gift->id = (int)$row['id'];
+        $gift->name = $row['name'];
+        $gift->description = $row['description'];
+        $gift->price = $row['price'];
+        $gift->category_id = $row['category_id'] !== null ? (int)$row['category_id'] : null;
+        $gift->specifications = $row['specifications'] !== null ? json_decode($row['specifications'], true) : null;
+        $gift->created_at = $row['created_at'];
+        $gift->brand_id = $row['brand_id'] !== null ? (int)$row['brand_id'] : null;
+        $gift->image_url = $row['image_url'];
+        $gift->score = $row['score'];
+        $gift->chosen_count = (int)$row['chosen_count'];
+        $gift->category_name = $row['category_name'] ?? null;
+        $gift->brand_name = $row['brand_name'] ?? null;
+        return $gift;
     }
 
-    private function hydrateTag(array $r): Tag {
-        $t = new Tag();
-        $t->id = (int)$r['id'];
-        $t->name = $r['name'];
-        $t->slug = $r['slug'];
-        return $t;
+    private function hydrateTag(array $row): Tag {
+        $tag = new Tag();
+        $tag->id = (int)$row['id'];
+        $tag->name = $row['name'];
+        $tag->slug = $row['slug'];
+        return $tag;
     }
 
     private function loadTags(array $gifts): void {

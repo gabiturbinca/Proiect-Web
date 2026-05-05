@@ -4,14 +4,14 @@ class User {
     private string $username;
     private string $email;
     private string $password;
-    private UserRole $user_role;
-    private array $preferences_json;
+    private string $user_role;
+    private ?string $preferences_json;
     private string $created_at;
 
-    public function getUserame(): string {
+    public function getUsername(): string {
         return $this->username;
     }
-    public function setUserame(string $username) {
+    public function setUsername(string $username) {
         $this->username = $username;
     }
     public function getEmail(): string {
@@ -26,10 +26,10 @@ class User {
     public function setPassword(string $password) {
         $this->password = $password;
     }
-    public function getPreferencesJson(): array {
+    public function getPreferencesJson(): string {
         return $this->preferences_json;
     }
-    public function setPreferencesJson(array $preferences_json) {
+    public function setPreferencesJson(string $preferences_json) {
         $this->preferences_json = $preferences_json;
     }
     public function getCreatedAt(): string {
@@ -45,9 +45,14 @@ class User {
         $this->id = $id;
     }
     public function getUserRole(): string {
-        return $this->username;
+        return $this->user_role;
     }
-    public function setUserRole(UserRole $user_role) {
+    public function setUserRole(string $user_role) {
+        /*$res = match($user_role) {
+            'user' => UserRole::user,
+            'admin' => UserRole::admin,
+            default => UserRole::user
+        };*/
         $this->user_role = $user_role;
     }
 }
