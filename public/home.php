@@ -1,6 +1,7 @@
 <?php
     $page_title = 'Giw — Acasă';
     $page_css   = 'home';
+    $page_js = 'home';
     require __DIR__ . '/../templates/header.php';
 ?>
 
