@@ -8,7 +8,10 @@ class GiftService {
     }
     public function getGiftsByCategoryId($categoryId, $elemNumber, $pageNumber) {
         $offset = ($pageNumber - 1) * $elemNumber;
-        return $this->giftRepository->findAllByCategory($categoryId, $elemNumber, $offset);
+        return [
+            'gifts' => $this->giftRepository->findAllByCategory($categoryId, $elemNumber, $offset),
+            'gifts_count' => $this->giftRepository->getGiftsCountByCategory($categoryId)
+        ];  
     }
 
     public function getGiftById($id) {
@@ -17,7 +20,10 @@ class GiftService {
 
     public function getAllGifts($elemNumber, $pageNumber) {
         $offset = ($pageNumber - 1) * $elemNumber;
-        return $this->giftRepository->findAll($elemNumber, $offset);
+        return [
+            'gifts' => $this->giftRepository->findAll($elemNumber, $offset),
+            'gifts_count' => $this->giftRepository->getGiftsCount()
+        ];
     }
 
 }
