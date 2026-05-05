@@ -5,20 +5,21 @@
     require __DIR__ . '/../templates/header.php';
 ?>
 
-    <section class="gift__container">
-        <h1 class="gift__title">Buchet Trandafiri Rosii</h1>
+    <template id="gift__card">
+        <h1 class="gift__title"></h1>
 
         <div class="gift__row">
             <div id="gift__header">
-                <img src="https://cdn.pixabay.com/photo/2014/04/14/20/11/pink-324175_1280.jpg" alt="Buchet Trandafiri Rosii">
+                <img class="gift__image" src="" alt="">
             </div>
 
             <div id="gift__mini__container">
                 <div class="gift__details">
-                    <p class="gift__description"><strong>Descriere: </strong>Buchet de 25 trandafiri rosii</p>
-                    <p class="gift_price">Pret: 149.99</p>
-                    <p class="gift__brand__name">Brand: FloraExpress</p>
-                    <p class="gift__category">Categorie: Flori</p>
+                    <p><strong>Descriere: </strong><span class="gift__description"></span></p>
+                    <p><strong>Pret: </strong><span class="gift__price"></span></p>
+                    <p><strong>Brand: </strong><span class="gift__brand"></span></p>
+                    <p><strong>Categorie: </strong><span class="gift__category"></span></p>
+                    <div class="gift__specs"></div>
                 </div>
 
                 <div class="gift__buttons">
@@ -27,7 +28,13 @@
                 </div>
             </div>
         </div>
-    </section>
+    </template>
+
+    <template id="gift__spec">
+        <p><strong class="gift__spec__label"></strong><span class="gift__spec__value"></span></p>
+    </template>
+
+    <section class="gift__container" id="gift__container"></section>
 
 <?php
     require __DIR__ . '/../templates/footer.php';
