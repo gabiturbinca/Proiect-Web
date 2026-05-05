@@ -45,7 +45,7 @@ async function renderGiftPage(page){
         prevBtn.disabled = currentPage <= 1;
     }
     catch(err){
-        console.log(err);
+        console.error(err);
         giftBox.innerHTML='<p>Nu am putut incarca cadourile!</p>';
     }
 

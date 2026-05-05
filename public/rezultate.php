@@ -9,9 +9,8 @@
             <h1>Cadouri:</h1>
             <h2>Uite câteva recomandări de cadouri pe gusturile tale:</h2>
          </div>
-
-         <div class="result__gifts" id="result__gifts">
-            <template id="result__gift">
+        
+         <template id="result__gift">
                 <a href ="" class ="card card__gift" id="gift__link">
                     <img src="" alt="" class ="card__image">
                     <p class="card__title"></p>
@@ -20,7 +19,8 @@
                     <span class="btn btn--primary">Vezi detalii cadou</span>
                 </a>
             </template>
-         </div>
+            
+         <div class="result__gifts" id="result__gifts"></div>
 
          <div class ="buttons__pagination">
             <button type="button" class="btn btn--accent" id="btn__prev">Prev</button>
