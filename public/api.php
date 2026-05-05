@@ -13,6 +13,7 @@ require_once __DIR__ . '/../api/Router.php';
 require_once __DIR__ . '/../config/Container.php';
 
 $container = new Container();
+$container->factory(PDO::class, fn() => Database::getInstance()->getConnection());
 $router = new Router($container);
 
 require_once __DIR__ . '/../api/routes.php';

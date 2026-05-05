@@ -7,7 +7,7 @@ class GiftController {
         $this->giftService = $giftService;
     }
 
-    public function show($id) : array {
+    public function show($id): Gift {
         return $this->giftService->getGiftById($id);
     }
 

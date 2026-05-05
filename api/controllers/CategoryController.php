@@ -11,7 +11,7 @@ class CategoryController {
         return $this->categoryService->getAllCategories($activeOnly);
     }
 
-    public function show($id) : array {
+    public function show($id): Category {
         return $this->categoryService->getCategoryById($id);
     }
 

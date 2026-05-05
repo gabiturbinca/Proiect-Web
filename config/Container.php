@@ -1,23 +1,54 @@
 <?php
 
 class Container {
-    private PDO $pdo;
-
-    public function __construct() {
-        $this->pdo = Database::getInstance()->getConnection();
-    }
+    //private PDO $pdo;
+    private array $instances = [];
+    private array $factories = [];
 
     public function get(string $class) :object {
-        return match($class) {
-            GiftController::class => new GiftController(new GiftService(new GiftRepository($this->pdo))),
-            CategoryController::class => new CategoryController(new CategoryService(new CategoryRepository($this->pdo))),
-            TagController::class => new TagController(new TagService(new TagRepository($this->pdo))),
-            BrandController::class => new BrandController(new BrandService(new BrandRepository($this->pdo))),
-            FormController::class => new FormController(
-                new BrandService(new BrandRepository($this->pdo)),
-                new TagService(new TagRepository($this->pdo)),
-                new CategoryService(new CategoryRepository($this->pdo))),
-            default => throw new Exception("Class $class not found in container")
-        };
+        if(isset($this->instances[$class]))
+            return $this->instances[$class];
+
+        if(isset($this->factories[$class])) {
+            $this->instances[$class] = ($this->factories[$class])();
+            return $this->instances[$class];
+        }
+        $instance = $this->resolve($class);
+
+        $this->instances[$class] = $instance;
+        return $instance;
+    }
+
+    private function resolve(string $class) : object {
+        $reflector = new ReflectionClass($class);
+
+        if(!$reflector -> isInstantiable()) {
+            throw new Exception("Class {$class} is not instantiable");
+        }
+        $constructor = $reflector->getConstructor();
+        if($constructor === null)
+            return new $class();
+        $parameters = $constructor->getParameters();
+        $dependencies = [];
+
+        foreach($parameters as $parameter) {
+            $type = $parameter->getType();
+
+            if(!$type instanceof ReflectionNamedType || $type->isBuiltin()) {
+                if ($parameter->isDefaultValueAvailable()) {
+                    $dependencies[] = $parameter->getDefaultValue();
+                    continue;
+                }
+                throw new Exception("Parameter {$parameter->getName()} cannot be resolved ");           
+            }
+            $dependencies[] = $this->get($type->getName());
+        }
+        return $reflector->newInstanceArgs($dependencies);
+    }
+    public function instance(string $class, object $instance) {
+        $this->instances[$class] = $instance;
+    }
+    public function factory(string $class, callable $factory) {
+        $this->factories[$class] = $factory;
     }
 }
