@@ -50,19 +50,19 @@ class UserRepository {
 
     public function create(User $user) : User {
         $stmt = $this->db->prepare(
-        "INSERT INTO users (username, email, password_hash, role)
-         VALUES (?, ?, ?, ?::user_role)
-         RETURNING id, created_at"
+        "INSERT INTO users (username, email, password_hash)
+         VALUES (?, ?, ?)
+         RETURNING id, role, created_at"
         );
         $stmt->execute([
             $user->getUsername(),
             $user->getEmail(),
             $user->getPasswordHash(),
-            $user->getUserRole(),
         ]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $user->setId((int) $row["id"]);
         $user->setCreatedAt($row["created_at"]);
+        $user->setUserRole($row["role"]);
         return $user;
     }
 

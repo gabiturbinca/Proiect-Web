@@ -14,7 +14,16 @@ class ExceptionHandler {
             ]);
             return;
         }
-
+        if($e instanceof ConflictException) {
+            http_response_code(409);
+            echo json_encode([
+                'error'=> [
+                    'message' =>$e->getMessage(),
+                    'errors' => $e->getErrors(),
+                ]
+            ]);
+            return;
+        }
         if($e instanceof NotFoundException) {
             http_response_code(404);
              echo json_encode([

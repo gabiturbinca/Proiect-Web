@@ -27,4 +27,5 @@ $router->get("/api/forms", [FormController::class,"index"]);
 $router->get("/api/users", [UserController::class, "index"]);
 $router->get("/api/users/{id}", [UserController::class, "show"]);
 
-//de test
+//auth
+$router->post("/api/auth/register", [AuthController::class, "register"]);
