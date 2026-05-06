@@ -36,7 +36,6 @@
             
             <ul id="primary-menu" class="navbar__menu">
                 <li><a href="/recomandare.php">Caută cadou</a></li>
-                <li><a href="/">Comenzile mele</a></li>
                 <li><a href="/login.php">Logare</a></li>
                 <li><a href="/register.php">Înregistrare</a></li>
             </ul>
