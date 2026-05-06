@@ -9,8 +9,8 @@ class BrandRepository {
 
     private function hydrate(array $r): Brand {
         $b = new Brand();
-        $b->id = (int)$r['id'];
-        $b->name = $r['name'];
+        $b->setId ( (int)$r['id']);
+        $b->setName ( $r['name']);
         return $b;
     }
 

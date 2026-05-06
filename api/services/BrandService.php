@@ -8,6 +8,6 @@ class BrandService {
         $this->brandRepository = $brandRepository;
     }
     public function getAllBrands() {
-        return $this->brandRepository->findAll();
+        return array_map(fn(Brand $b)=> new BrandDTO($b->getId(), $b->getName()),$this->brandRepository->findAll());
     }
 }

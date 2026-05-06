@@ -22,3 +22,7 @@ $router->get("/api/brands", [BrandController::class,"index"]);
 //for form
 
 $router->get("/api/forms", [FormController::class,"index"]);
+
+//for user
+$router->get("/api/users", [UserController::class, "index"]);
+$router->get("/api/users/{id}", [UserController::class, "show"]);

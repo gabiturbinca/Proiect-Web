@@ -7,12 +7,12 @@ class TagRepository {
         $this->db = $db;
     }
 
-    private function hydrate(array $r): Tag {
-        $t = new Tag();
-        $t->id = (int)$r['id'];
-        $t->name = $r['name'];
-        $t->slug = $r['slug'];
-        return $t;
+    private function hydrate(array $row): Tag {
+        $tag = new Tag();
+        $tag->setId ((int)$row['id']);
+        $tag->setName ( $row['name']);
+        $tag->setSlug ( $row['slug']);
+        return $tag;
     }
 
     public function findAll(): array {

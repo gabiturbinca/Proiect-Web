@@ -7,36 +7,36 @@ class GiftRepository {
         $this->db = $db;
     }
 
-    private function hydrate(array $r): Gift {
-        $g = new Gift();
-        $g->id = (int)$r['id'];
-        $g->name = $r['name'];
-        $g->description = $r['description'];
-        $g->price = $r['price'];
-        $g->category_id = $r['category_id'] !== null ? (int)$r['category_id'] : null;
-        $g->specifications = $r['specifications'] !== null ? json_decode($r['specifications'], true) : null;
-        $g->created_at = $r['created_at'];
-        $g->brand_id = $r['brand_id'] !== null ? (int)$r['brand_id'] : null;
-        $g->image_url = $r['image_url'];
-        $g->score = $r['score'];
-        $g->chosen_count = (int)$r['chosen_count'];
-        $g->category_name = $r['category_name'] ?? null;
-        $g->brand_name = $r['brand_name'] ?? null;
-        return $g;
+    private function hydrate(array $row): Gift {
+        $gift = new Gift();
+        $gift->setId ( (int)$row['id']);
+        $gift->setName ( $row['name']);
+        $gift->setDescription ( $row['description']);
+        $gift->setPrice ((float) $row['price']);
+        $gift->setCategoryId ( $row['category_id'] !== null ? (int)$row['category_id'] : null);
+        $gift->setSpecifications ( $row['specifications'] !== null ? json_decode($row['specifications'], true) : null);
+        $gift->setCreatedAt ($row['created_at']);
+        $gift->setBrandId ( $row['brand_id'] !== null ? (int)$row['brand_id'] : null);
+        $gift->setImageUrl ( $row['image_url']);
+        $gift->setScore ( (float)$row['score']);
+        $gift->setChosenCount ( (int)$row['chosen_count']);
+        $gift->setCategoryName ( $row['category_name'] ?? null);
+        $gift->setBrandName ( $row['brand_name'] ?? null);
+        return $gift;
     }
 
-    private function hydrateTag(array $r): Tag {
-        $t = new Tag();
-        $t->id = (int)$r['id'];
-        $t->name = $r['name'];
-        $t->slug = $r['slug'];
-        return $t;
+    private function hydrateTag(array $row): Tag {
+        $tag = new Tag();
+        $tag->setId ( (int)$row['id']);
+        $tag->setName ( $row['name']);
+        $tag->setSlug ($row['slug']);
+        return $tag;
     }
 
     private function loadTags(array $gifts): void {
         if (empty($gifts)) return;
 
-        $ids = array_map(fn(Gift $g) => $g->id, $gifts);
+        $ids = array_map(fn(Gift $g) => $g->getId(), $gifts);
         $placeholders = implode(',', array_fill(0, count($ids), '?'));
 
         $stmt = $this->db->prepare(
@@ -53,7 +53,7 @@ class GiftRepository {
         }
 
         foreach ($gifts as $g) {
-            $g->setTags($tagsByGift[$g->id] ?? []);
+            $g->setTags($tagsByGift[$g->getId()] ?? []);
         }
     }
 
