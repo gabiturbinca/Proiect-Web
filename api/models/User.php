@@ -3,7 +3,7 @@ class User {
     private int $id;
     private string $username;
     private string $email;
-    private string $password;
+    private string $password_hash;
     private string $user_role;
     private ?string $preferences_json;
     private string $created_at;
@@ -20,11 +20,11 @@ class User {
     public function setEmail(string $email) {
         $this->email = $email;
     }
-    public function getPassword(): string {
-        return $this->password;
+    public function getPasswordHash(): string {
+        return $this->password_hash;
     }
-    public function setPassword(string $password) {
-        $this->password = $password;
+    public function setPasswordHash(string $password_hash) {
+        $this->password_hash = $password_hash;
     }
     public function getPreferencesJson(): string {
         return $this->preferences_json;
