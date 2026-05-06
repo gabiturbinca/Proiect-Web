@@ -26,10 +26,10 @@ class User {
     public function setPasswordHash(string $password_hash) {
         $this->password_hash = $password_hash;
     }
-    public function getPreferencesJson(): string {
+    public function getPreferencesJson(): ?string {
         return $this->preferences_json;
     }
-    public function setPreferencesJson(string $preferences_json) {
+    public function setPreferencesJson(?string $preferences_json) {
         $this->preferences_json = $preferences_json;
     }
     public function getCreatedAt(): string {
