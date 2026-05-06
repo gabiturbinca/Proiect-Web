@@ -17,7 +17,7 @@
                 <h2>Fă-ți cont la noi pentru a putea comanda cadouri pentru cei dragi.</h2>
             </div>
 
-            <form method="POST" action="/home.php" class="auth__form">
+            <form method="POST" action="/home.php" class="auth__form" id="register_form">
                 <div class="auth__field">
                     <label for="username">Username</label>
                     <input id="username" type="text" placeholder="Username..." name="username" required>
@@ -31,6 +31,12 @@
                 <div class="auth__field">
                     <label for="psw">Parolă</label>
                     <input id="psw" type="password" placeholder="Parola..." name="psw" minlength="8" required>
+                </div>
+
+
+                <div class="auth__field">
+                    <label for="psw_confirm">Confirmă parolă</label>
+                    <input id="psw_confirm" type="password" placeholder="Confirma parola..." name="psw_confirm" minlength="8" required>
                 </div>
 
                 <button type="submit" class="btn btn--primary auth__submit">Înregistrează-te!</button>

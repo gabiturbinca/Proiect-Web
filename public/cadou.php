@@ -26,6 +26,17 @@
                     <button class="btn btn--primary">Trimite cadou</button>
                     <button class="btn btn--ghost">Adaugă la favorite</button>
                 </div>
+                <div class="gift__tags">
+                    <p>Flori</p>
+                    <p>Femei</p>
+                    <p>Lalale</p>
+                    <p>Trandafiri</p>
+                    <p>Flori</p>
+                    <p>Femei</p>
+                    <p>Lalale</p>
+                    <p>Trandafiri</p>
+                </div>
+               
             </div>
         </div>
     </template>
@@ -34,7 +45,85 @@
         <p><strong class="gift__spec__label"></strong><span class="gift__spec__value"></span></p>
     </template>
 
+     
     <section class="gift__container" id="gift__container"></section>
+          <template id="result__gift" class="result__gift">
+                <a href ="" class ="card card__gift" id="gift__link">
+                    <img src="" alt="" class ="card__image">
+                    <p class="card__title"></p>
+                    <p class="card__desc card__desc__gift"></p>
+                    <p class="card__desc card__price__gift"></p>
+                    <span class="btn btn--primary">Vezi detalii cadou</span>
+                </a>
+            </template>
+                 
+            <div class="result__gift">
+                <a href ="" class ="card card__gift" id="gift__link">
+                    <img src="" alt="" class ="card__image">
+                    <p class="card__title">Title</p>
+                    <p class="card__desc card__desc__gift">Descc</p>
+                    <p class="card__desc card__price__gift">Price</p>
+                    <span class="btn btn--primary">Vezi detalii cadou</span>
+                </a>
+
+                <a href ="" class ="card card__gift" id="gift__link">
+                    <img src="" alt="" class ="card__image">
+                    <p class="card__title">Titlee</p>
+                    <p class="card__desc card__desc__gift">Descc</p>
+                    <p class="card__desc card__price__gift">Price</p>
+                    <span class="btn btn--primary">Vezi detalii cadou</span>
+                </a>
+
+                 <a href ="" class ="card card__gift" id="gift__link">
+                    <img src="" alt="" class ="card__image">
+                    <p class="card__title">Title</p>
+                    <p class="card__desc card__desc__gift">Descc</p>
+                    <p class="card__desc card__price__gift">Price</p>
+                    <span class="btn btn--primary">Vezi detalii cadou</span>
+                </a>
+
+                <a href ="" class ="card card__gift" id="gift__link">
+                    <img src="" alt="" class ="card__image">
+                    <p class="card__title">Titlee</p>
+                    <p class="card__desc card__desc__gift">Descc</p>
+                    <p class="card__desc card__price__gift">Price</p>
+                    <span class="btn btn--primary">Vezi detalii cadou</span>
+                </a>
+
+                 <a href ="" class ="card card__gift" id="gift__link">
+                    <img src="" alt="" class ="card__image">
+                    <p class="card__title">Title</p>
+                    <p class="card__desc card__desc__gift">Descc</p>
+                    <p class="card__desc card__price__gift">Price</p>
+                    <span class="btn btn--primary">Vezi detalii cadou</span>
+                </a>
+
+                <a href ="" class ="card card__gift" id="gift__link">
+                    <img src="" alt="" class ="card__image">
+                    <p class="card__title">Titlee</p>
+                    <p class="card__desc card__desc__gift">Descc</p>
+                    <p class="card__desc card__price__gift">Price</p>
+                    <span class="btn btn--primary">Vezi detalii cadou</span>
+                </a>
+                 <a href ="" class ="card card__gift" id="gift__link">
+                    <img src="" alt="" class ="card__image">
+                    <p class="card__title">Title</p>
+                    <p class="card__desc card__desc__gift">Descc</p>
+                    <p class="card__desc card__price__gift">Price</p>
+                    <span class="btn btn--primary">Vezi detalii cadou</span>
+                </a>
+
+                <a href ="" class ="card card__gift" id="gift__link">
+                    <img src="" alt="" class ="card__image">
+                    <p class="card__title">Titlee</p>
+                    <p class="card__desc card__desc__gift">Descc</p>
+                    <p class="card__desc card__price__gift">Price</p>
+                    <span class="btn btn--primary">Vezi detalii cadou</span>
+                </a>
+            </div>
+    <section class="related__gifts__container">
+
+    </section>
 
 <?php
     require __DIR__ . '/../templates/footer.php';
