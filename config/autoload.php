@@ -10,6 +10,8 @@ spl_autoload_register(function ($class) {
         __DIR__ . '/../config/',
         __DIR__ . '/../utils/',
         __DIR__ . '/../utils/exceptions/',
+        __DIR__ . '/../utils/validation/',         
+        __DIR__ . '/../utils/validation/rules/', 
     ];
     foreach ($paths as $path) {
         $file = $path . $class. '.php';

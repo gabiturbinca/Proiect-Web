@@ -1,10 +1,10 @@
 -- Active: 1777305896303@@127.0.0.1@5432@proiect_web
-CREATE IF NOT EXISTS TYPE user_role AS ENUM('admin', 'user');
-CREATE IF NOT EXISTS TYPE relation_type AS ENUM('similar', 'goes_well_with', 'includes');
+CREATE TYPE user_role AS ENUM('admin', 'user');
+CREATE TYPE relation_type AS ENUM('similar', 'goes_well_with', 'includes');
 
-CREATE IF NOT EXISTS TYPE action_type AS ENUM('recommendation', 'chosen', 'purchased');
+CREATE TYPE action_type AS ENUM('recommendation', 'chosen', 'purchased');
 
-CREATE IF NOT EXISTS TYPE order_status AS ENUM('pending', 'completed', 'cancelled', 'placed');
+CREATE TYPE order_status AS ENUM('pending', 'completed', 'cancelled', 'placed');
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,

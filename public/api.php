@@ -24,8 +24,6 @@ $uri = $_SERVER['REQUEST_URI'];
 try {
     $result = $router->dispatch($method, $uri);
     Response::success($result);
-} catch (NotFoundException $e) {
-    Response::error($e->getMessage(), 404);
 } catch (Throwable $e) {
     ExceptionHandler::handleException($e);
 }

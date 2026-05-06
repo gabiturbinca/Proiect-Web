@@ -4,7 +4,7 @@ class User {
     private string $username;
     private string $email;
     private string $password_hash;
-    private string $user_role;
+    private UserRole $user_role;
     private ?string $preferences_json;
     private string $created_at;
 
@@ -44,15 +44,15 @@ class User {
     public function setId(int $id) {
         $this->id = $id;
     }
-    public function getUserRole(): string {
+    public function getUserRole(): UserRole {
         return $this->user_role;
     }
     public function setUserRole(string $user_role) {
-        /*$res = match($user_role) {
+        $res = match($user_role) {
             'user' => UserRole::user,
             'admin' => UserRole::admin,
             default => UserRole::user
-        };*/
-        $this->user_role = $user_role;
+        };
+        $this->user_role = $res;
     }
 }

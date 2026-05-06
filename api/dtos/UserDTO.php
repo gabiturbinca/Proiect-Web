@@ -5,7 +5,7 @@ readonly class UserDTO {
         public int $id,
         public string $username,
         public string $email,
-        public string $user_role
+        public UserRole $user_role
     ) {}
     
 }
