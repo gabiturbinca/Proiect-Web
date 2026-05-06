@@ -11,12 +11,12 @@ class CategoryController {
         return $this->categoryService->getAllCategories($activeOnly);
     }
 
-    public function show($id): Category {
+    public function show($id): CategoryDTO {
         return $this->categoryService->getCategoryById($id);
     }
 
     public function indexShort() : array {
         $activeOnly = isset($_GET['activeOnly']) ? filter_var($_GET['activeOnly'], FILTER_VALIDATE_BOOLEAN) : true;
-        return $this->categoryService->getShortCategories($activeOnly);
+        return $this->categoryService->getAllCategories($activeOnly);
     }
 }

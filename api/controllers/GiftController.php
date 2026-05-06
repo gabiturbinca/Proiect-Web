@@ -7,7 +7,7 @@ class GiftController {
         $this->giftService = $giftService;
     }
 
-    public function show($id): Gift {
+    public function show($id): GiftDTO {
         return $this->giftService->getGiftById($id);
     }
 

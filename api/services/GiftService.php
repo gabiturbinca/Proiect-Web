@@ -9,19 +9,20 @@ class GiftService {
     public function getGiftsByCategoryId($categoryId, $elemNumber, $pageNumber) {
         $offset = ($pageNumber - 1) * $elemNumber;
         return [
-            'gifts' => $this->giftRepository->findAllByCategory($categoryId, $elemNumber, $offset),
+            'gifts' => array_map(fn(Gift $g) => new GiftDTO($g->getId(), $g->getName(),$g->getDescription(), $g->getPrice(), $g->getImageUrl()) ,$this->giftRepository->findAllByCategory($categoryId, $elemNumber, $offset)),
             'gifts_count' => $this->giftRepository->getGiftsCountByCategory($categoryId)
         ];  
     }
 
     public function getGiftById($id) {
-        return $this->giftRepository->findById($id);
+        $gift = $this->giftRepository->findById($id);
+        return new GiftDTO($gift->getId(),$gift->getName(), $gift->getDescription(), $gift->getPrice(), $gift->getImageUrl());
     }
 
     public function getAllGifts($elemNumber, $pageNumber) {
         $offset = ($pageNumber - 1) * $elemNumber;
         return [
-            'gifts' => $this->giftRepository->findAll($elemNumber, $offset),
+            'gifts' => array_map(fn(Gift $g) => new GiftDTO($g->getId(), $g->getName(),$g->getDescription(), $g->getPrice(), $g->getImageUrl()) ,$this->giftRepository->findAll($elemNumber, $offset)),
             'gifts_count' => $this->giftRepository->getGiftsCount()
         ];
     }

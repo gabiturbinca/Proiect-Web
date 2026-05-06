@@ -10,13 +10,13 @@ class CategoryRepository {
 
     private function hydrate(array $r): Category {
         $c = new Category();
-        $c->id = (int)$r['id'];
-        $c->name = $r['name'];
-        $c->description = $r['description'];
-        $c->image_url = $r['image_url'] ?? null;
-        $c->is_active = (bool)$r['is_active'];
-        $c->sort_order = (int)$r['sort_order'];
-        $c->created_at = $r['created_at'];
+        $c->setId ((int)$r['id']);
+        $c->setName ($r['name']);
+        $c->setDescription ($r['description']);
+        $c->setImageUrl ($r['image_url'] ?? null);
+        $c->setIsActive ((bool)$r['is_active']);
+        $c->setSortOrder ((int)$r['sort_order']);
+        $c->setCreatedAt ($r['created_at']);
         return $c;
     }
 
@@ -44,7 +44,7 @@ class CategoryRepository {
         return array_map($this->hydrate(...), $stmt->fetchAll(PDO::FETCH_ASSOC));
     }
 
-    public function findShortCategories($activeOnly = true): array {
+    /*public function findShortCategories($activeOnly = true): array {
         $sql = "SELECT id, name, description, image_url FROM categories";
         if ($activeOnly) {
             $sql .= " WHERE is_active = true";
@@ -72,5 +72,5 @@ class CategoryRepository {
             id: (int)$r['id'],
             name: $r['name']
         ), $rows);
-    }
+    }*/
 }

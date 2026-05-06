@@ -8,18 +8,14 @@ class CategoryService {
     }
 
     public function getAllCategories($activeOnly = true) {
-        return $this->categoryRepository->findAll($activeOnly);
+        return array_map(fn(Category $c) => new CategoryDTO($c->getId(), $c->getName(), $c->getDescription(), $c->getImageUrl()),$this->categoryRepository->findAll($activeOnly));
     }
 
     public function getCategoryById($id, $activeOnly = true) {
-        return $this->categoryRepository->findById($id, $activeOnly);
+        $category = $this->categoryRepository->findById($id);
+        return new CategoryDTO($category->getId(), $category->getName(), $category->getDescription(), $category->getImageUrl());
     }
-
-    public function getShortCategories($activeOnly = true) {
-        return $this->categoryRepository->findShortCategories($activeOnly);
-    }
-
     public function getIdNameCategories($activeOnly = true) {
-        return $this->categoryRepository->findIdNameCategories($activeOnly);
+        return array_map(fn(Category $c) => new IdNameCategoryDTO($c->getId(), $c->getName()),$this->categoryRepository->findAll($activeOnly));
     }
 }

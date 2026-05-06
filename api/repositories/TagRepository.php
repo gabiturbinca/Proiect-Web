@@ -9,9 +9,9 @@ class TagRepository {
 
     private function hydrate(array $row): Tag {
         $tag = new Tag();
-        $tag->id = (int)$row['id'];
-        $tag->name = $row['name'];
-        $tag->slug = $row['slug'];
+        $tag->setId ((int)$row['id']);
+        $tag->setName ( $row['name']);
+        $tag->setSlug ( $row['slug']);
         return $tag;
     }
 
