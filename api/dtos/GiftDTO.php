@@ -7,8 +7,8 @@ readonly class GiftDTO {
         public ?string $description,
         public float $price,
         public ?string $image_url,
-        public string $brand_name,
-        public string $category_name
+        public ?string $brand_name,
+        public ?string $category_name
     ) {}
 
 }
