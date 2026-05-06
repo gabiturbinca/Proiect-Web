@@ -19,7 +19,7 @@ class Gift {
     public function getTags(): ?array {
         return $this->tags;
     }
-    public function setTags(array $tags): void {
+    public function setTags(?array $tags): void {
         $this->tags = $tags;
     }
     public function addTag(string $tag): void {
@@ -101,10 +101,10 @@ class Gift {
     public function setImageUrl(?string $image_url): void {
         $this->image_url = $image_url;
     }
-    public function getBrandId(): int {
+    public function getBrandId(): ?int {
         return $this->brand_id;
     }
-    public function setBrandId(int $brand_id): void {
+    public function setBrandId(?int $brand_id): void {
         $this->brand_id = $brand_id;
     }
 

@@ -21,16 +21,16 @@ class Category {
     public function getName(): string {
         return $this->name;
     }
-    public function setDescription(string $description): void {
+    public function setDescription(?string $description): void {
         $this->description = $description;
     }
-    public function getDescription(): string {
+    public function getDescription(): ?string {
         return $this->description;
     }
-    public function setImageUrl(string $image_url): void {
+    public function setImageUrl(?string $image_url): void {
         $this->image_url = $image_url;
     }
-    public function getImageUrl(): string {
+    public function getImageUrl(): ?string {
         return $this->image_url;
     }
     public function setIsActive(bool $is_active): void {
