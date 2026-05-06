@@ -8,11 +8,14 @@ class UserRepository {
         $this->db = $db;
     }
 
-    public function hydrate (array $row) {
+    public function hydrate (array $row) : ?User{
+        if(!$row) {
+            return null;
+        }
         $user = new User();
         $user->setUsername($row["username"]);
         $user->setEmail($row["email"]);
-        $user->setPassword($row["password"]);
+        $user->setPasswordHash($row["password_hash"]);
         $user->setUserRole($row["role"]);
         $user->setPreferencesJson($row["preferences_json"]);
         $user->setCreatedAt($row["created_at"]);
@@ -33,5 +36,39 @@ class UserRepository {
         $stmt = $this->db->query("SELECT * FROM users");
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return array_map($this->hydrate(...), $result);
+    }
+
+    public function findByUsername(string $username) : ?User {
+        $stmt = $this->db->prepare("SELECT * FROM users WHERE username = ?");
+        $stmt->execute([$username]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $this->hydrate($result);
+    }
+    public function findByEmail(string $email) : ?User {
+        $stmt = $this->db->prepare("SELECT * FROM users WHERE email = ?");
+        $stmt->execute([$email]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $this->hydrate($result);
+    }
+
+    public function create(User $user) : int {
+        $stmt = $this->db->prepare("INSERT INTO users VALUES ?");
+        $stmt->execute([$user->getId()]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return (int) $result["id"];
+    }
+
+    public function existsByUsername(string $username) : bool {
+        $stmt = $this->db->prepare("SELECT 1 FROM users WHERE username = ?");
+        $stmt->execute([$username]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return empty($result);
+    }
+
+    public function existsByEmail(string $email) : bool {
+        $stmt = $this->db->prepare("SELECT 1 FROM users WHERE email = ?");
+        $stmt->execute([$email]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return empty($result);
     }
 }
