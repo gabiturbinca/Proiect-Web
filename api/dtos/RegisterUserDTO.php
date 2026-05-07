@@ -1,11 +1,9 @@
 <?php
 
-readonly class UserDTO {
+readonly class RegisterUserDTO {
     public function __construct(
-        public int $id,
         public string $username,
         public string $email,
-        public UserRole $user_role
+        public string $password,
     ) {}
-    
 }
