@@ -13,4 +13,11 @@ class AuthController {
        $req = new RegisterRequestDTO($data['username'], $data['email'], $data['password'], $data['password_confirmation']);
        return $this->authService->register($req->toRegisterUserDTO());
     }
+
+    public function login() {
+        $input = json_decode(file_get_contents('php://input'), true) ?? [];
+        $data = Validator::make($input, LoginRequestDTO::RULES)->validate();
+        $req = new LoginRequestDTO($data['identifier'], $data['password']);
+        return $this->authService->login($req);
+    }
 }

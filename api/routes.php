@@ -29,3 +29,4 @@ $router->get("/api/users/{id}", [UserController::class, "show"]);
 
 //auth
 $router->post("/api/auth/register", [AuthController::class, "register"]);
+$router->post("/api/auth/login", [AuthController::class, "login"]);

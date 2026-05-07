@@ -33,7 +33,15 @@ class ExceptionHandler {
             ]);
             return;
         }
-
+        if($e instanceof AuthException) {
+            http_response_code(401);
+            echo json_encode([
+                'error'=> [
+                    'message' => $e->getMessage(),
+                ]
+            ]);
+            return;     
+        }
         http_response_code(500);
 
         $payload = ['message' => 'Internal server error'];
