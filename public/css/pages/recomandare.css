@@ -1,6 +1,4 @@
-/* ============================================================
-   Recomandare — quiz form
-   ============================================================ */
+
 
 .form__cadouri {
   max-width: var(--container-md);
@@ -8,7 +6,7 @@
   padding: var(--space-8) var(--space-6);
 }
 
-/* ---- Header ---- */
+
 
 #form__header {
   display: flex;
@@ -35,7 +33,6 @@
   max-width: 28ch;
 }
 
-/* ---- Form layout ---- */
 
 .form__cadouri form {
   display: flex;
@@ -59,7 +56,6 @@
   color: var(--color-primary-900);
 }
 
-/* ---- Budget row (number inputs) ---- */
 
 .quiz__row {
   display: flex;
@@ -104,7 +100,6 @@
   box-shadow: var(--focus-ring);
 }
 
-/* ---- Checkbox pills (categories / brands / tags) ---- */
 
 .quiz__options {
   display: flex;
@@ -166,7 +161,6 @@
   box-shadow: var(--focus-ring);
 }
 
-/* ---- Submit ---- */
 
 .form__cadouri form > .btn {
   align-self: flex-start;
@@ -174,7 +168,6 @@
   min-width: 200px;
 }
 
-/* ---- Tablet (≥768px) ---- */
 
 @media (min-width: 768px) {
   .form__cadouri {
@@ -195,7 +188,6 @@
   }
 }
 
-/* ---- Desktop (≥1024px) ---- */
 
 @media (min-width: 1024px) {
   .form__cadouri {

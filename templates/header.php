@@ -40,6 +40,7 @@
                         <ul id="primary-menu" class="navbar__menu">
                             <li><a href="/recomandare.php">Caută cadou</a></li>
                             <li><a href="#">Comenzile mele</a></li>
+                            <li><a href="#">Logout</a></li>
                         </ul>
                     <?php
                 }
