@@ -24,8 +24,8 @@
                 </div>
 
                 <div class="auth__field">
-                    <label for="psw">Parolă</label>
-                    <input id="psw" type="password" placeholder="Parola..." name="psw" minlength="8" required>
+                    <label for="password">Parolă</label>
+                    <input id="password" type="password" placeholder="Parola..." name="password" minlength="8" required>
                 </div>
 
                 <button type="submit" class="btn btn--primary auth__submit">Loghează-te!</button>

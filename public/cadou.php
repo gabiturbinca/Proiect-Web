@@ -60,15 +60,15 @@
             <div class="result__gift">
                 <a href ="" class ="card card__gift" id="gift__link">
                     <img src="" alt="" class ="card__image">
-                    <p class="card__title">Title</p>
-                    <p class="card__desc card__desc__gift">Descc</p>
-                    <p class="card__desc card__price__gift">Price</p>
+                    <p class="card__title">Cadou de test</p>
+                    <p class="card__desc card__desc__gift">Descriere cadou de test</p>
+                    <p class="card__desc card__price__gift">Price : 12.99</p>
                     <span class="btn btn--primary">Vezi detalii cadou</span>
                 </a>
 
                 <a href ="" class ="card card__gift" id="gift__link">
                     <img src="" alt="" class ="card__image">
-                    <p class="card__title">Titlee</p>
+                    <p class="card__title">Cadou de test</p>
                     <p class="card__desc card__desc__gift">Descc</p>
                     <p class="card__desc card__price__gift">Price</p>
                     <span class="btn btn--primary">Vezi detalii cadou</span>
@@ -76,7 +76,7 @@
 
                  <a href ="" class ="card card__gift" id="gift__link">
                     <img src="" alt="" class ="card__image">
-                    <p class="card__title">Title</p>
+                    <p class="card__title">Cadou de test</p>
                     <p class="card__desc card__desc__gift">Descc</p>
                     <p class="card__desc card__price__gift">Price</p>
                     <span class="btn btn--primary">Vezi detalii cadou</span>
@@ -84,7 +84,7 @@
 
                 <a href ="" class ="card card__gift" id="gift__link">
                     <img src="" alt="" class ="card__image">
-                    <p class="card__title">Titlee</p>
+                    <p class="card__title">Cadou de test</p>
                     <p class="card__desc card__desc__gift">Descc</p>
                     <p class="card__desc card__price__gift">Price</p>
                     <span class="btn btn--primary">Vezi detalii cadou</span>
@@ -92,7 +92,7 @@
 
                  <a href ="" class ="card card__gift" id="gift__link">
                     <img src="" alt="" class ="card__image">
-                    <p class="card__title">Title</p>
+                    <p class="card__title">Cadou de test</p>
                     <p class="card__desc card__desc__gift">Descc</p>
                     <p class="card__desc card__price__gift">Price</p>
                     <span class="btn btn--primary">Vezi detalii cadou</span>
@@ -100,14 +100,14 @@
 
                 <a href ="" class ="card card__gift" id="gift__link">
                     <img src="" alt="" class ="card__image">
-                    <p class="card__title">Titlee</p>
+                    <p class="card__title">Cadou de test</p>
                     <p class="card__desc card__desc__gift">Descc</p>
                     <p class="card__desc card__price__gift">Price</p>
                     <span class="btn btn--primary">Vezi detalii cadou</span>
                 </a>
                  <a href ="" class ="card card__gift" id="gift__link">
                     <img src="" alt="" class ="card__image">
-                    <p class="card__title">Title</p>
+                    <p class="card__title">Cadou de test</p>
                     <p class="card__desc card__desc__gift">Descc</p>
                     <p class="card__desc card__price__gift">Price</p>
                     <span class="btn btn--primary">Vezi detalii cadou</span>
@@ -115,7 +115,7 @@
 
                 <a href ="" class ="card card__gift" id="gift__link">
                     <img src="" alt="" class ="card__image">
-                    <p class="card__title">Titlee</p>
+                    <p class="card__title">Cadou de test</p>
                     <p class="card__desc card__desc__gift">Descc</p>
                     <p class="card__desc card__price__gift">Price</p>
                     <span class="btn btn--primary">Vezi detalii cadou</span>

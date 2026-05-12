@@ -18,7 +18,7 @@ form.addEventListener('submit', async (e) => {
     });
     const json = await res.json();
     if (!res.ok) 
-        throw new Error(json.error ?? 'Login eșuat');
+      throw new Error(json.error ?? 'Login eșuat');
 
     window.location.href = '/home.php';
   } catch (err) {

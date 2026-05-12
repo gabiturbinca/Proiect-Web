@@ -104,3 +104,18 @@
   color: var(--color-accent-600);
   padding-bottom: var(--space-4);
 }
+
+.message__null{
+  display:none;
+}
+.error__message{
+  color:var(--color-error);
+  padding:var(--space-2);
+  display:inline;
+}
+
+.success__messsage{
+  color:var(--color-success);
+  padding:var(--space-2);
+  display:inline;
+}
