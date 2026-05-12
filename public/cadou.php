@@ -23,7 +23,7 @@
                 </div>
 
                 <div class="gift__buttons">
-                    <button class="btn btn--primary">Trimite cadou</button>
+                    <button class="btn btn--primary" id="send__gift">Trimite cadou</button>
                    
                     <?php
                       if(isset($_SESSION['user_id'])){

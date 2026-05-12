@@ -1,0 +1,28 @@
+{
+  "total": 23,
+  "data": [
+    { "awb": "AWB1029384756", "datetime": "2026-05-11T14:32:00", "status": "In procesare" },
+    { "awb": "AWB9182736455", "datetime": "2026-05-10T09:15:00", "status": "Confirmata" },
+    { "awb": "AWB5647382910", "datetime": "2026-05-09T17:48:00", "status": "Expediata" },
+    { "awb": "AWB7382910564", "datetime": "2026-05-08T11:05:00", "status": "Finalizata" },
+    { "awb": "AWB4738291056", "datetime": "2026-05-07T20:22:00", "status": "Finalizata" },
+    { "awb": "AWB3829105647", "datetime": "2026-05-06T08:40:00", "status": "Expediata" },
+    { "awb": "AWB2910564738", "datetime": "2026-05-05T15:55:00", "status": "Confirmata" },
+    { "awb": "AWB1056473829", "datetime": "2026-05-04T13:12:00", "status": "In procesare" },
+    { "awb": "AWB6473829105", "datetime": "2026-05-03T19:30:00", "status": "Finalizata" },
+    { "awb": "AWB8473920156", "datetime": "2026-05-02T10:08:00", "status": "Finalizata" },
+    { "awb": "AWB5829304716", "datetime": "2026-05-01T16:45:00", "status": "Expediata" },
+    { "awb": "AWB3047165829", "datetime": "2026-04-30T12:18:00", "status": "Confirmata" },
+    { "awb": "AWB1658293047", "datetime": "2026-04-29T07:55:00", "status": "Finalizata" },
+    { "awb": "AWB9304716582", "datetime": "2026-04-28T21:02:00", "status": "Finalizata" },
+    { "awb": "AWB4716582930", "datetime": "2026-04-27T14:27:00", "status": "Finalizata" },
+    { "awb": "AWB7165829304", "datetime": "2026-04-26T18:11:00", "status": "In procesare" },
+    { "awb": "AWB2938475610", "datetime": "2026-04-25T09:33:00", "status": "Expediata" },
+    { "awb": "AWB8475610293", "datetime": "2026-04-24T15:50:00", "status": "Finalizata" },
+    { "awb": "AWB5610293847", "datetime": "2026-04-23T11:24:00", "status": "Finalizata" },
+    { "awb": "AWB0293847561", "datetime": "2026-04-22T17:39:00", "status": "Confirmata" },
+    { "awb": "AWB6102938475", "datetime": "2026-04-21T08:07:00", "status": "Finalizata" },
+    { "awb": "AWB3847561029", "datetime": "2026-04-20T20:16:00", "status": "Finalizata" },
+    { "awb": "AWB7561029384", "datetime": "2026-04-19T13:48:00", "status": "Finalizata" }
+  ]
+}
