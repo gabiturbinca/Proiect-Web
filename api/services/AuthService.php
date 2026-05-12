@@ -42,7 +42,7 @@ class AuthService {
         }
         session_regenerate_id(true);
         $_SESSION['user_id'] = $user->getId();
-        $_SESSION['user_role'] = $user->getUserRole();
+        $_SESSION['user_role'] = $user->getUserRole()->value;
         return new UserDTO($user->getId(), $user->getUsername(), $user->getEmail(), $user->getUserRole() );
 
     }

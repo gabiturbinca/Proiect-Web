@@ -1,4 +1,5 @@
 <?php
+    session_start();
     $page_title = $page_title ?? 'Gift Web Manager';
     $page_css = $page_css ?? null;
     $page_js=$page_js ?? null;
@@ -33,12 +34,27 @@
                 <span></span>
                 <span></span>
             </button>
+            <?php 
+                if(isset($_SESSION['user_id'])){
+                    ?>
+                        <ul id="primary-menu" class="navbar__menu">
+                            <li><a href="/recomandare.php">Caută cadou</a></li>
+                            <li><a href="#">Comenzile mele</a></li>
+                        </ul>
+                    <?php
+                }
+                else{
+                    ?>
+                        <ul id="primary-menu" class="navbar__menu">
+                            <li><a href="/recomandare.php">Caută cadou</a></li>
+                            <li><a href="/login.php">Logare</a></li>
+                            <li><a href="/register.php">Înregistrare</a></li>
+                        </ul>
+                    <?php
+                }
+
+            ?>
             
-            <ul id="primary-menu" class="navbar__menu">
-                <li><a href="/recomandare.php">Caută cadou</a></li>
-                <li><a href="/login.php">Logare</a></li>
-                <li><a href="/register.php">Înregistrare</a></li>
-            </ul>
     </nav>
     </header>
 
