@@ -17,17 +17,17 @@
                 <h2>Bine ai revenit! Caută cadouri pentru cei dragi cu ajutorul asistentului nostru digital.</h2>
             </div>
 
-            <form method="POST" action="/home.php" class="auth__form">
+            <form class="auth__form" id="login_form">
                 <div class="auth__field">
-                    <label for="username">Username</label>
-                    <input id="username" type="text" placeholder="Username..." name="username" required>
+                    <label for="identifier">Username sau email</label>
+                    <input id="identifier" type="text" placeholder="Username or email..." name="identifier" required>
                 </div>
 
                 <div class="auth__field">
                     <label for="password">Parolă</label>
                     <input id="password" type="password" placeholder="Parola..." name="password" minlength="8" required>
                 </div>
-
+                 <span id="message__invalid_credentials"></span>
                 <button type="submit" class="btn btn--primary auth__submit">Loghează-te!</button>
 
                 <p class="auth__alt">
