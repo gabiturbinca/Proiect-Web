@@ -1,7 +1,9 @@
 <?php
 
 
+//for gift recs
 
+$router->get("/api/gifts/recommend", [RecommendationController::class, "recommend"]);
 //for gifts
 $router->get("/api/gifts", [GiftController::class, "index"]);
 $router->get("/api/gifts/{id}", [GiftController::class, "show"]);

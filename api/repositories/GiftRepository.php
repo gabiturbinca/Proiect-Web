@@ -24,7 +24,44 @@ class GiftRepository {
         $gift->setBrandName ( $row['brand_name'] ?? null);
         return $gift;
     }
-
+    private function loadCircumstanceIds(array $gifts): void {
+        if (empty($gifts)) return;
+        $ids = array_map(fn(Gift $g) => $g->getId(), $gifts);
+        $placeholders = implode(',', array_fill(0, count($ids), '?'));
+        
+        $stmt = $this->db->prepare(
+            "SELECT gift_id, circumstance_id FROM gift_circumstances WHERE gift_id IN ($placeholders)"
+        );
+        $stmt->execute($ids);
+        
+        $byGift = [];
+        foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
+            $byGift[(int)$row['gift_id']][] = (int)$row['circumstance_id'];
+        }
+        
+        foreach ($gifts as $g) {
+            $g->setCircumstanceIds($byGift[$g->getId()] ?? []);
+        }
+    }
+    private function loadContextIds(array $gifts): void {
+        if (empty($gifts)) return;
+        $ids = array_map(fn(Gift $g) => $g->getId(), $gifts);
+        $placeholders = implode(',', array_fill(0, count($ids), '?'));
+        
+        $stmt = $this->db->prepare(
+            "SELECT gift_id, context_id FROM gift_contexts WHERE gift_id IN ($placeholders)"
+        );
+        $stmt->execute($ids);
+        
+        $byGift = [];
+        foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
+            $byGift[(int)$row['gift_id']][] = (int)$row['context_id'];
+        }
+        
+        foreach ($gifts as $g) {
+            $g->setContextIds($byGift[$g->getId()] ?? []);
+        }
+    }
     private function hydrateTag(array $row): Tag {
         $tag = new Tag();
         $tag->setId ( (int)$row['id']);
@@ -125,4 +162,43 @@ class GiftRepository {
         $this->loadTags($gifts);
         return $gifts;
     }
+    public function findCandidates(RecommendationRequestDTO $req): array {
+        $where = ["c.is_active = true"];
+        $params = [];
+        
+        if ($req->categoryId !== null) {
+            $where[] = "g.category_id = ?";
+            $params[] = $req->categoryId;
+        }
+        if ($req->brandId !== null) {
+            $where[] = "g.brand_id = ?";
+            $params[] = $req->brandId;
+        }
+        if ($req->budgetMin !== null) {
+            $where[] = "g.price >= ?";
+            $params[] = $req->budgetMin;
+        }
+        if ($req->budgetMax !== null) {
+            $where[] = "g.price <= ?";
+            $params[] = $req->budgetMax;
+        }
+        
+        $whereClause = implode(' AND ', $where);
+        
+        $sql = "SELECT g.*, c.name AS category_name, b.name AS brand_name
+                FROM gifts g
+                JOIN categories c ON g.category_id = c.id
+                LEFT JOIN brands b ON g.brand_id = b.id
+                WHERE $whereClause";
+        
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($params);
+        
+        $gifts = array_map($this->hydrate(...), $stmt->fetchAll(PDO::FETCH_ASSOC));
+        $this->loadTags($gifts);
+        $this->loadCircumstanceIds($gifts); 
+        $this->loadContextIds($gifts);
+        return $gifts;
+    }
+
 }
