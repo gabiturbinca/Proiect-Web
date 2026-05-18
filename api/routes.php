@@ -33,6 +33,12 @@ $router->get("/api/users/{id}", [UserController::class, "show"]);
 $router->post("/api/auth/register", [AuthController::class, "register"]);
 $router->post("/api/auth/login", [AuthController::class, "login"]);
 
-// auth cu middleware 
+// auth cu middleware
 $router->get("/api/auth/me", [AuthController::class, "me"], [AuthMiddleware::class]);
 $router->post("/api/auth/logout", [AuthController::class, "logout"], [AuthMiddleware::class]);
+
+// reviews
+$router->get("/api/gifts/{id}/reviews", [ReviewController::class, "index"]);
+$router->post("/api/gifts/{id}/reviews", [ReviewController::class, "create"], [AuthMiddleware::class]);
+$router->put("/api/reviews/{id}", [ReviewController::class, "update"], [AuthMiddleware::class]);
+$router->delete("/api/reviews/{id}", [ReviewController::class, "delete"], [AuthMiddleware::class]);

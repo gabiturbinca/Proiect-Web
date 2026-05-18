@@ -2,15 +2,15 @@
 
 
 class NumericMaxRule implements Rule {
-    private int $max;
+    private float $max;
 
-    public function __construct(int $max) {
+    public function __construct(float $max) {
         $this->max = $max;
     }
     public function passes(string $field, mixed $value, array $data): bool {
-        if($value === null || $value === "") 
+        if($value === null || $value === "")
             return true;
-        return ((int)$value) <= $this->max;
+        return is_numeric($value) && ((float) $value) <= $this->max;
     }
 
     public function message(string $field): string {

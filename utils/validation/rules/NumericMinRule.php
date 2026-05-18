@@ -1,15 +1,15 @@
 <?php
 
 class NumericMinRule implements Rule {
-    private int $min;
+    private float $min;
 
-    public function __construct(int $min) {
+    public function __construct(float $min) {
         $this->min = $min;
     }
     public function passes(string $field, mixed $value, array $data): bool {
-        if($value === null || $value === "") 
+        if($value === null || $value === "")
             return true;
-        return ((int)$value) >= $this->min;
+        return is_numeric($value) && ((float) $value) >= $this->min;
     }
 
     public function message(string $field): string {

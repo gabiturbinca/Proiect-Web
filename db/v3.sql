@@ -66,3 +66,10 @@ INSERT INTO gift_contexts (gift_id, context_id) VALUES
 (11, 4), (11, 1),
 -- 12. Curs Gatit → Romantic, Familial
 (12, 4), (12, 1);
+
+
+ALTER TABLE reviews ADD CONSTRAINT reviews_user_gift_unique UNIQUE (gift_id, user_id);
+
+-- rating de la 1 la 5
+ALTER TABLE reviews DROP CONSTRAINT IF EXISTS reviews_rating_check;
+ALTER TABLE reviews ADD CONSTRAINT reviews_rating_check CHECK (rating >= 1 AND rating <= 5 );
