@@ -30,3 +30,7 @@ $router->get("/api/users/{id}", [UserController::class, "show"]);
 //auth
 $router->post("/api/auth/register", [AuthController::class, "register"]);
 $router->post("/api/auth/login", [AuthController::class, "login"]);
+
+// auth cu middleware 
+$router->get("/api/auth/me", [AuthController::class, "me"], [AuthMiddleware::class]);
+$router->post("/api/auth/logout", [AuthController::class, "logout"], [AuthMiddleware::class]);

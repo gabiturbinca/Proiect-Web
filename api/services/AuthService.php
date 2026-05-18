@@ -1,12 +1,11 @@
 <?php
 
 class AuthService {
-
-    private UserRepository $userRepository;
     private const HASH_FAKE = '$2y$10$0mIR/tc5l1qOVq4PUf28.uLWJabiK.vTPNT.rFnc6VYYG7XdAjdh6';
-    public function __construct(UserRepository $userRepository) {
-        $this->userRepository = $userRepository;
-    }
+    public function __construct(
+        private UserRepository $userRepository,
+        private JwtService $jwtService,
+    ) {}
     public function register(RegisterUserDTO $dto) :UserDTO {
         $errors = [];
         if ($this->userRepository->existsByUsername($dto->username)) {
@@ -27,7 +26,7 @@ class AuthService {
         return new UserDTO($user->getId(), $user->getUsername(), $user->getEmail(), $user->getUserRole() );
     }
 
-    public function login(LoginRequestDTO $dto) : UserDTO {
+    public function login(LoginRequestDTO $dto) : array {
 
         if(filter_var($dto->identifier, FILTER_VALIDATE_EMAIL))
             $user = $this->userRepository->findByEmail($dto->identifier);
@@ -40,10 +39,19 @@ class AuthService {
         if(!password_verify($dto->password,$user->getPasswordHash())) {
             throw new AuthException();
         }
-        session_regenerate_id(true);
-        $_SESSION['user_id'] = $user->getId();
-        $_SESSION['user_role'] = $user->getUserRole();
-        return new UserDTO($user->getId(), $user->getUsername(), $user->getEmail(), $user->getUserRole() );
+        $token = $this->jwtService->encode([
+            'sub' => $user->getId(),
+            'role' => $user->getUserRole(),
+        ]);
+        return [
+            'token' => $token,
+            'user' => new UserDTO(
+                $user->getId(),
+                $user->getUsername(),
+                $user->getEmail(),
+                $user->getUserRole(),
+            ),
+        ];
 
     }
 }
