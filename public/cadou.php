@@ -4,7 +4,7 @@
     $page_js = 'cadou';
     require __DIR__ . '/../templates/header.php';
 ?>
-
+    
     <template id="gift__card">
         <h1 class="gift__title"></h1>
 
@@ -24,25 +24,8 @@
 
                 <div class="gift__buttons">
                     <button class="btn btn--primary" id="send__gift">Trimite cadou</button>
-                   
-                    <?php
-                      if(isset($_SESSION['user_id'])){
-                        ?>
-                            <button class="btn btn--ghost">Adaugă la favorite</button>
-                        <?php
-                     }
-                    ?>
                 </div>
-                <div class="gift__tags">
-                    <p>Flori</p>
-                    <p>Femei</p>
-                    <p>Lalale</p>
-                    <p>Trandafiri</p>
-                    <p>Flori</p>
-                    <p>Femei</p>
-                    <p>Lalale</p>
-                    <p>Trandafiri</p>
-                </div>
+                <div class="gift__tags"></div>
                
             </div>
         </div>
