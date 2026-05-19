@@ -5,23 +5,25 @@ const perPage = 5;
 let currentPage = 1;
 
 async function getCommands(page){
-    const URL="/data/comenzileMele.json";
+    const URL=`/api/orders?pageNumber=${page}&elemNumber=${perPage}`;
     const res = await fetch(URL);
     if(!res.ok){
         throw new Error("Couldn't fetch the user commands");
     }
     const data = await res.json();
-    return data;
+    console.log(data.success);
+    return data.success;
 }
 
-function createCommandcard(command_details){
+function createCommandCard(command_details){
     const template = document.getElementById("commands_template");
     const card = template.content.firstElementChild.cloneNode(true);
-
-    card.querySelector(".card__awb").textContent="AWB: " + command_details.awb;
-    card.querySelector(".card__time").textContent="Data si ora: " + command_details.datetime;
-    card.querySelector(".card__status").textContent=command_details.status;
-
+    card.querySelector(".card__gift_name").textContent = " " + command_details.gift_name;
+    card.querySelector(".card__time").textContent = " " + command_details.created_at;
+    card.querySelector(".card__address").textContent = " " + command_details.address;
+    card.querySelector(".card__description").textContent = " " + command_details.description;
+    card.querySelector(".card__quantity").textContent = " " + command_details.quantity;
+    card.querySelector(".card__status").textContent = " " + command_details.status;
     return card;
 }
 
@@ -31,16 +33,17 @@ async function renderCommandsPage(page){
     const nextBtn = document.getElementById("btn__next");
     const prevBtn = document.getElementById("btn__prev");
     try{
-        const {total, data} = await getCommands(page);
-        const totalPages = Math.ceil(total/perPage);
-        if (page > totalPages) return;
-        currentPage = page;
-        const start = (page - 1) * perPage;
-        const slice = data.slice(start, start + perPage);
-        commandBox.innerHTML = '';
-        slice.forEach(c => commandBox.appendChild(createCommandcard(c)));
-        prevBtn.disabled = page === 1;
-        nextBtn.disabled = page === totalPages;
+       const {orders, orders_count} = await getCommands(page);
+       console.log(orders);
+       if(page < 1) return;
+       const nrPages = Math.ceil(orders_count/perPage);
+       if(page == nrPages)
+            nextBtn.disabled=true;
+       if(page==1)
+            prevBtn.disabled=true;
+        orderCards=orders.map(createCommandCard);
+        commandBox.append(...orderCards);
+       
     }
     catch{
         commandBox.innerHTML='<p>Nu am putut incarca comenzile dvs!</p>';

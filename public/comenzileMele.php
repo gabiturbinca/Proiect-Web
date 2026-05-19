@@ -11,9 +11,12 @@
 
         <template id="commands_template">
             <div class="card" id="card__command">
-                <p class="card__desc card__awb"></p>
-                <p class="card__desc card__time"></p>
-                <p class="card__desc">Status: <span class="card__status"></span></p>
+                <p class="card__desc"><span class="card__label">Cadou:</span> <span class="card__gift_name"></span></p>
+                <p class="card__desc"><span class="card__label">Data:</span> <span class="card__time"></span></p>
+                <p class="card__desc"><span class="card__label">Adresă:</span> <span class="card__address"></span></p>
+                <p class="card__desc"><span class="card__label">Descriere:</span> <span class="card__description"></span></p>
+                <p class="card__desc"><span class="card__label">Cantitate:</span> <span class="card__quantity"></span></p>
+                <p class="card__desc"><span class="card__label">Status:</span> <span class="card__status"></span></p>
             </div>
         </template>
 

@@ -1,6 +1,7 @@
 .my_commands{
     margin-inline:auto;
     max-width: var(--container-sm);
+    min-height:var(--container-md);
 }
 
 .my_commands__header{
@@ -28,6 +29,12 @@
 
 #card__command span{
     color:var(--color-accent-600);
+}
+
+#card__command .card__label{
+    font-weight: 700;
+    font-size: 1.1em;
+    color: var(--color-text);
 }
 
 .buttons__pagination{

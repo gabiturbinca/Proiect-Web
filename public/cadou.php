@@ -24,14 +24,6 @@
 
                 <div class="gift__buttons">
                     <button class="btn btn--primary" id="send__gift">Trimite cadou</button>
-                   
-                    <?php
-                      if(isset($_SESSION['user_id'])){
-                        ?>
-                            <button class="btn btn--ghost">Adaugă la favorite</button>
-                        <?php
-                     }
-                    ?>
                 </div>
                 <div class="gift__tags">
                     <p>Flori</p>
