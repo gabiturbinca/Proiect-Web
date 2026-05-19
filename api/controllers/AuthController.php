@@ -38,6 +38,12 @@ class AuthController {
             'httponly' => true,
             'samesite' => 'Lax',
         ]);
+        setcookie('csrf_token', '', [
+            'expires'  => time() - 3600,
+            'path'     => '/',
+            'httponly' => true,
+            'samesite' => 'Lax',
+        ]);
         return ['message' => 'Logged out'];
     }
 }
