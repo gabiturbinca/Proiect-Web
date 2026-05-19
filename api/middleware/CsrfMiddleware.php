@@ -10,7 +10,7 @@ class CsrfMiddleware implements Middleware {
         $headerToken = $_SERVER['HTTP_X_CSRF_TOKEN'] ?? null;
 
         if(!$cookieToken || !$headerToken || !hash_equals($cookieToken, $headerToken)) {
-            throw new AuthException("CSRF token mismatch");
+            throw new CsrfException("CSRF token mismatch");
         }
     }
 }

@@ -41,7 +41,7 @@ $router->get("/api/users/{id}", [UserController::class, "show"]);
 
 //auth
 $router->post("/api/auth/register", [AuthController::class, "register"]);
-$router->post("/api/auth/login", [AuthController::class, "login"]);
+$router->post("/api/auth/login", [AuthController::class, "login"],[RateLimiterMiddleware::class]);
 
 // auth cu middleware
 $router->get("/api/auth/me", [AuthController::class, "me"], [AuthMiddleware::class]);

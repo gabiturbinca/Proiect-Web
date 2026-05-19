@@ -42,6 +42,26 @@ class ExceptionHandler {
             ]);
             return;     
         }
+        if($e instanceof CsrfException) {
+            http_response_code(403);
+            echo json_encode([
+                'error'=> [
+                    'message' => $e->getMessage(),
+                ]
+            ]);
+            return;
+        }
+
+        if($e instanceof TooManyRequestsException) {
+            http_response_code(429);
+            header("Retry-After: {$e->getRetry()}");
+            echo json_encode([
+                'error'=> [
+                    'message' => $e->getMessage(),
+                ]
+            ]);
+            return;
+        }
         http_response_code(500);
 
         $payload = ['message' => 'Internal server error'];

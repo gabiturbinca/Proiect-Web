@@ -89,3 +89,12 @@ CREATE TRIGGER orders_set_updated
 BEFORE UPDATE ON orders
 FOR EACH ROW
 EXECUTE FUNCTION orders_update_timestamp();
+
+CREATE TABLE login_attempts (
+    id SERIAL PRIMARY KEY,
+    ip_address VARCHAR(45) NOT NULL,    -- VARCHAR(45) suportă și IPv6
+    attempted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+CREATE INDEX idx_login_attempts_ip_ts 
+    ON login_attempts (ip_address, attempted_at);

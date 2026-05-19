@@ -1,9 +1,9 @@
 <?php
 
 class AuthController {
-
     public function __construct(private AuthService $authService,
-                                private Container $container) {}
+                                private Container $container,
+                                private LoginAttemptRepository $logRepo) {}
     public function register() :UserDTO {
        $input = json_decode(file_get_contents("php://input"), true) ?? [];
 
@@ -13,10 +13,14 @@ class AuthController {
     }
 
     public function login() :UserDTO {
+
         $input = json_decode(file_get_contents('php://input'), true) ?? [];
         $data = Validator::make($input, LoginRequestDTO::RULES)->validate();
         $req = new LoginRequestDTO($data['identifier'], $data['password']);
+        $ip = $_SERVER['REMOTE_ADDR']?? '0.0.0.0';
         $result = $this->authService->login($req);
+        //aici trb sa dau clear la attempturi pt rate limiter
+        $this->logRepo->clearByIp($ip);
         setcookie('auth_token', $result['token'], [
             'expires' =>time() + 3600,
             'path' => '/',
