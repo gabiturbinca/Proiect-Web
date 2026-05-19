@@ -38,18 +38,18 @@
                 </div>
 
                 <div class="field">
-                    <label class="field__label" for="adress">Adresa :</label>
-                    <input class="field__input" type="text" id="adress" name="adress">
+                    <label class="field__label" for="address">Adresa :</label>
+                    <input class="field__input" type="text" id="address" name="address" required>
                 </div>
 
                 <div class="field">
                     <label class="field__label" for="recipient_name">Nume destinatar: </label>
-                    <input class="field__input" type="text" id="recipient_name" name="recipient_name">
+                    <input class="field__input" type="text" id="recipient_name" name="recipient_name" required>
                 </div>
 
                 <div class="field">
                     <label class="field__label" for="quantity">Cantitatea :</label>
-                    <input class="field__input" type="number" id="quantity" name="quantity" min="1" placeholder="1" step="1">
+                    <input class="field__input" type="number" id="quantity" name="quantity" min="1" placeholder="1" step="1" required>
                 </div>
 
                 <div class="field">
@@ -70,12 +70,12 @@
 
                 <div class="field">
                     <label class="field__label" for="description">Alege un mesaj pentru destinatar: </label>
-                    <input class="field__input" type="text" id="description" name="description">
+                    <input class="field__input" type="text" id="description" name="description" required>
                 </div>
 
+                <span id="message__command"></span>
                 <div class ="buttons__pagination">
-                    <button type="button" class="btn btn--ghost" id="btn__cancel">Anulează</button>
-                    <button type="button" class="btn btn--primary" id="btn__order">Dă comanda</button>
+                    <button type="submit" class="btn btn--primary" id="btn__submit">Comandă!</button>
                 </div>
 
 

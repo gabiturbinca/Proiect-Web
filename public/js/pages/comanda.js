@@ -53,3 +53,46 @@ async function renderGift() {
 }
 
 renderGift();
+
+
+const form = document.getElementById("order__form");
+
+form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const formObject = Object.fromEntries(formData);
+
+    if(formObject.is_anonymous==="true")
+        formObject.is_anonymous=true;
+    else
+        formObject.is_anonymous=false;
+
+    formObject.gift_id= giftId;
+    try{
+        const sendCommand= await fetch("/api/orders",{
+            method:"POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formObject),
+        });
+        const result=await sendCommand.json();
+        const message__command = document.getElementById("message__command");
+
+        if(sendCommand.ok){
+            message__command.textContent="Comandă plasată cu success. Aveți răbdare până ajunge!";
+            message__command.classList.remove("error__message");
+            message__command.classList.add("success__messsage");
+        }
+        else{
+            message__command.textContent="Comandă nu a putut fi plasată. Vă rugăm să reîncercați.";
+            message__command.classList.remove("success__messsage");
+            message__command.classList.add("error__message");
+        }
+        
+    }
+    catch{
+        console.log("Nu a mers sa trimit cadoul oopsie.");
+    }
+});
+
+
+
