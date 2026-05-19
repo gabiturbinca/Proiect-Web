@@ -34,16 +34,13 @@ async function renderCommandsPage(page){
     const prevBtn = document.getElementById("btn__prev");
     try{
        const {orders, orders_count} = await getCommands(page);
-       console.log(orders);
-       if(page < 1) return;
        const nrPages = Math.ceil(orders_count/perPage);
-       if(page == nrPages)
-            nextBtn.disabled=true;
-       if(page==1)
-            prevBtn.disabled=true;
-        orderCards=orders.map(createCommandCard);
-        commandBox.append(...orderCards);
-       
+       if(page > nrPages) return;
+       currentPage = page;
+       const orderCards = orders.map(createCommandCard);
+       commandBox.replaceChildren(...orderCards);
+       prevBtn.disabled = (page === 1);
+       nextBtn.disabled = (page === nrPages);
     }
     catch{
         commandBox.innerHTML='<p>Nu am putut incarca comenzile dvs!</p>';
