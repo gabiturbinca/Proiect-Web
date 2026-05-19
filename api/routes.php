@@ -47,11 +47,13 @@ $router->post("/api/auth/login", [AuthController::class, "login"]);
 $router->get("/api/auth/me", [AuthController::class, "me"], [AuthMiddleware::class]);
 $router->post("/api/auth/logout", [AuthController::class, "logout"], [AuthMiddleware::class]);
 
-// reviews
+// reviews — public
 $router->get("/api/gifts/{id}/reviews", [ReviewController::class, "index"]);
-$router->post("/api/gifts/{id}/reviews", [ReviewController::class, "create"], [AuthMiddleware::class]);
-$router->put("/api/reviews/{id}", [ReviewController::class, "update"], [AuthMiddleware::class]);
-$router->delete("/api/reviews/{id}", [ReviewController::class, "delete"], [AuthMiddleware::class]);
+
+// reviews — authenticated
+$router->post("/api/gifts/{id}/reviews", [MyReviewController::class, "create"], [AuthMiddleware::class]);
+$router->put("/api/reviews/{id}", [MyReviewController::class, "update"], [AuthMiddleware::class]);
+$router->delete("/api/reviews/{id}", [MyReviewController::class, "delete"], [AuthMiddleware::class]);
 
 // admin gifts
 $router->post("/api/admin/gifts", [GiftController::class, "create"], [AuthMiddleware::class, AdminMiddleware::class]);

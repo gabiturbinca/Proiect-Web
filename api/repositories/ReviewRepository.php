@@ -34,7 +34,7 @@ class ReviewRepository {
         return $row ? $this->hydrate($row) : null;
     }
 
-    public function findAllByGiftId(int $giftId): array {
+    public function findAllByGiftId(int $giftId, int $limit, int $offset): array {
         $stmt = $this->db->prepare(
             "SELECT r.id, r.gift_id, r.user_id, r.rating, r.comment, r.created_at,
                     u.username, g.name AS gift_name
@@ -42,13 +42,20 @@ class ReviewRepository {
              JOIN users u ON r.user_id = u.id
              JOIN gifts g ON r.gift_id = g.id
              WHERE r.gift_id = ?
-             ORDER BY r.created_at DESC"
+             ORDER BY r.created_at DESC
+             LIMIT ? OFFSET ?"
         );
-        $stmt->execute([$giftId]);
+        $stmt->execute([$giftId, $limit, $offset]);
         return array_map($this->hydrate(...), $stmt->fetchAll(PDO::FETCH_ASSOC));
     }
 
-    public function findAllByUserId(int $userId): array {
+    public function countByGiftId(int $giftId): int {
+        $stmt = $this->db->prepare("SELECT COUNT(1) FROM reviews WHERE gift_id = ?");
+        $stmt->execute([$giftId]);
+        return (int) $stmt->fetchColumn();
+    }
+
+    public function findAllByUserId(int $userId, int $limit, int $offset): array {
         $stmt = $this->db->prepare(
             "SELECT r.id, r.gift_id, r.user_id, r.rating, r.comment, r.created_at,
                     u.username, g.name AS gift_name
@@ -56,10 +63,17 @@ class ReviewRepository {
              JOIN users u ON r.user_id = u.id
              JOIN gifts g ON r.gift_id = g.id
              WHERE r.user_id = ?
-             ORDER BY r.created_at DESC"
+             ORDER BY r.created_at DESC
+             LIMIT ? OFFSET ?"
         );
-        $stmt->execute([$userId]);
+        $stmt->execute([$userId, $limit, $offset]);
         return array_map($this->hydrate(...), $stmt->fetchAll(PDO::FETCH_ASSOC));
+    }
+
+    public function countByUserId(int $userId): int {
+        $stmt = $this->db->prepare("SELECT COUNT(1) FROM reviews WHERE user_id = ?");
+        $stmt->execute([$userId]);
+        return (int) $stmt->fetchColumn();
     }
 
     public function existsByUserAndGift(int $userId, int $giftId): bool {

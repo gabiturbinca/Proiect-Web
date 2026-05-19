@@ -6,18 +6,13 @@ class ReviewService {
         private GiftRepository $giftRepository,
     ) {}
 
-    public function listByGift(int $giftId): array {
-        $reviews = $this->reviewRepository->findAllByGiftId($giftId);
-        return array_map(
-            fn(Review $r) => new ReviewDTO(
-                $r->getId(),
-                $r->getUsername(),
-                $r->getRating(),
-                $r->getComment(),
-                $r->getCreatedAt(),
-            ),
-            $reviews,
-        );
+    public function listByGift(int $giftId, int $page, int $limit): array {
+        $offset = ($page - 1) * $limit;
+        $reviews = $this->reviewRepository->findAllByGiftId($giftId, $limit, $offset);
+        return [
+            'reviews'       => array_map(fn(Review $r) => $this->toDTO($r), $reviews),
+            'reviews_count' => $this->reviewRepository->countByGiftId($giftId),
+        ];
     }
 
     public function create(int $userId, int $giftId, PostReviewRequestDTO $dto): ReviewDTO {
@@ -36,13 +31,7 @@ class ReviewService {
         $review = $this->reviewRepository->create($review);
         $full = $this->reviewRepository->findById($review->getId());
 
-        return new ReviewDTO(
-            $full->getId(),
-            $full->getUsername(),
-            $full->getRating(),
-            $full->getComment(),
-            $full->getCreatedAt(),
-        );
+        return $this->toDTO($full);
     }
 
     public function update(int $reviewId, int $userId, PostReviewRequestDTO $dto): ReviewDTO {
@@ -51,20 +40,14 @@ class ReviewService {
             throw new NotFoundException("Review not found");
         }
         if ($review->getUserId() !== $userId) {
-            throw new AuthException("You can only edit your own reviews");
+            throw new NotFoundException("Review not found");
         }
 
         $review->setRating((float) $dto->rating);
         $review->setComment($dto->comment);
         $this->reviewRepository->update($review);
 
-        return new ReviewDTO(
-            $review->getId(),
-            $review->getUsername(),
-            $review->getRating(),
-            $review->getComment(),
-            $review->getCreatedAt(),
-        );
+        return $this->toDTO($review);
     }
 
     public function delete(int $reviewId, int $userId, string $userRole): void {
@@ -73,8 +56,18 @@ class ReviewService {
             throw new NotFoundException("Review not found");
         }
         if ($review->getUserId() !== $userId && $userRole !== 'admin') {
-            throw new AuthException("You can only delete your own reviews");
+            throw new NotFoundException("Review not found");
         }
         $this->reviewRepository->delete($reviewId);
+    }
+
+    private function toDTO(Review $r): ReviewDTO {
+        return new ReviewDTO(
+            $r->getId(),
+            $r->getUsername(),
+            $r->getRating(),
+            $r->getComment(),
+            $r->getCreatedAt(),
+        );
     }
 }

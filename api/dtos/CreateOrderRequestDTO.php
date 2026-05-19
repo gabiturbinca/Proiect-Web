@@ -5,7 +5,7 @@ final readonly class CreateOrderRequestDTO {
     'gift_id'         => ['required', 'numeric_id'],
     'quantity'        => ['required', 'numeric_min:1', 'numeric_max:100'],
     'address'         => ['required', 'min:5', 'max:255'],
-    'recipient_name'  => ['max:255'],
+    'recipient_name'  => ['max:255', 'required'],
     'description'     => ['max:500'],
     'is_anonymous'    => [],
     ];
