@@ -35,3 +35,13 @@ async function changeNavbar()
 }
 
 changeNavbar();
+
+
+const logout = document.getElementById("navbara3");
+logout.addEventListener("click", async (e) => {
+  e.preventDefault();                       
+  await fetch("/api/auth/logout",
+     { method: "POST" }
+    );
+  window.location.href = "/home.php";      
+});
