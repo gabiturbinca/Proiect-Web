@@ -25,16 +25,7 @@
                 <div class="gift__buttons">
                     <button class="btn btn--primary" id="send__gift">Trimite cadou</button>
                 </div>
-                <div class="gift__tags">
-                    <p>Flori</p>
-                    <p>Femei</p>
-                    <p>Lalale</p>
-                    <p>Trandafiri</p>
-                    <p>Flori</p>
-                    <p>Femei</p>
-                    <p>Lalale</p>
-                    <p>Trandafiri</p>
-                </div>
+                <div class="gift__tags"></div>
                
             </div>
         </div>

@@ -42,6 +42,15 @@ function buildGiftCard(gift) {
         }
     }
 
+    const tagsBox = card.querySelector('.gift__tags');
+    if (gift.tags) {
+        for (const tag of gift.tags) {
+            const p = document.createElement('p');
+            p.textContent = tag.name;
+            tagsBox.append(p);
+        }
+    }
+
     card.querySelector('#send__gift').addEventListener('click', () => {
         window.location.href = "/comanda.php";
     });
