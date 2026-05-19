@@ -21,26 +21,28 @@
                 <div class="auth__field">
                     <label for="username">Username</label>
                     <input id="username" type="text" placeholder="Username..." name="username" required>
+                    <span id="message__username"></span>
                 </div>
 
                 <div class="auth__field">
                     <label for="email">Email</label>
                     <input id="email" type="email" placeholder="Email..." name="email" required>
+                    <span id="message__email" ></span>
                 </div>
 
                 <div class="auth__field">
-                    <label for="psw">Parolă</label>
-                    <input id="psw" type="password" placeholder="Parola..." name="psw" minlength="8" required>
+                    <label for="password">Parolă</label>
+                    <input id="password" type="password" placeholder="Parola..." name="password" minlength="8" required>
                 </div>
 
 
                 <div class="auth__field">
-                    <label for="psw_confirm">Confirmă parolă</label>
-                    <input id="psw_confirm" type="password" placeholder="Confirma parola..." name="psw_confirm" minlength="8" required>
+                    <label for="password_confirmation">Confirmă parolă</label>
+                    <input id="password_confirmation" type="password" placeholder="Confirma parola..." name="password_confirmation" minlength="8" required>
                 </div>
 
                 <button type="submit" class="btn btn--primary auth__submit">Înregistrează-te!</button>
-
+                <span id="message__register"></span>
                 <p class="auth__alt">
                     Ai cont deja? <a href="/login.php">Loghează-te</a>
                 </p>

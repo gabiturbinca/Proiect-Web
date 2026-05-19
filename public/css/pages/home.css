@@ -91,7 +91,6 @@
   gap: var(--space-4);
 }
 
-/* ---- Tablet (≥768px) ---- */
 
 @media (min-width: 768px) {
   .hero-section {
@@ -119,8 +118,6 @@
   }
 }
 
-
-/* ---- Desktop (≥1024px) ---- */
 
 @media (min-width: 1024px) {
   .hero-section {

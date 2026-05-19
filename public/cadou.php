@@ -23,8 +23,15 @@
                 </div>
 
                 <div class="gift__buttons">
-                    <button class="btn btn--primary">Trimite cadou</button>
-                    <button class="btn btn--ghost">Adaugă la favorite</button>
+                    <button class="btn btn--primary" id="send__gift">Trimite cadou</button>
+                   
+                    <?php
+                      if(isset($_SESSION['user_id'])){
+                        ?>
+                            <button class="btn btn--ghost">Adaugă la favorite</button>
+                        <?php
+                     }
+                    ?>
                 </div>
                 <div class="gift__tags">
                     <p>Flori</p>
@@ -47,6 +54,7 @@
 
      
     <section class="gift__container" id="gift__container"></section>
+          <h2 class="gift__header">Cadouri similare:</h2>
           <template id="result__gift" class="result__gift">
                 <a href ="" class ="card card__gift" id="gift__link">
                     <img src="" alt="" class ="card__image">
@@ -60,15 +68,15 @@
             <div class="result__gift">
                 <a href ="" class ="card card__gift" id="gift__link">
                     <img src="" alt="" class ="card__image">
-                    <p class="card__title">Title</p>
-                    <p class="card__desc card__desc__gift">Descc</p>
-                    <p class="card__desc card__price__gift">Price</p>
+                    <p class="card__title">Cadou de test</p>
+                    <p class="card__desc card__desc__gift">Descriere cadou de test</p>
+                    <p class="card__desc card__price__gift">Price : 12.99</p>
                     <span class="btn btn--primary">Vezi detalii cadou</span>
                 </a>
 
                 <a href ="" class ="card card__gift" id="gift__link">
                     <img src="" alt="" class ="card__image">
-                    <p class="card__title">Titlee</p>
+                    <p class="card__title">Cadou de test</p>
                     <p class="card__desc card__desc__gift">Descc</p>
                     <p class="card__desc card__price__gift">Price</p>
                     <span class="btn btn--primary">Vezi detalii cadou</span>
@@ -76,7 +84,7 @@
 
                  <a href ="" class ="card card__gift" id="gift__link">
                     <img src="" alt="" class ="card__image">
-                    <p class="card__title">Title</p>
+                    <p class="card__title">Cadou de test</p>
                     <p class="card__desc card__desc__gift">Descc</p>
                     <p class="card__desc card__price__gift">Price</p>
                     <span class="btn btn--primary">Vezi detalii cadou</span>
@@ -84,7 +92,7 @@
 
                 <a href ="" class ="card card__gift" id="gift__link">
                     <img src="" alt="" class ="card__image">
-                    <p class="card__title">Titlee</p>
+                    <p class="card__title">Cadou de test</p>
                     <p class="card__desc card__desc__gift">Descc</p>
                     <p class="card__desc card__price__gift">Price</p>
                     <span class="btn btn--primary">Vezi detalii cadou</span>
@@ -92,7 +100,7 @@
 
                  <a href ="" class ="card card__gift" id="gift__link">
                     <img src="" alt="" class ="card__image">
-                    <p class="card__title">Title</p>
+                    <p class="card__title">Cadou de test</p>
                     <p class="card__desc card__desc__gift">Descc</p>
                     <p class="card__desc card__price__gift">Price</p>
                     <span class="btn btn--primary">Vezi detalii cadou</span>
@@ -100,14 +108,14 @@
 
                 <a href ="" class ="card card__gift" id="gift__link">
                     <img src="" alt="" class ="card__image">
-                    <p class="card__title">Titlee</p>
+                    <p class="card__title">Cadou de test</p>
                     <p class="card__desc card__desc__gift">Descc</p>
                     <p class="card__desc card__price__gift">Price</p>
                     <span class="btn btn--primary">Vezi detalii cadou</span>
                 </a>
                  <a href ="" class ="card card__gift" id="gift__link">
                     <img src="" alt="" class ="card__image">
-                    <p class="card__title">Title</p>
+                    <p class="card__title">Cadou de test</p>
                     <p class="card__desc card__desc__gift">Descc</p>
                     <p class="card__desc card__price__gift">Price</p>
                     <span class="btn btn--primary">Vezi detalii cadou</span>
@@ -115,7 +123,7 @@
 
                 <a href ="" class ="card card__gift" id="gift__link">
                     <img src="" alt="" class ="card__image">
-                    <p class="card__title">Titlee</p>
+                    <p class="card__title">Cadou de test</p>
                     <p class="card__desc card__desc__gift">Descc</p>
                     <p class="card__desc card__price__gift">Price</p>
                     <span class="btn btn--primary">Vezi detalii cadou</span>

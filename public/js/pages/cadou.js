@@ -42,6 +42,10 @@ function buildGiftCard(gift) {
         }
     }
 
+    card.querySelector('#send__gift').addEventListener('click', () => {
+        window.location.href = "/comanda.php";
+    });
+
     return card;
 }
 
