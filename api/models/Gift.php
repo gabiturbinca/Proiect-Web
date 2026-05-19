@@ -15,6 +15,13 @@ class Gift {
     private ?string $category_name = null;
     private ?string $brand_name = null;
     private ?array $tags = null;
+    private ?array $circumstance_ids = null;
+    private ?array $context_ids = null;
+
+    public function getCircumstanceIds(): ?array { return $this->circumstance_ids; }
+    public function setCircumstanceIds(?array $ids): void { $this->circumstance_ids = $ids; }
+    public function getContextIds(): ?array { return $this->context_ids; }
+    public function setContextIds(?array $ids): void { $this->context_ids = $ids; }
 
     public function getTags(): ?array {
         return $this->tags;
@@ -107,5 +114,10 @@ class Gift {
     public function setBrandId(?int $brand_id): void {
         $this->brand_id = $brand_id;
     }
-
+    public function getTagDtos(): array {
+    return array_map(
+        fn(Tag $t) => new TagDTO($t->getId(), $t->getName(), $t->getSlug()),
+        $this->tags ?? [],
+    );
+}
 }

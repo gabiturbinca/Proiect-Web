@@ -7,7 +7,10 @@ class RuleParser {
         'min' => MinRule::class,
         'max' => MaxRule::class,
         'alpha_num' => AlphaNumRule::class,
-        'confirmed' => ConfirmedRule::class 
+        'confirmed' => ConfirmedRule::class,
+        'numeric_id' => NumericIdRule::class,
+        'numeric_min' => NumericMinRule::class,
+        'numeric_max' => NumericMaxRule::class 
     ];
     public function parse(string |Rule $rule):Rule {
         if($rule instanceof Rule)

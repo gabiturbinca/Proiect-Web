@@ -44,33 +44,52 @@ class CategoryRepository {
         return array_map($this->hydrate(...), $stmt->fetchAll(PDO::FETCH_ASSOC));
     }
 
-    /*public function findShortCategories($activeOnly = true): array {
-        $sql = "SELECT id, name, description, image_url FROM categories";
-        if ($activeOnly) {
-            $sql .= " WHERE is_active = true";
-        }
-        $sql .= " ORDER BY sort_order ASC";
-        $stmt = $this->db->query($sql);
-        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return array_map(fn($r) => new IdNameDescImgCategoryDTO(
-            id: (int)$r['id'],
-            name: $r['name'],
-            image_url: $r['image_url'],
-            description: $r['description']
-        ), $rows);
+    public function create(Category $category): Category {
+        $stmt = $this->db->prepare(
+            "INSERT INTO categories (name, description, image_url, is_active, sort_order)
+             VALUES (?, ?, ?, ?, ?)
+             RETURNING id, created_at"
+        );
+        $stmt->execute([
+            $category->getName(),
+            $category->getDescription(),
+            $category->getImageUrl(),
+            $category->getIsActive(),
+            $category->getSortOrder(),
+        ]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $category->setId((int) $row['id']);
+        $category->setCreatedAt($row['created_at']);
+        return $category;
     }
 
-    public function findIdNameCategories($activeOnly = true): array {
-        $sql = "SELECT id, name FROM categories";
-        if ($activeOnly) {
-            $sql .= " WHERE is_active = true";
+    public function update(int $id, array $fields): void {
+        if (empty($fields)) return;
+        $sets = [];
+        $params = [];
+        foreach ($fields as $column => $value) {
+            $sets[] = "$column = ?";
+            $params[] = $value;
         }
-        $sql .= " ORDER BY sort_order ASC";
-        $stmt = $this->db->query($sql);
-        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return array_map(fn($r) => new IdNameCategoryDTO(
-            id: (int)$r['id'],
-            name: $r['name']
-        ), $rows);
-    }*/
+        $params[] = $id;
+        $sql = "UPDATE categories SET " . implode(', ', $sets) . " WHERE id = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($params);
+    }
+
+    public function delete(int $id): void {
+        $stmt = $this->db->prepare("DELETE FROM categories WHERE id = ?");
+        $stmt->execute([$id]);
+    }
+
+    public function existsByName(string $name, ?int $excludeId = null): bool {
+        if ($excludeId === null) {
+            $stmt = $this->db->prepare("SELECT 1 FROM categories WHERE name = ?");
+            $stmt->execute([$name]);
+        } else {
+            $stmt = $this->db->prepare("SELECT 1 FROM categories WHERE name = ? AND id <> ?");
+            $stmt->execute([$name, $excludeId]);
+        }
+        return (bool) $stmt->fetchColumn();
+    }
 }
