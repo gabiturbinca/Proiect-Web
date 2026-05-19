@@ -42,6 +42,7 @@ class AuthService {
         $token = $this->jwtService->encode([
             'sub' => $user->getId(),
             'role' => $user->getUserRole(),
+            'username' => $user->getUsername(),
         ]);
         return [
             'token' => $token,
