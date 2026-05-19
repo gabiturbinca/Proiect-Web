@@ -34,29 +34,12 @@
                 <span></span>
                 <span></span>
             </button>
-            <?php 
-                if(isset($_SESSION['user_id'])){
-                    ?>
-                        <ul id="primary-menu" class="navbar__menu">
-                            <li><a href="/recomandare.php">Caută cadou</a></li>
-                            <li><a href="/comenzileMele.php">Comenzile mele</a></li>
-                            <li><a href="#">Logout</a></li>
-                        </ul>
-                    <?php
-                }
-                else{
-                    ?>
-                        <ul id="primary-menu" class="navbar__menu">
-                            <li><a href="/recomandare.php">Caută cadou</a></li>
-                            <li><a href="/login.php">Logare</a></li>
-                            <li><a href="/register.php">Înregistrare</a></li>
-                        </ul>
-                    <?php
-                }
-
-            ?>
-            
-    </nav>
+            <ul id="primary-menu" class="navbar__menu">
+                <li id="navbar1"><a href="/recomandare.php" id="navbara1">Caută cadou</a></li>
+                <li id="navbar2"><a href="/login.php" id="navbara2">Logare</a></li>
+                <li id="navbar3"><a href="/register.php" id="navbara3">Înregistrare</a></li>
+            </ul>
+          </nav>
     </header>
 
     <main>
