@@ -29,6 +29,9 @@ class Router {
     public function delete(string $path, array $handler, array $middleware = []) : void {
         $this->addRoute('DELETE', $path, $handler, $middleware);
     }
+    public function patch(string $path, array $handler, array $middleware = []) : void {
+        $this->addRoute('PATCH', $path, $handler, $middleware);
+    }
 
     public function dispatch(string $method, string $uri) : mixed {
         $parsed_uri = parse_url($uri, PHP_URL_PATH);
