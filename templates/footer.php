@@ -31,7 +31,7 @@
         </div>
     </footer>
 
-    <script src="/js/main.js"></script>
+    <script src="/js/main.js" defer></script>
      <?php if($page_js): ?>
         <script src="/js/pages/<?= htmlspecialchars($page_js)?>.js"> </script>
     <?php endif; ?>

@@ -6,8 +6,15 @@ let currentPage=1;
 async function getGifts(page){
     let CATEGORIES_GIFTS_URL=`/api/gifts/category/${categoryId}?pageNumber=${page}&elemNumber=${perPage}`;
     const response = await fetch(CATEGORIES_GIFTS_URL);
-    if(!response.ok)
-        throw new Error("Couldn't fetch the gifts for this category!");
+    if(!response.ok){
+        let API_FORM=`api/gifts/recommend?pageNumber=${page}&elemNumber=${perPage}`;
+        const response1 = await fetch(API_FORM);
+        if(!response1.ok){
+             throw new Error("Couldn't fetch the gifts!");
+        }
+         const rez = await response1.json();
+        return rez.success;
+    }
     const rez = await response.json();
     return rez.success;
 }
