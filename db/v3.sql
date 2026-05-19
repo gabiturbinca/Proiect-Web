@@ -73,3 +73,19 @@ ALTER TABLE reviews ADD CONSTRAINT reviews_user_gift_unique UNIQUE (gift_id, use
 -- rating de la 1 la 5
 ALTER TABLE reviews DROP CONSTRAINT IF EXISTS reviews_rating_check;
 ALTER TABLE reviews ADD CONSTRAINT reviews_rating_check CHECK (rating >= 1 AND rating <= 5 );
+
+ALTER TYPE order_status ADD VALUE 'shipped';
+ALTER TYPE order_status ADD VALUE 'delivered';
+
+CREATE OR REPLACE FUNCTION orders_update_timestamp()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.last_updated = CURRENT_TIMESTAMP;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER orders_set_updated
+BEFORE UPDATE ON orders
+FOR EACH ROW
+EXECUTE FUNCTION orders_update_timestamp();

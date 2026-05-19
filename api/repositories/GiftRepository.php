@@ -94,7 +94,7 @@ class GiftRepository {
         }
     }
 
-    public function findById($id): Gift {
+    public function findById(int $id): Gift {
         $stmt = $this->db->prepare(
             "SELECT g.*, c.name AS category_name, b.name AS brand_name
              FROM gifts g
@@ -201,4 +201,95 @@ class GiftRepository {
         return $gifts;
     }
 
+    public function create(Gift $gift): Gift {
+        $stmt = $this->db->prepare(
+            "INSERT INTO gifts (name, description, price, category_id, brand_id, specifications, image_url)
+             VALUES (?, ?, ?, ?, ?, ?::jsonb, ?)
+             RETURNING id, created_at, chosen_count, score"
+        );
+        $stmt->execute([
+            $gift->getName(),
+            $gift->getDescription(),
+            $gift->getPrice(),
+            $gift->getCategoryId(),
+            $gift->getBrandId(),
+            $gift->getSpecifications() !== null ? json_encode($gift->getSpecifications()) : null,
+            $gift->getImageUrl(),
+        ]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $gift->setId((int) $row['id']);
+        $gift->setCreatedAt($row['created_at']);
+        $gift->setChosenCount((int) $row['chosen_count']);
+        $gift->setScore((float) $row['score']);
+        return $gift;
+    }
+
+    public function update(int $id, array $fields): void {
+        if (empty($fields)) return;
+        $sets = [];
+        $params = [];
+        foreach ($fields as $column => $value) {
+            if ($column === 'specifications') {
+                $sets[] = "$column = ?::jsonb";
+                $params[] = $value !== null ? json_encode($value) : null;
+            } else {
+                $sets[] = "$column = ?";
+                $params[] = $value;
+            }
+        }
+        $params[] = $id;
+        $sql = "UPDATE gifts SET " . implode(', ', $sets) . " WHERE id = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($params);
+    }
+
+    public function delete(int $id): void {
+        $stmt = $this->db->prepare("DELETE FROM gifts WHERE id = ?");
+        $stmt->execute([$id]);
+    }
+
+    public function syncTags(int $giftId, array $tagIds): void {
+        $this->db->prepare("DELETE FROM gift_tags WHERE gift_id = ?")->execute([$giftId]);
+        if (empty($tagIds)) return;
+        $stmt = $this->db->prepare("INSERT INTO gift_tags (gift_id, tag_id) VALUES (?, ?)");
+        foreach (array_unique($tagIds) as $tagId) {
+            $stmt->execute([$giftId, $tagId]);
+        }
+    }
+
+    public function syncCircumstances(int $giftId, array $circumstanceIds): void {
+        $this->db->prepare("DELETE FROM gift_circumstances WHERE gift_id = ?")->execute([$giftId]);
+        if (empty($circumstanceIds)) return;
+        $stmt = $this->db->prepare("INSERT INTO gift_circumstances (gift_id, circumstance_id) VALUES (?, ?)");
+        foreach (array_unique($circumstanceIds) as $cid) {
+            $stmt->execute([$giftId, $cid]);
+        }
+    }
+
+    public function syncContexts(int $giftId, array $contextIds): void {
+        $this->db->prepare("DELETE FROM gift_contexts WHERE gift_id = ?")->execute([$giftId]);
+        if (empty($contextIds)) return;
+        $stmt = $this->db->prepare("INSERT INTO gift_contexts (gift_id, context_id) VALUES (?, ?)");
+        foreach (array_unique($contextIds) as $cid) {
+            $stmt->execute([$giftId, $cid]);
+        }
+    }
+
+    public function updateImageUrl(int $id, ?string $imageUrl): void {
+        $stmt = $this->db->prepare("UPDATE gifts SET image_url = ? WHERE id = ?");
+        $stmt->execute([$imageUrl, $id]);
+    }
+
+    public function findByIdRaw(int $id): ?Gift {
+        $stmt = $this->db->prepare(
+            "SELECT g.*, c.name AS category_name, b.name AS brand_name
+             FROM gifts g
+             LEFT JOIN categories c ON g.category_id = c.id
+             LEFT JOIN brands b ON g.brand_id = b.id
+             WHERE g.id = ?"
+        );
+        $stmt->execute([$id]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row ? $this->hydrate($row) : null;
+    }
 }

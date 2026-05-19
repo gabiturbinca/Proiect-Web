@@ -14,6 +14,10 @@ require_once __DIR__ . '/../config/Container.php';
 $container = new Container();
 $container->factory(PDO::class, fn() => Database::getInstance()->getConnection());
 $container->factory(JwtService::class, fn() => new JwtService($_ENV['JWT_SECRET']));
+$container->factory(ImageStorage::class, fn() => new ImageStorage(
+    diskPath:   __DIR__ . '/uploads/gifts',
+    publicPath: '/uploads/gifts',
+));
 $container->instance(Container::class, $container);
 $router = new Router($container);
 
