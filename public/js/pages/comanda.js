@@ -8,21 +8,10 @@ async function getGift(id) {
     return rez.success;
 }
 
-function humanize(key) {
-    return key.replace(/_/g, ' ').replace(/^./, c => c.toUpperCase());
-}
-
-function createSpecLine(key, value) {
-    const tpl = document.getElementById('gift__spec');
-    const node = tpl.content.firstElementChild.cloneNode(true);
-    node.querySelector('.gift__spec__label').textContent = `${humanize(key)}: `;
-    node.querySelector('.gift__spec__value').textContent = String(value);
-    return node;
-}
 
 function buildGiftCard(gift) {
-    const tpl = document.getElementById('gift__card');
-    const card = tpl.content.cloneNode(true);
+    const template = document.getElementById('gift__card');
+    const card = template.content.cloneNode(true);
 
     card.querySelector('.gift__title').textContent = gift.name;
 
@@ -35,13 +24,6 @@ function buildGiftCard(gift) {
     card.querySelector('.gift__brand').textContent = gift.brand_name ?? '-';
     card.querySelector('.gift__category').textContent = gift.category_name ?? '-';
 
-    const specsBox = card.querySelector('.gift__specs');
-    if (gift.specifications) {
-        for (const [key, value] of Object.entries(gift.specifications)) {
-            specsBox.append(createSpecLine(key, value));
-        }
-    }
-
     const tagsBox = card.querySelector('.gift__tags');
     if (gift.tags) {
         for (const tag of gift.tags) {
@@ -50,10 +32,6 @@ function buildGiftCard(gift) {
             tagsBox.append(p);
         }
     }
-
-    card.querySelector('#send__gift').addEventListener('click', () => {
-        window.location.href = `/comanda.php?gift_id=${giftId}`;
-    });
 
     return card;
 }
@@ -66,6 +44,7 @@ async function renderGift() {
     }
     try {
         const gift = await getGift(giftId);
+        console.log(gift)
         container.replaceChildren(buildGiftCard(gift));
     } catch (err) {
         console.error(err);
@@ -74,4 +53,3 @@ async function renderGift() {
 }
 
 renderGift();
-

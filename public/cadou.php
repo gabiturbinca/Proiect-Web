@@ -4,7 +4,7 @@
     $page_js = 'cadou';
     require __DIR__ . '/../templates/header.php';
 ?>
-
+    
     <template id="gift__card">
         <h1 class="gift__title"></h1>
 
