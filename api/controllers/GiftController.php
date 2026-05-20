@@ -6,7 +6,11 @@ class GiftController {
     public function show($id): GiftDTO {
         return $this->giftService->getGiftById($id);
     }
-
+    public function showRelated($id): array {
+        $elemNumber = (int) ($_GET['elemNumber'] ?? 10);
+        $pageNumber = (int) ($_GET['pageNumber'] ?? 1);
+        return $this->giftService->getRelatedGiftsById($id, $elemNumber, $pageNumber);
+    }
     public function index(): array {
         $elemNumber = (int) ($_GET['elemNumber'] ?? 10);
         $pageNumber = (int) ($_GET['pageNumber'] ?? 1);

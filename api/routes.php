@@ -1,6 +1,17 @@
 <?php
 
 
+//pentru export, e folosit ca sa dai import 
+$router->get("/api/admin/export/gifts", [AdminExportController::class, "gifts"],
+ [AuthMiddleware::class, AdminMiddleware::class]);
+$router->get("/api/admin/export/categories", [AdminExportController::class, "categories"],
+ [AuthMiddleware::class, AdminMiddleware::class]);
+
+//mai trebuie facut acelasi lucru pentru import
+$router->post("/api/admin/import/gifts", [AdminImportController::class, "gifts"],
+[AuthMiddleware::class, CsrfMiddleware::class, AdminMiddleware::class]);
+$router->post("/api/admin/import/categories", [AdminImportController::class, "categories"],
+[AuthMiddleware::class, CsrfMiddleware::class, AdminMiddleware::class]);
 
 // for reports
 $router->get("/api/admin/reports", [AdminReportController::class, "generate"],
@@ -24,7 +35,7 @@ $router->get("/api/gifts/recommend", [RecommendationController::class, "recommen
 $router->get("/api/gifts", [GiftController::class, "index"]);
 $router->get("/api/gifts/{id}", [GiftController::class, "show"]);
 $router->get("/api/gifts/category/{id}",[GiftController::class, "indexByCategory"]);
-
+$router->get("/api/gifts/{id}/related", [GiftController::class, "showRelated"]);
 //for categories
 
 $router->get("/api/categories", [CategoryController::class, "index"]);
