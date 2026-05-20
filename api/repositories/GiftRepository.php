@@ -292,4 +292,48 @@ class GiftRepository {
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         return $row ? $this->hydrate($row) : null;
     }
+
+    public function findAllExport() : array {
+        $stmt = $this->db->query(
+            "SELECT * FROM gifts ORDER BY id"
+        );
+        $gifts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $res = array_map($this->hydrate(...), $gifts);
+        $this->loadTags($res);
+        $this->loadCircumstanceIds($res);
+        $this->loadContextIds($res);
+        return $res;
+    }
+
+    public function findRelated(int $id, $elemNumber, $offset) : array {
+        $stmt = $this->db->prepare(
+            "SELECT DISTINCT g.*, c.name AS category_name, b.name AS brand_name
+            FROM gifts g
+            JOIN categories c ON g.category_id = c.id
+            LEFT JOIN brands b ON g.brand_id = b.id
+            WHERE c.is_active = true
+            AND g.id != ?
+            AND EXISTS (
+            SELECT 1 FROM gift_relations
+            WHERE (gift_id = ? AND related_gift_id = g.id)
+            OR (related_gift_id = ? AND gift_id = g.id)
+           )
+         ORDER BY g.created_at DESC
+         LIMIT ? OFFSET ?"
+        );
+        $stmt->execute([$id, $id, $id, $elemNumber, $offset]);
+        $gifts = array_map($this->hydrate(...), $stmt->fetchAll(PDO::FETCH_ASSOC));
+        return $gifts;
+    }
+
+    public function getRelatedCount(int $id) :int {
+        $stmt=$this->db->prepare(
+            "SELECT COUNT(*) FROM (
+            SELECT gift_id FROM gift_relations WHERE related_gift_id = ?
+            UNION
+            SELECT related_gift_id FROM gift_relations WHERE gift_id = ?) as rl
+        ");
+        $stmt->execute([$id, $id]);
+        return (int)$stmt->fetchColumn();
+    }
 }

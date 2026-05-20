@@ -104,6 +104,13 @@ class GiftService {
         $this->giftRepository->updateImageUrl($id, null);
         return $this->getGiftById($id);
     }
+    public function getRelatedGiftsById($id, $elemNumber, $pageNumber) : array {
+        $offset = ($pageNumber - 1) * $elemNumber;
+        return [
+            'gifts' => array_map(fn(Gift $g) => $this->toDTO($g), $this->giftRepository->findRelated($id, $elemNumber, $offset)),
+            'gifts_count' => $this->giftRepository->getRelatedCount($id),
+        ];
+    }
 
     private function toDTO(Gift $g): GiftDTO {
         return new GiftDTO(
