@@ -1,5 +1,11 @@
 <?php
 
+
+
+// for reports
+$router->get("/api/admin/reports", [AdminReportController::class, "generate"],
+    [AuthMiddleware::class, AdminMiddleware::class]);
+
 //orders for userls
 
 $router->post("/api/orders", [OrderController::class,"create"], [AuthMiddleware::class, CsrfMiddleware::class]);

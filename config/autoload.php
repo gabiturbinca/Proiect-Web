@@ -1,5 +1,5 @@
 <?php
-
+require_once __DIR__ . '/../vendor/autoload.php';
 spl_autoload_register(function ($class) {
     $paths = [
         __DIR__ . '/../api/controllers/',
@@ -9,6 +9,7 @@ spl_autoload_register(function ($class) {
         __DIR__ . '/../api/models/',
         __DIR__ . '/../api/middleware/',
         __DIR__ . '/../api/services/scoring/',
+        __DIR__ . '/../api/services/reports/',
         __DIR__ . '/../config/',
         __DIR__ . '/../utils/',
         __DIR__ . '/../utils/exceptions/',
