@@ -8,40 +8,13 @@ toggle?.addEventListener('click', () => {
 });
 
 
-const URL= "/api/auth/me";
-
-async function isLoggedIn(){
-  try{
-     const res = await fetch(URL);
-     return res.ok;
-  }
-  catch{
-    return false;
-  }
-}
-
-async function changeNavbar()
-{
-   if(!(await isLoggedIn())) return;
-   
-    document.getElementById("navbara1").textContent = "Comenzile mele";
-    document.getElementById("navbara1").href="/comenzileMele.php";
-
-    document.getElementById("navbara2").textContent = "Cauta cadou";
-    document.getElementById("navbara2").href="/recomandare.php";
-
-    document.getElementById("navbara3").textContent = "Logout";
-    document.getElementById("navbara3").href="#";
-}
-
-changeNavbar();
-
-
 const logout = document.getElementById("navbara3");
-logout.addEventListener("click", async (e) => {
-  e.preventDefault();                       
-  await fetch("/api/auth/logout",
-     { method: "POST" }
-    );
-  window.location.href = "/home.php";      
-});
+if(document.getElementById("navbara3").textContent=="Logout"){
+    logout.addEventListener("click", async (e) => {
+    e.preventDefault();                       
+    await fetch("/api/auth/logout",
+      { method: "POST" }
+      );
+    window.location.href = "/home.php";      
+  });
+}
