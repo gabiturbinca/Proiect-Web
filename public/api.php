@@ -27,7 +27,10 @@ $method = $_SERVER['REQUEST_METHOD'];
 $uri = $_SERVER['REQUEST_URI'];
 try {
     $result = $router->dispatch($method, $uri);
-    Response::success($result);
+    if($result instanceof RawResponse)
+        $result->send();
+    else
+        Response::success($result);
 } catch (Throwable $e) {
     ExceptionHandler::handleException($e);
 }

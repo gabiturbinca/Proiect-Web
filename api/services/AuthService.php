@@ -44,6 +44,7 @@ class AuthService {
             'role' => $user->getUserRole(),
             'username' => $user->getUsername(),
         ]);
+        CsrfService::putCookie(CsrfService::generateToken());
         return [
             'token' => $token,
             'user' => new UserDTO(
@@ -53,6 +54,5 @@ class AuthService {
                 $user->getUserRole(),
             ),
         ];
-
     }
 }
