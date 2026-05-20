@@ -9,12 +9,10 @@ toggle?.addEventListener('click', () => {
 
 
 const logout = document.getElementById("navbara3");
-if(document.getElementById("navbara3").textContent=="Logout"){
+if(logout && logout.textContent == "Logout"){
     logout.addEventListener("click", async (e) => {
-    e.preventDefault();                       
-    await fetch("/api/auth/logout",
-      { method: "POST" }
-      );
-    window.location.href = "/home.php";      
+    e.preventDefault();
+    await apiFetch("/api/auth/logout", { method: "POST" });
+    window.location.href = "/home.php";
   });
 }

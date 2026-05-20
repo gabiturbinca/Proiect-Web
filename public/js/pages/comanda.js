@@ -2,7 +2,7 @@ const params = new URLSearchParams(window.location.search);
 const giftId = params.get('gift_id');
 
 async function getGift(id) {
-    const res = await fetch(`/api/gifts/${id}`);
+    const res = await apiFetch(`/api/gifts/${id}`);
     if (!res.ok) throw new Error("Couldn't fetch the gift!");
     const rez = await res.json();
     return rez.success;
@@ -69,7 +69,7 @@ form.addEventListener("submit", async (e) => {
 
     formObject.gift_id= giftId;
     try{
-        const sendCommand= await fetch("/api/orders",{
+        const sendCommand= await apiFetch("/api/orders",{
             method:"POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formObject),

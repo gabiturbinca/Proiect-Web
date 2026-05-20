@@ -12,7 +12,7 @@ let totalPages = 1;
 
 async function getAllUsers(){
     const URL = "/api/users";
-    const res = await fetch(URL);
+    const res = await apiFetch(URL);
     if(!res.ok){
         throw new Error("Error fetching this info");
     }
@@ -24,7 +24,7 @@ async function getAllUsers(){
 
 async function getGifts(page){
     const URL = `/api/gifts?elemNumber=${elemNumber}&pageNumber=${page}`;
-    const res = await fetch(URL);
+    const res = await apiFetch(URL);
     if(!res.ok){
         throw new Error("Error fetching this info");
     }

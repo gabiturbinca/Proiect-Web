@@ -1,7 +1,7 @@
 const FILTERS_URL="/api/forms";
 
 async function getFilters(){
-      const response = await fetch(FILTERS_URL);
+      const response = await apiFetch(FILTERS_URL);
       if(!response.ok)
           throw new Error(`Couldn't find the filters ${response.status}`);
 

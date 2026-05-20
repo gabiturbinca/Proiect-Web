@@ -6,7 +6,7 @@ let currentPage = 1;
 
 async function getCommands(page){
     const URL=`/api/orders?pageNumber=${page}&elemNumber=${perPage}`;
-    const res = await fetch(URL);
+    const res = await apiFetch(URL);
     if(!res.ok){
         throw new Error("Couldn't fetch the user commands");
     }

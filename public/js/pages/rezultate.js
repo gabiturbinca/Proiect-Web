@@ -5,10 +5,10 @@ let currentPage=1;
 
 async function getGifts(page){
     let CATEGORIES_GIFTS_URL=`/api/gifts/category/${categoryId}?pageNumber=${page}&elemNumber=${perPage}`;
-    const response = await fetch(CATEGORIES_GIFTS_URL);
+    const response = await apiFetch(CATEGORIES_GIFTS_URL);
     if(!response.ok){
         let API_FORM=`api/gifts/recommend?pageNumber=${page}&elemNumber=${perPage}`;
-        const response1 = await fetch(API_FORM);
+        const response1 = await apiFetch(API_FORM);
         if(!response1.ok){
              throw new Error("Couldn't fetch the gifts!");
         }

@@ -31,9 +31,10 @@
         </div>
     </footer>
 
-    <script src="/js/main.js" defer></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/main.js"></script>
      <?php if($page_js): ?>
-        <script src="/js/pages/<?= htmlspecialchars($page_js)?>.js"> </script>
+        <script src="/js/pages/<?= htmlspecialchars($page_js)?>.js"></script>
     <?php endif; ?>
 </body>
 </html>

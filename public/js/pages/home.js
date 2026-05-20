@@ -1,7 +1,7 @@
 const CATEGORIES_URL="/api/categories-short";
 
 async function getCategories() {
-  const response = await fetch(CATEGORIES_URL);
+  const response = await apiFetch(CATEGORIES_URL);
   if (!response.ok) {
     throw new Error(`Failed to load categories: ${response.status}`);
   }
