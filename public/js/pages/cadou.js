@@ -6,6 +6,13 @@ const nextBtn = document.getElementById("btn__next");
 const prevBtnComm = document.getElementById("btn__prev_comm");
 const nextBtnComm = document.getElementById("btn__next_comm");
 
+const reviewForm = document.getElementById("review__form");
+const cancelEditBtn = document.getElementById("btn__cancel__edit");
+const submitReviewBtn = document.getElementById("btn__submit__review");
+const reviewFormHeading = document.getElementById("review_form__heading");
+const reviewMessage = document.getElementById("message__review");
+const currentUsername = reviewForm ? reviewForm.dataset.username : null;
+
 const elemNumber = 5;
 let currentPage = 1;
 
@@ -32,10 +39,38 @@ async function getReviews(id, page){
     if(!res.ok)
         throw new Error("Couldn't fetch the reviews!");
     const rez = await res.json();
-    console.log(rez.success);
     return rez.success;
 
 }
+
+async function addComment(id, data) {
+    const res = await apiFetch(`/api/gifts/${id}/reviews`, {
+        method:"POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+    });
+    const rez = await res.json();
+    return { ok: res.ok, body: rez };
+}
+
+async function updateComment(id, data) {
+    const res = await apiFetch(`/api/reviews/${id}`, {
+        method:"PUT",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+    });
+    const rez = await res.json();
+    return { ok: res.ok, body: rez };
+}
+
+async function deleteComment(id) {
+    const res = await apiFetch(`/api/reviews/${id}`, {
+        method:"DELETE",
+    });
+    const rez = await res.json();
+    return { ok: res.ok, body: rez };
+}
+
 function humanize(key) {
     return key.replace(/_/g, ' ').replace(/^./, c => c.toUpperCase());
 }
@@ -106,46 +141,103 @@ function buildRelatedGiftsCard(gift){
 function buildReviews(review){
     const template = document.getElementById("review");
     const card = template.content.firstElementChild.cloneNode(true);
+    card.dataset.reviewId = review.id;
     card.querySelector('.reviewer_name').textContent=review.username;
     card.querySelector('.comment').textContent=review.comment;
-    
+
     const rating = Math.round(review.rating * 2);
     const idRating = "rating" + rating;
     const inputs = card.querySelectorAll('.rate input');
-    const labels = card.querySelectorAll('.rate label');
     inputs.forEach(input => {
         input.name = "rating_" + review.id;
 
         const oldIdInput = input.id;
         const newId = oldIdInput + "_" + review.id;
-        input.id= newId;
-        const associatedFor=document.querySelector(`label[for=${oldIdInput}]`);
+        input.id = newId;
+        const associatedFor = card.querySelector(`label[for="${oldIdInput}"]`);
         if(associatedFor)
             associatedFor.setAttribute("for", newId);
-         
-        if(oldIdInput==idRating)
-            input.checked=true;
 
+        if(oldIdInput == idRating)
+            input.checked = true;
     });
+
+    if (currentUsername && review.username === currentUsername) {
+        const actions = card.querySelector('.review__actions');
+        actions.hidden = false;
+        actions.querySelector('.review__edit').addEventListener('click', () => {
+            enterEditMode(review);
+        });
+        actions.querySelector('.review__delete').addEventListener('click', () => {
+            handleDelete(review.id);
+        });
+    }
+
     return card;
+}
+
+function showReviewMessage(text, kind) {
+    if (!reviewMessage) return;
+    reviewMessage.textContent = text;
+    reviewMessage.classList.remove('error__message', 'success__messsage');
+    if (kind === 'success') reviewMessage.classList.add('success__messsage');
+    if (kind === 'error') reviewMessage.classList.add('error__message');
+}
+
+function clearReviewForm() {
+    if (!reviewForm) return;
+    reviewForm.reset();
+    delete reviewForm.dataset.editId;
+    submitReviewBtn.textContent = 'Trimite recenzia';
+    reviewFormHeading.textContent = 'Lasă o recenzie:';
+    cancelEditBtn.hidden = true;
+    showReviewMessage('', null);
+}
+
+function enterEditMode(review) {
+    if (!reviewForm) return;
+    reviewForm.dataset.editId = String(review.id);
+    submitReviewBtn.textContent = 'Salvează modificarea';
+    reviewFormHeading.textContent = 'Modifică recenzia:';
+    cancelEditBtn.hidden = false;
+
+    reviewForm.querySelector('#comment').value = review.comment ?? '';
+    const ratingValue = Math.round(review.rating * 2);
+    const input = reviewForm.querySelector(`#rating${ratingValue}`);
+    if (input) input.checked = true;
+
+    showReviewMessage('', null);
+    reviewForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+async function handleDelete(reviewId) {
+    if (!confirm('Sigur dorești să ștergi această recenzie?')) return;
+    try {
+        const { ok } = await deleteComment(reviewId);
+        if (!ok) {
+            showReviewMessage('Nu am putut șterge recenzia.', 'error');
+            return;
+        }
+        if (reviewForm && reviewForm.dataset.editId === String(reviewId)) {
+            clearReviewForm();
+        }
+        showReviewMessage('Recenzie ștearsă.', 'success');
+        await renderComments(currentPageReviews);
+    } catch {
+        showReviewMessage('Nu am putut șterge recenzia.', 'error');
+    }
 }
 
 async function renderComments(page){
     const container = document.querySelector(".reviews_container");
     try{
         const {reviews, reviews_count} = await getReviews(giftId,page);
-        const totalPages = Math.ceil(reviews_count/elemNumber);
+        const totalPages = Math.max(1, Math.ceil(reviews_count/elemNumber));
         if(page < 1) return;
-        if(page==1) 
-            prevBtnComm.disabled=true;
-        else
-            prevBtnComm.disabled=false;
-        if(page == totalPages)
-            nextBtnComm.disabled=true;
-        else
-            nextBtnComm.disabled=false;
-        const reviewCards = reviews.map(buildReviews);      
-        container.replaceChildren(...reviewCards);  
+        prevBtnComm.disabled = page <= 1;
+        nextBtnComm.disabled = page >= totalPages;
+        const reviewCards = reviews.map(buildReviews);
+        container.replaceChildren(...reviewCards);
     }
     catch{
         container.innerHTML="<p>Couldn't load reviews!</p>";
@@ -157,7 +249,7 @@ async function renderRelatedGifts(page){
         const {gifts, gifts_count} = await getRelatedGifts(giftId,page);
         const totalPages = Math.ceil(gifts_count/elemNumber);
         if(page < 1) return;
-        if(page==1) 
+        if(page==1)
             prevBtn.disabled=true;
         else
             prevBtn.disabled=false;
@@ -165,8 +257,8 @@ async function renderRelatedGifts(page){
             nextBtn.disabled=true;
         else
             nextBtn.disabled=false;
-        const giftCards = gifts.map(buildRelatedGiftsCard);      
-        container.replaceChildren(...giftCards);    
+        const giftCards = gifts.map(buildRelatedGiftsCard);
+        container.replaceChildren(...giftCards);
     }
     catch{
         container.innerHTML="<p>Couldn't load related presents!</p>";
@@ -214,3 +306,53 @@ nextBtnComm.addEventListener("click", async(e) =>{
     currentPageReviews=+1;
     renderComments(currentPageReviews);
 });
+
+if (reviewForm) {
+    reviewForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(reviewForm);
+        const ratingRaw = formData.get('rating');
+        const comment = (formData.get('comment') ?? '').toString().trim();
+
+        if (ratingRaw === null) {
+            showReviewMessage('Choose a rating before sending.', 'error');
+            return;
+        }
+        if (comment === '') {
+            showReviewMessage('Leave us a comment.', 'error');
+            return;
+        }
+
+        const payload = {
+            rating: Number(ratingRaw) / 2,
+            comment,
+        };
+
+        const editId = reviewForm.dataset.editId;
+        try {
+            const { ok, body } = editId
+                ? await updateComment(editId, payload)
+                : await addComment(giftId, payload);
+
+            if (!ok) {
+                const errMsg = body?.error?.review?.[0]
+                    || body?.error?.rating?.[0]
+                    || body?.error?.comment?.[0]
+                    || (typeof body?.error === 'string' ? body.error : null)
+                    || 'We could not send the review.';
+                showReviewMessage(errMsg, 'error');
+                return;
+            }
+
+            showReviewMessage(editId ? 'Review updated' : 'Review added.', 'success');
+            clearReviewForm();
+            await renderComments(currentPageReviews);
+        } catch {
+            showReviewMessage('Could not send the review.', 'error');
+        }
+    });
+
+    cancelEditBtn.addEventListener('click', () => {
+        clearReviewForm();
+    });
+}
