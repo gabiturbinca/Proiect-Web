@@ -37,7 +37,7 @@
                     <p class="card__title"></p>
                     <p class="card__desc"></p>
                     <span class="btn btn--primary">Vezi cadourile</span>
-                </a>
+                    </a>
             </template>
 
 

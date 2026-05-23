@@ -83,6 +83,23 @@
     flex-wrap: wrap;
 }
 
+
+.related__gifts__container{
+    margin-inline: auto;
+    max-width: var(--container-sm);
+}
+
+.related_gifts, .buttons__pagination{
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+    gap:var(--space-4);
+    margin-top:var(--space-6);
+}
+
+
+
 @media (min-width: 768px){
     .gift__container{
         margin-top:var(--space-12);

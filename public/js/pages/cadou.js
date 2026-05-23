@@ -1,5 +1,9 @@
 const params = new URLSearchParams(window.location.search);
 const giftId = params.get('gift_id');
+const prevBtn = document.getElementById("btn__prev");
+const nextBtn = document.getElementById("btn__next");
+const elemNumber = 5;
+let currentPage = 1;
 
 async function getGift(id) {
     const res = await apiFetch(`/api/gifts/${id}`);
@@ -8,6 +12,13 @@ async function getGift(id) {
     return rez.success;
 }
 
+async function getRelatedGifts(id,page){
+    const res = await apiFetch(`/api/gifts/${id}/related?pageNumber=${page}&elemNumber=${elemNumber}`);
+    if (!res.ok) 
+        throw new Error("Couldn't fetch the related gifts!");
+    const rez = await res.json();
+    return rez.success;
+}
 function humanize(key) {
     return key.replace(/_/g, ' ').replace(/^./, c => c.toUpperCase());
 }
@@ -58,6 +69,46 @@ function buildGiftCard(gift) {
     return card;
 }
 
+
+function buildRelatedGiftsCard(gift){
+    const template = document.getElementById("result__gift");
+    const card = template.content.firstElementChild.cloneNode(true);
+    card.querySelector('.card__title').textContent = gift.name;
+    const img = card.querySelector('.card__image');
+    img.src = gift.image_url;
+    img.alt = gift.name;
+    card.querySelector('.card__description').textContent = "Description : " + gift.description;
+    card.querySelector('.card__price').textContent = "Price : " + gift.price;
+    card.querySelector('.card__brand').textContent = "Brand : " + gift.brand_name;
+    card.querySelector('.card__category').textContent = "Category : " + gift.category_name;
+
+    return card;
+
+}
+
+
+async function renderRelatedGifts(page){
+    const container = document.getElementById("related_gifts");
+    try{
+        const {gifts, gifts_count} = await getRelatedGifts(giftId,page);
+        const totalPages = Math.ceil(gifts_count/elemNumber);
+        if(page < 1) return;
+        if(page==1) 
+            prevBtn.disabled=true;
+        else
+            prevBtn.disabled=false;
+        if(page == totalPages)
+            nextBtn.disabled=true;
+        else
+            nextBtn.disabled=false;
+        const giftCards = gifts.map(buildRelatedGiftsCard);      
+        container.replaceChildren(...giftCards);    
+    }
+    catch{
+        container.innerHTML="<p>Couldn't load related presents!</p>";
+    }
+}
+
 async function renderGift() {
     const container = document.getElementById('gift__container');
     if (!giftId) {
@@ -74,4 +125,16 @@ async function renderGift() {
 }
 
 renderGift();
+
+renderRelatedGifts(currentPage);
+
+prevBtn.addEventListener("click", async(e) =>{
+    currentPage=-1;
+    renderRelatedGifts(currentPage);
+});
+
+nextBtn.addEventListener("click", async(e) =>{
+    currentPage=+1;
+    renderRelatedGifts(currentPage);
+});
 
