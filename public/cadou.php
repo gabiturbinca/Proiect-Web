@@ -41,7 +41,7 @@
     </section>
           
     <section class="related__gifts__container">
-        <h2 class="gift__header">Cadouri similare:</h2>
+        <h2 class="gift__header">Similar gifts:</h2>
           <div id ="related_gifts" class="related_gifts"></div>
           
           <template id="result__gift" class="result__gift">
@@ -52,13 +52,56 @@
                     <p class="card__desc card__brand"></p>
                     <p class="card__desc card__category"></p>
                     <p class="card__desc card__price"></p>
-                    <span class="btn btn--primary">Vezi detalii cadou</span>
+                    <span class="btn btn--primary">See gift details</span>
                 </a>
             </template>
 
             <div class ="buttons__pagination">
                 <button type="button" class="btn btn--accent" id="btn__prev">Prev</button>
                 <button type="button" class="btn btn--accent" id="btn__next">Next</button>
+            </div>
+    </section>
+
+
+    <section class="reviews">
+        <div class="reviews__title">
+            <h2 class="gift__header">Reviews:</h2>
+        </div>
+
+        <div class="add_review"></div>
+
+        <div class="reviews_container"></div>
+
+        <template id="review">
+            <div class="review_card">
+                 <svg width="10" height="10">
+                    <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" />
+                </svg>
+                <p class="reviewer_name"></p>
+
+
+                <fieldset class="rate">
+                    <input type="radio" id="rating10" name="rating" value="10" /><label for="rating10" title="5 stars"></label>
+                    <input type="radio" id="rating9" name="rating" value="9" /><label class="half" for="rating9" title="4 1/2 stars"></label>
+                    <input type="radio" id="rating8" name="rating" value="8" /><label for="rating8" title="4 stars"></label>
+                    <input type="radio" id="rating7" name="rating" value="7" /><label class="half" for="rating7" title="3 1/2 stars"></label>
+                    <input type="radio" id="rating6" name="rating" value="6" /><label for="rating6" title="3 stars"></label>
+                    <input type="radio" id="rating5" name="rating" value="5" /><label class="half" for="rating5" title="2 1/2 stars"></label>
+                    <input type="radio" id="rating4" name="rating" value="4" /><label for="rating4" title="2 stars"></label>
+                    <input type="radio" id="rating3" name="rating" value="3" /><label class="half" for="rating3" title="1 1/2 stars"></label>
+                    <input type="radio" id="rating2" name="rating" value="2" /><label for="rating2" title="1 star"></label>
+                    <input type="radio" id="rating1" name="rating" value="1" /><label class="half" for="rating1" title="1/2 star"></label>
+                </fieldset>
+
+                <p class="comment"></p>
+            </div>
+           
+
+        </template>
+
+            <div class ="buttons__pagination">
+                <button type="button" class="btn btn--accent" id="btn__prev_comm">Prev</button>
+                <button type="button" class="btn btn--accent" id="btn__next_comm">Next</button>
             </div>
     </section>
 
