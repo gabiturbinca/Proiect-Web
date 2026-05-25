@@ -468,6 +468,20 @@ async function renderOrders(page){
         dataBox.innerHTML = "<p>Couldn't fetch the orders. Try again next time!</p>";
     }
 }
+
+async function onEnter(){
+    const dataBox = document.getElementById("admin__data_container");
+    try{
+        const users = await getAllUsers();
+        dataBox.replaceChildren(buildUsersTable(users));
+    }
+    catch(err){
+        console.error(err);
+        dataBox.innerHTML = "<p>Couldn't fetch the users. Try again next time!</p>";
+    }
+}
+
+onEnter();
 usersBtn.addEventListener("click", async (e) => {
     e.preventDefault();
     hidePagination();
@@ -535,4 +549,3 @@ nextBtn.addEventListener("click", async (e) => {
             await renderOrders();
     }
 });
-
