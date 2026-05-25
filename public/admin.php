@@ -21,6 +21,7 @@
              <button class ="btn btn--primary" type="button" id="gifts">Gifts</button>
              <button class ="btn btn--primary" type="button" id="orders">Orders</button>
              <button class ="btn btn--primary" type="button" id="addGift">Add a new gift</button>
+             <button class ="btn btn--accent admin__buttons__report" type="button" id="report">Generate report</button>
         </div>
 
         <div id="admin__data_container"></div>
@@ -108,6 +109,48 @@
                 </td>
                 <td class="change__button"><button type="button" class="btn btn--accent order__change-status-btn" data-orderId="">Change status</button></td>
             </tr>
+        </template>
+
+        <template id="report_form__container">
+            <form id="report_form">
+                <div class="field">
+                    <label for="report_type">Report type</label>
+                    <select id="report_type" name="type" class="report__type-select">
+                        <option value="orders">Orders</option>
+                        <option value="users">Users</option>
+                        <option value="categories">Categories</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="report_from">From</label>
+                    <input type="date" id="report_from" name="from">
+                </div>
+
+                <div class="field">
+                    <label for="report_to">To</label>
+                    <input type="date" id="report_to" name="to">
+                </div>
+
+                <div class="field" id="report__category-field">
+                    <label for="report_category">Category</label>
+                    <select id="report_category" name="category" class="report__category-select">
+                        <option value="">All categories</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="report_format">Format</label>
+                    <select id="report_format" name="format" class="report__format-select">
+                        <option value="pdf">PDF</option>
+                        <option value="html">HTML</option>
+                        <option value="csv">CSV</option>
+                        <option value="json">JSON</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn--primary btn-generate-report">Generate</button>
+            </form>
         </template>
 
         <template id="add_gift__container">

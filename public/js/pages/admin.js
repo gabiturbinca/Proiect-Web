@@ -4,6 +4,7 @@ const prevBtn  = document.getElementById("btn__prev");
 const nextBtn  = document.getElementById("btn__next");
 const ordersBtn = document.getElementById("orders");
 const addGiftBtn=document.getElementById("addGift");
+const reportBtn=document.getElementById("report");
 const paginationBox = document.getElementById("buttons");
 
 const elemNumber = 10;
@@ -236,6 +237,59 @@ function buildGiftsTable(gifts){
     return table;
 }
 
+async function renderReportForm(){
+    const dataBox = document.getElementById("admin__data_container");
+    try{
+        hidePagination();
+        const { categories } = await getFormData();
+
+        const formTpl = document.getElementById("report_form__container");
+        const form = formTpl.content.firstElementChild.cloneNode(true);
+
+        const categorySelect = form.querySelector(".report__category-select");
+        categories.forEach(cat => {
+            const opt = document.createElement("option");
+            opt.value = cat.id;
+            opt.textContent = cat.name;
+            categorySelect.append(opt);
+        });
+
+        const typeSelect = form.querySelector(".report__type-select");
+        const categoryField = form.querySelector("#report__category-field");
+        const syncCategoryVisibility = () => {
+            if(typeSelect.value === "orders"){
+                categoryField.classList.remove("invisible");
+            } else {
+                categoryField.classList.add("invisible");
+                categorySelect.value = "";
+            }
+        };
+        typeSelect.addEventListener("change", syncCategoryVisibility);
+        syncCategoryVisibility();
+
+        dataBox.replaceChildren(form);
+
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const params = new URLSearchParams();
+            params.set("type", typeSelect.value);
+            params.set("format", form.querySelector(".report__format-select").value);
+            const from = form.querySelector("#report_from").value;
+            const to = form.querySelector("#report_to").value;
+            if(from) params.set("from", from);
+            if(to) params.set("to", to);
+            if(typeSelect.value === "orders" && categorySelect.value){
+                params.set("category", categorySelect.value);
+            }
+            window.open(`/api/admin/reports?${params.toString()}`, "_blank");
+        });
+    }
+    catch(err){
+        console.error(err);
+        dataBox.innerHTML = "<p>Couldn't load the report form!</p>";
+    }
+}
+
 function showPagination(){
     paginationBox.classList.remove("invisible");
     paginationBox.classList.add("visible");
@@ -421,6 +475,13 @@ addGiftBtn.addEventListener("click", async(e) => {
     onGifts=false; onOrders=true;
     hidePagination();
     await renderGiftForm();
+});
+
+reportBtn.addEventListener("click", async(e) => {
+    e.preventDefault();
+    onGifts=false; onOrders=false;
+    hidePagination();
+    await renderReportForm();
 });
 
 prevBtn.addEventListener("click", async (e) => {
