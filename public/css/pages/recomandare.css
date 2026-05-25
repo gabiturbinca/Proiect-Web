@@ -1,0 +1,196 @@
+
+
+.form__cadouri {
+  max-width: var(--container-md);
+  margin-inline: auto;
+  padding: var(--space-8) var(--space-6);
+}
+
+
+
+#form__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-12);
+  text-align: center;
+}
+
+#form__header h1 {
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--color-primary-600);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+#form__header h2 {
+  font-size: var(--text-2xl);
+  font-weight: var(--font-bold);
+  line-height: 1.15;
+  color: var(--color-primary-900);
+  max-width: 28ch;
+}
+
+
+.form__cadouri form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.quiz__group {
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.quiz__legend {
+  padding: 0;
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  color: var(--color-primary-900);
+}
+
+
+.quiz__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.field {
+  flex: 1 1 200px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.field__label {
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--color-text-subtle);
+}
+
+.field__input {
+  padding: 0.75rem var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  transition: border-color var(--transition-fast),
+              box-shadow var(--transition-fast);
+}
+
+.field__input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.field__input:hover {
+  border-color: var(--color-primary-300);
+}
+
+.field__input:focus-visible {
+  outline: none;
+  border-color: var(--color-primary-500);
+  box-shadow: var(--focus-ring);
+}
+
+
+.quiz__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.quiz__checkbox {
+  display: inline-block;
+}
+
+.checkbox__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.checkbox__label {
+  display: inline-block;
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background-color: var(--color-surface);
+  color: var(--color-text-subtle);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  cursor: pointer;
+  user-select: none;
+  transition: background-color var(--transition-fast),
+              color var(--transition-fast),
+              border-color var(--transition-fast),
+              box-shadow var(--transition-fast);
+}
+
+.checkbox__label:hover {
+  border-color: var(--color-primary-300);
+  color: var(--color-primary-700);
+}
+
+.checkbox__input:checked + .checkbox__label {
+  background-color: var(--color-primary-600);
+  border-color: var(--color-primary-600);
+  color: var(--color-text-on-primary);
+}
+
+.checkbox__input:checked + .checkbox__label:hover {
+  background-color: var(--color-primary-700);
+  border-color: var(--color-primary-700);
+  color: var(--color-text-on-primary);
+}
+
+.checkbox__input:focus-visible + .checkbox__label {
+  box-shadow: var(--focus-ring);
+}
+
+
+.form__cadouri form > .btn {
+  align-self: flex-start;
+  margin-top: var(--space-4);
+  min-width: 200px;
+}
+
+
+@media (min-width: 768px) {
+  .form__cadouri {
+    max-width: var(--container-lg);
+    padding: var(--space-12) var(--space-8);
+  }
+
+  #form__header h2 {
+    font-size: 2.5rem;
+  }
+
+  .form__cadouri form {
+    gap: var(--space-12);
+  }
+
+  .form__cadouri form > .btn {
+    align-self: center;
+  }
+}
+
+
+@media (min-width: 1024px) {
+  .form__cadouri {
+    padding: var(--space-16) var(--space-8);
+  }
+}

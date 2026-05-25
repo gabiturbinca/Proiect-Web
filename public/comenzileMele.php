@@ -1,0 +1,34 @@
+<?php
+    $page_title = 'Comenzile mele';
+    $page_css   = 'comenzileMele';
+    $page_js = 'comenzileMele';
+    require __DIR__ . '/../templates/header.php';
+?>
+    <section class="my_commands">
+        <div class="my_commands__header">
+            <h1>Comenzile mele: </h1>
+        </div>
+
+        <template id="commands_template">
+            <div class="card" id="card__command" data-orderId="">
+                <p class="card__desc"><span class="card__label">Gift:</span> <span class="card__gift_name"></span></p>
+                <p class="card__desc"><span class="card__label">Date:</span> <span class="card__time"></span></p>
+                <p class="card__desc"><span class="card__label">Address:</span> <span class="card__address"></span></p>
+                <p class="card__desc"><span class="card__label">Description:</span> <span class="card__description"></span></p>
+                <p class="card__desc"><span class="card__label">Quantity:</span> <span class="card__quantity"></span></p>
+                <p class="card__desc"><span class="card__label">Status:</span> <span class="card__status"></span></p>
+                <button class="btn btn--accent btn-cancel-order">Cancel order</button>
+            </div>
+        </template>
+
+        <div class="commands_cards" id="commands_cards"></div>
+
+        <div class ="buttons__pagination">
+            <button type="button" class="btn btn--accent" id="btn__prev">Prev</button>
+            <button type="button" class="btn btn--accent" id="btn__next">Next</button>
+         </div>
+
+    </section>
+<?php
+    require __DIR__ . '/../templates/footer.php';
+?>

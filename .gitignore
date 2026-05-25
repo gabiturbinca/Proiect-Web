@@ -1,2 +1,5 @@
 recs.txt
 enunt.txt
+.env
+test_*.php
+vendor/
