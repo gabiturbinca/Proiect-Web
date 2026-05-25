@@ -274,7 +274,7 @@ label:hover ~ input:checked ~ label /* highlight previous selected stars */ { co
 .review__login__link {
     color: var(--color-primary-600);
     font-weight: var(--font-semibold);
-    text-decoration: underline;
+    text-decoration: none;
     transition: color var(--transition-fast);
 }
 

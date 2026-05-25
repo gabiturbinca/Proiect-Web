@@ -62,6 +62,23 @@
             </table>
         </template>
 
+        <template id="orders__container">
+            <table class="admin__table">
+                <thead>
+                    <tr>
+                        <th>Gift name</th>
+                        <th>Recipient</th>
+                        <th>Ordered by</th>
+                        <th>Address</th>
+                        <th>Quantity</th>
+                        <th>Status</th>
+                        <th>Choose new status</th>
+                        <th>Submit</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </template>
 
         <template id="gift__row">
             <tr>
@@ -69,17 +86,28 @@
                 <td class="cell__description"></td>
                 <td class="cell__price"></td>
                 <td class="cell__score"></td>
-                <td class="cell__delete"><button type="button" class="btn btn--accent gift__delete-btn">Delete</button></td>
+                <td class="cell__delete"><button type="button" class="btn btn--accent gift__delete-btn" data-giftId="">Delete</button></td>
             </tr>
         </template>
 
-        <template id="order__container">
-            <p class="card__desc"><span class="card__label">Cadou:</span> <span class="card__gift_name"></span></p>
-            <p class="card__desc"><span class="card__label">Data:</span> <span class="card__time"></span></p>
-            <p class="card__desc"><span class="card__label">Adresă:</span> <span class="card__address"></span></p>
-            <p class="card__desc"><span class="card__label">Descriere:</span> <span class="card__description"></span></p>
-            <p class="card__desc"><span class="card__label">Cantitate:</span> <span class="card__quantity"></span></p>
-            <p class="card__desc"><span class="card__label">Status:</span> <span class="card__status"></span></p>
+        <template id="order__row">
+            <tr>
+                <td class="cell__gift_name"></td>
+                <td class="cell__recipient"></td>
+                <td class="cell_user"></td>
+                <td class="cell__address"></td>
+                <td class="cell__quantity"></td>
+                <td class="cell__status"></td>
+                <td class="cell__change_status">
+                    <select class="order__status-select" data-orderId="">
+                        <option value="placed">placed</option>
+                        <option value="shipped">shipped</option>
+                        <option value="delivered">delivered</option>
+                        <option value="cancelled">cancelled</option>
+                    </select>
+                </td>
+                <td class="change__button"><button type="button" class="btn btn--accent order__change-status-btn" data-orderId="">Change status</button></td>
+            </tr>
         </template>
 
         <template id="add_gift__container">
@@ -111,7 +139,6 @@
 
         <div id="buttons" class="invisible">
             <button type="button" class="btn btn--accent" id="btn__prev">Prev</button>
-            <span id="page__indicator"></span>
             <button type="button" class="btn btn--accent" id="btn__next">Next</button>
          </div>
     </div>
