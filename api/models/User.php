@@ -7,7 +7,20 @@ class User {
     private UserRole $user_role;
     private ?string $preferences_json;
     private string $created_at;
-
+    private bool $must_change_password;
+    private int $password_changed_at;
+    public function setPasswordChangedAt(int $password_changed): void {
+        $this->password_changed_at = $password_changed;
+    }
+    public function getPasswordChangedAt(): int {
+        return $this->password_changed_at;
+    }
+    public function setMustChangePassword(bool $must_change): void {
+        $this->must_change_password = $must_change;
+    }
+    public function getMustChangePassword(): bool {
+        return $this->must_change_password;
+    }
     public function getUsername(): string {
         return $this->username;
     }

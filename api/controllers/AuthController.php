@@ -12,7 +12,7 @@ class AuthController {
        return $this->authService->register($req->toRegisterUserDTO());
     }
 
-    public function login() :UserDTO {
+    public function login(): array {
 
         $input = json_decode(file_get_contents('php://input'), true) ?? [];
         $data = Validator::make($input, LoginRequestDTO::RULES)->validate();
@@ -28,7 +28,29 @@ class AuthController {
             'httponly' => true,
             'samesite' => 'Lax'
         ]);
-        return $result['user'];
+        return [
+            'user' => $result['user'],
+            'must_change_password' => $result['must_change_password'],
+        ];
+    }
+    public function changePassword() : array {
+        $current = $this->container->get(CurrentUserDTO::class);
+        $input = json_decode(file_get_contents('php://input'), true) ?? [];
+        $data = Validator::make($input, ChangePasswordRequestDTO::RULES)->validate();
+        $dto = new ChangePasswordRequestDTO(
+            oldPassword: $data['current_password'],
+            newPassword: $data['new_password'],
+            newPasswordConfirmation: $data['new_password_confirmation']
+        );
+        $toki = $this->authService->changePassword($current->id, $dto);
+        setcookie('auth_token', $toki['token'], [
+            'expires' =>time() + 3600,
+            'path' => '/',
+            'secure' => ($_ENV['APP_ENV'] ?? 'production') === 'production',
+            'httponly' => true,
+            'samesite' => 'Lax'
+        ]);
+        return ['message' => 'Password succesfuly updated!'];
     }
     public function me(): CurrentUserDTO {
         $current = $this->container->get(CurrentUserDTO::class);
@@ -49,5 +71,18 @@ class AuthController {
             'samesite' => 'Lax',
         ]);
         return ['message' => 'Logged out'];
+    }
+
+    public function requestReset(): array {
+        $input = json_decode(file_get_contents('php://input'), true) ?? [];
+        $data = Validator::make($input, ResetAsUnkownDTO::RULES)->validate();
+
+        $dto = new ResetAsUnkownDTO(
+            identifier: $data['identifier'],
+            message:    $data['message'] ?? null,
+        );
+        $this->authService->registerResetRequest($dto);
+
+        return ['message' => 'If the account exists, a request to change the password has been submitted'];
     }
 }
