@@ -82,9 +82,9 @@ async function renderFilters(){
   }
   catch(error){
     console.error(error);
-    categoryBox.innerHTML='<p>Nu am putut incarca categoriile!</p>';
-    brandBox.innerHTML='<p>Nu am putut incarca brandurile!</p>';
-    tagBox.innerHTML='<p>Nu am putut incarca tagurile!</p>';
+    categoryBox.innerHTML='<p>Could not load categories!</p>';
+    brandBox.innerHTML='<p>Could not load brands</p>';
+    tagBox.innerHTML='<p>Could not load tags!</p>';
   }
 }
 

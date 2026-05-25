@@ -73,7 +73,7 @@ async function renderOrdersPage(page){
        });
     }
     catch{
-        commandBox.innerHTML='<p>Nu am putut incarca comenzile dvs!</p>';
+        commandBox.innerHTML='<p>We could not load you orders!</p>';
     }
 }
 

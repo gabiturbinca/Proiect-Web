@@ -11,8 +11,8 @@
 
 <section class="admin__container">
     <div class="admin__title">
-        <h1>Pagina de admin:</h1>
-        <h2>Observă activitatea utilizatorilor, comenzile lor și cadourile din aplicație.</h2>
+        <h1>Admin page:</h1>
+        <h2>See your users' activity, their orders and the gifts in the app.</h2>
     </div>
 
     <div id ="admin__container_mini">
@@ -57,6 +57,7 @@
                         <th>Price</th>
                         <th>Score</th>
                         <th>Change properties</th>
+                        <th>Add image</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -88,6 +89,11 @@
                 <td class="cell__price"></td>
                 <td class="cell__score"></td>
                 <td class="cell__change"><button type="button" class="btn btn--accent gift__change-btn" data-giftId="">Modify</button></td>
+                <td class="cell__image">
+                    <label class="btn btn--accent gift__image-label"> Add image
+                        <input type="file" accept="image/*" class="gift__image-input" hidden>
+                    </label>
+                </td>
             </tr>
         </template>
 
@@ -216,7 +222,7 @@
                     </div>
                 </fieldset>
 
-<!-- 
+
                 <fieldset class="form__group">
                     <legend class="form__legend">Choose the circumstances the gift would be good for</legend>
 
@@ -241,7 +247,7 @@
                             </article>
                         </template>
                     </div>
-                </fieldset> -->
+                </fieldset>
                 
                 <button type="submit" class="btn btn--primary btn-add-gift">Add gift</button>
             </form>

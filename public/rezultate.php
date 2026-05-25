@@ -6,8 +6,8 @@
 ?>
     <section class="recs__gifts">
           <div id="result__header">
-            <h1>Cadouri:</h1>
-            <h2>Uite câteva recomandări de cadouri pe gusturile tale:</h2>
+            <h1>Gifts:</h1>
+            <h2>Look through some gifts for your taste:</h2>
          </div>
         
          <template id="result__gift">
@@ -16,7 +16,7 @@
                     <p class="card__title"></p>
                     <p class="card__desc card__desc__gift"></p>
                     <p class="card__desc card__price__gift"></p>
-                    <span class="btn btn--primary">Vezi detalii cadou</span>
+                    <span class="btn btn--primary">See gift details</span>
                 </a>
             </template>
             

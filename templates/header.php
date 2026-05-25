@@ -46,8 +46,8 @@
                                 <?php
                             }
                         ?>
-                        <li id="navbar1"><a href="/recomandare.php" id="navbara1">Caută cadou</a></li>
-                        <li id="navbar2"><a href="/comenzileMele.php" id="navbara2">Comenzile mele</a></li>
+                        <li id="navbar1"><a href="/recomandare.php" id="navbara1">Search gift</a></li>
+                        <li id="navbar2"><a href="/comenzileMele.php" id="navbara2">My orders</a></li>
                         <li id="navbar3"><a href="#" id="navbara3">Logout</a></li>
                     </ul>
                  <?php
@@ -55,9 +55,9 @@
             else{
                   ?>
                     <ul id="primary-menu" class="navbar__menu">
-                        <li id="navbar1"><a href="/recomandare.php" id="navbara1">Caută cadou</a></li>
-                        <li id="navbar2"><a href="/login.php" id="navbara2">Logare</a></li>
-                        <li id="navbar3"><a href="/register.php" id="navbara3">Înregistrare</a></li>
+                        <li id="navbar1"><a href="/recomandare.php" id="navbara1">Search gift</a></li>
+                        <li id="navbar2"><a href="/login.php" id="navbara2">Login</a></li>
+                        <li id="navbar3"><a href="/register.php" id="navbara3">Register</a></li>
                     </ul>
                  <?php
             }

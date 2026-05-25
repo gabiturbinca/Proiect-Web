@@ -122,6 +122,8 @@ class GiftService {
             $g->getBrandName(),
             $g->getCategoryName(),
             $g->getTagDtos(),
+            $g->getCircumstanceIds(),
+            $g->getContextIds(),
         );
     }
 }

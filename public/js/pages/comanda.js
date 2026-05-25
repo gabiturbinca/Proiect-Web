@@ -39,7 +39,7 @@ function buildGiftCard(gift) {
 async function renderGift() {
     const container = document.getElementById('gift__container');
     if (!giftId) {
-        container.innerHTML = '<p>Cadou inexistent.</p>';
+        container.innerHTML = '<p>Gift does not exist.</p>';
         return;
     }
     try {
@@ -48,12 +48,11 @@ async function renderGift() {
         container.replaceChildren(buildGiftCard(gift));
     } catch (err) {
         console.error(err);
-        container.innerHTML = '<p>Nu am putut incarca cadoul!</p>';
+        container.innerHTML = '<p>We could not load the gift!</p>';
     }
 }
 
 renderGift();
-
 
 const form = document.getElementById("order__form");
 
@@ -78,19 +77,19 @@ form.addEventListener("submit", async (e) => {
         const message__command = document.getElementById("message__command");
 
         if(sendCommand.ok){
-            message__command.textContent="Comandă plasată cu success. Aveți răbdare până ajunge!";
+            message__command.textContent="Order successful.";
             message__command.classList.remove("error__message");
             message__command.classList.add("success__messsage");
         }
         else{
-            message__command.textContent="Comandă nu a putut fi plasată. Vă rugăm să reîncercați.";
+            message__command.textContent="Order could not be placed. Please try again later!";
             message__command.classList.remove("success__messsage");
             message__command.classList.add("error__message");
         }
         
     }
     catch{
-        console.log("Nu a mers sa trimit cadoul oopsie.");
+        console.log("Error sending the gift");
     }
 });
 

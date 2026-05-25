@@ -8,13 +8,13 @@
     <section class="auth">
         <div class="auth__brand" aria-hidden="true">
             <img src="/images/logo_hero_section.png" alt="" class="auth__brand-logo">
-            <p class="auth__brand-tagline">Asistent digital pentru alegerea cadoului perfect.</p>
+            <p class="auth__brand-tagline">Your digital assistent for finding the perfect gift.</p>
         </div>
 
         <div class="auth__content">
             <div class="auth__header">
-                <h1>Înregistrează-te:</h1>
-                <h2>Fă-ți cont la noi pentru a putea comanda cadouri pentru cei dragi.</h2>
+                <h1>Register:</h1>
+                <h2>Make an account to order gifts for your loved ones.</h2>
             </div>
 
             <form method="POST" action="/home.php" class="auth__form" id="register_form">
@@ -31,20 +31,20 @@
                 </div>
 
                 <div class="auth__field">
-                    <label for="password">Parolă</label>
+                    <label for="password">Password</label>
                     <input id="password" type="password" placeholder="Parola..." name="password" minlength="8" required>
                 </div>
 
 
                 <div class="auth__field">
-                    <label for="password_confirmation">Confirmă parolă</label>
+                    <label for="password_confirmation">Confirm password</label>
                     <input id="password_confirmation" type="password" placeholder="Confirma parola..." name="password_confirmation" minlength="8" required>
                 </div>
 
-                <button type="submit" class="btn btn--primary auth__submit">Înregistrează-te!</button>
+                <button type="submit" class="btn btn--primary auth__submit">Register!</button>
                 <span id="message__register"></span>
                 <p class="auth__alt">
-                    Ai cont deja? <a href="/login.php">Loghează-te</a>
+                    Already have an account? <a href="/login.php">Login</a>
                 </p>
             </form>
         </div>

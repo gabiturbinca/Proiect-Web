@@ -55,7 +55,7 @@ form.addEventListener('submit', async (e) => {
       message_register.classList.remove("success__messsage");
      }
     else{
-       message_register.textContent="V-ați înregistrat cu succes. Puteți merge spre pagina de logare";
+       message_register.textContent="Register successful. Please go to the login page.";
        message_register.classList.add("success__messsage");
        message_email.textContent="";
        message_username.textContent="";

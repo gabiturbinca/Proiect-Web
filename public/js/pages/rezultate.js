@@ -53,7 +53,7 @@ async function renderGiftPage(page){
     }
     catch(err){
         console.error(err);
-        giftBox.innerHTML='<p>Nu am putut incarca cadourile!</p>';
+        giftBox.innerHTML='<p>We could not load the gifts!</p>';
     }
 
 }
