@@ -11,8 +11,8 @@
 
 <section class="admin__container">
     <div class="admin__title">
-        <h1>Pagina de admin:</h1>
-        <h2>Observă activitatea utilizatorilor, comenzile lor și cadourile din aplicație.</h2>
+        <h1>Admin page:</h1>
+        <h2>See your users' activity, their orders and the gifts in the app.</h2>
     </div>
 
     <div id ="admin__container_mini">

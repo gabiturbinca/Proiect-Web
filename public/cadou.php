@@ -15,15 +15,15 @@
 
             <div id="gift__mini__container">
                 <div class="gift__details">
-                    <p><strong>Descriere: </strong><span class="gift__description"></span></p>
-                    <p><strong>Pret: </strong><span class="gift__price"></span></p>
+                    <p><strong>Description: </strong><span class="gift__description"></span></p>
+                    <p><strong>Price: </strong><span class="gift__price"></span></p>
                     <p><strong>Brand: </strong><span class="gift__brand"></span></p>
-                    <p><strong>Categorie: </strong><span class="gift__category"></span></p>
+                    <p><strong>Category: </strong><span class="gift__category"></span></p>
                     <div class="gift__specs"></div>
                 </div>
 
                 <div class="gift__buttons">
-                    <button class="btn btn--primary" id="send__gift">Trimite cadou</button>
+                    <button class="btn btn--primary" id="send__gift">Send gift</button>
                 </div>
                 <div class="gift__tags"></div>
 
@@ -71,7 +71,7 @@
         <?php if($isLoggedIn): ?>
             <form class="review__form" id="review__form" data-username="<?= htmlspecialchars($payload['username']) ?>">
                 <div id="review_form__title">
-                    <h1 id="review_form__heading">Lasă o recenzie:</h1>
+                    <h1 id="review_form__heading">Leave a review:</h1>
                 </div>
 
                 <div class="field">
@@ -91,15 +91,15 @@
                 </div>
 
                 <div class="field">
-                    <label class="field__label" for="comment">Comentariu:</label>
+                    <label class="field__label" for="comment">Comment:</label>
                     <textarea class="field__input" id="comment" name="comment" placeholder="Spune-ne ce crezi despre acest produs..." required></textarea>
                 </div>
 
                 <span id="message__review"></span>
 
                 <div class="buttons__pagination">
-                    <button type="submit" class="btn btn--primary" id="btn__submit__review">Trimite recenzia</button>
-                    <button type="button" class="btn btn--ghost" id="btn__cancel__edit" hidden>Anulează</button>
+                    <button type="submit" class="btn btn--primary" id="btn__submit__review">Send review</button>
+                    <button type="button" class="btn btn--ghost" id="btn__cancel__edit" hidden>Cancel</button>
                 </div>
             </form>
         <?php else: ?>
@@ -131,8 +131,8 @@
                 <p class="comment"></p>
 
                 <div class="review__actions" hidden>
-                    <button type="button" class="btn btn--outline review__edit">Modifică</button>
-                    <button type="button" class="btn btn--ghost review__delete">Șterge</button>
+                    <button type="button" class="btn btn--outline review__edit">Modify</button>
+                    <button type="button" class="btn btn--ghost review__delete">Delete</button>
                 </div>
             </div>
 

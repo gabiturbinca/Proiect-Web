@@ -188,8 +188,8 @@ function clearReviewForm() {
     if (!reviewForm) return;
     reviewForm.reset();
     delete reviewForm.dataset.editId;
-    submitReviewBtn.textContent = 'Trimite recenzia';
-    reviewFormHeading.textContent = 'Lasă o recenzie:';
+    submitReviewBtn.textContent = 'Send review';
+    reviewFormHeading.textContent = 'Leave a review:';
     cancelEditBtn.hidden = true;
     showReviewMessage('', null);
 }
@@ -197,8 +197,8 @@ function clearReviewForm() {
 function enterEditMode(review) {
     if (!reviewForm) return;
     reviewForm.dataset.editId = String(review.id);
-    submitReviewBtn.textContent = 'Salvează modificarea';
-    reviewFormHeading.textContent = 'Modifică recenzia:';
+    submitReviewBtn.textContent = 'Save modifications';
+    reviewFormHeading.textContent = 'Modify review:';
     cancelEditBtn.hidden = false;
 
     reviewForm.querySelector('#comment').value = review.comment ?? '';
@@ -211,20 +211,20 @@ function enterEditMode(review) {
 }
 
 async function handleDelete(reviewId) {
-    if (!confirm('Sigur dorești să ștergi această recenzie?')) return;
+    if (!confirm('Are you sure you want to delete you review?')) return;
     try {
         const { ok } = await deleteComment(reviewId);
         if (!ok) {
-            showReviewMessage('Nu am putut șterge recenzia.', 'error');
+            showReviewMessage('We could not delete the review.', 'error');
             return;
         }
         if (reviewForm && reviewForm.dataset.editId === String(reviewId)) {
             clearReviewForm();
         }
-        showReviewMessage('Recenzie ștearsă.', 'success');
+        showReviewMessage('Review deleted.', 'success');
         await renderComments(currentPageReviews);
     } catch {
-        showReviewMessage('Nu am putut șterge recenzia.', 'error');
+        showReviewMessage('We could not delete the review.', 'error');
     }
 }
 
@@ -268,7 +268,7 @@ async function renderRelatedGifts(page){
 async function renderGift() {
     const container = document.getElementById('gift__container');
     if (!giftId) {
-        container.innerHTML = '<p>Cadou inexistent.</p>';
+        container.innerHTML = '<p>Gift does not exist.</p>';
         return;
     }
     try {
@@ -276,7 +276,7 @@ async function renderGift() {
         container.replaceChildren(buildGiftCard(gift));
     } catch (err) {
         console.error(err);
-        container.innerHTML = '<p>Nu am putut incarca cadoul!</p>';
+        container.innerHTML = '<p>We could not load the gifts!</p>';
     }
 }
 

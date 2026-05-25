@@ -35,7 +35,7 @@ async function renderCategories(){
   }
   catch(err){
     console.error(err);
-    categoriesBox.innerHTML='<p>Nu am putut incarca categoriile!</p>';
+    categoriesBox.innerHTML='<p>Could not load categories!</p>';
   }
 }
 
