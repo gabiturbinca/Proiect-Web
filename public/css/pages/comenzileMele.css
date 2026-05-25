@@ -55,4 +55,8 @@
         max-width:var(--container-xl);
         min-width: var(--container-xl);
     }
+    .btn-cancel-order{
+        max-width:var(--container-sm);
+        align-self:flex-end;
+    }
 }
