@@ -1,5 +1,5 @@
 <?php
-    $page_title = 'Comaenzile mele';
+    $page_title = 'Comenzile mele';
     $page_css   = 'comenzileMele';
     $page_js = 'comenzileMele';
     require __DIR__ . '/../templates/header.php';

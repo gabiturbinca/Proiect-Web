@@ -17,10 +17,10 @@
 
     <div id ="admin__container_mini">
         <div class="admin__buttons">
-             <button class ="btn btn--primary" type="button" id="users">Utilizatori</button>
-             <button class ="btn btn--primary" type="button" id="gifts">Cadouri</button>
-             <button class ="btn btn--primary" type="button" id="orders">Comenzi</button>
-             <button class ="btn btn--primary" type="button" id="addGift">Adaugă cadou</button>
+             <button class ="btn btn--primary" type="button" id="users">Users</button>
+             <button class ="btn btn--primary" type="button" id="gifts">Gifts</button>
+             <button class ="btn btn--primary" type="button" id="orders">Orders</button>
+             <button class ="btn btn--primary" type="button" id="addGift">Add a new gift</button>
         </div>
 
         <div id="admin__data_container"></div>
@@ -113,29 +113,96 @@
         <template id="add_gift__container">
             <form id="add_gift_form">
                 <div class="field">
-                    <label for="name"></label>
+                    <label for="name">Gift name</label>
                     <input type="text" id="name" name="name" placeholder="Enter a name...">
                 </div>
 
                 <div class="field">
-                    <label for="description"></label>
+                    <label for="description">Description</label>
                     <input type="text" id="description" name="description" placeholder="Enter a description...">
                 </div>
+
+                
                 <div class="field">
-                    
+                    <label for="price">Price</label>
+                    <input type="number" id="price" name="price" placeholder="Enter a price..." step="any">
                 </div>
+                
+                <fieldset>
+                    <legend class="form__legend">Choose the category of the gift</legend>
+                    <div class="field">
+                        <div class="form__options" id="form__options__category">
+                            <template id="category_template">
+                                <select class="gift__category-select">
+                                    
+                                </select>
+                            </template>
+                        </div>
+                    </div>
+                </fieldset>
+                
+                <fieldset>
+                    <legend class="form__legend">Choose the brand of the gift</legend>
+                    <div class="field">
+                        <div class="form__options" id="form__options__brand">
+                            <template id="brand_template">
+                                <select class="gift__brand-select">
+                                    
+                                </select>
+                            </template>
+                        </div>
+                    </div>
+                </fieldset>
+                
+
+                <div class="field">
+                    <label for="specifications">Add specifications</label>
+                    <input type="textarea" id="specifications" name="specifications" placeholder="Enter any missing information about the gift...">
+                </div>
+
+                <fieldset class="form__group">
+                    <legend class="form__legend">Add tags to the gift</legend>
+
+                    <div class="form__options" id="form__options__tag">
+                        <template id="tag_template">
+                            <article class="form__checkbox" data-tagId="">
+                                <input type="checkbox" value="" class="checkbox__input" name="" id="">
+                                <label for="" class="checkbox__label"></label>
+                            </article>
+                        </template>
+                    </div>
+                </fieldset>
+
+<!-- 
+                <fieldset class="form__group">
+                    <legend class="form__legend">Choose the circumstances the gift would be good for</legend>
+
+                    <div class="form__options" id="form__options__circumstance">
+                        <template id="circumstance_template">
+                            <article class="form__checkbox" data-circumstanceId="">
+                                <input type="checkbox" value="" class="checkbox__input" name="" id="">
+                                <label for="" class="checkbox__label"></label>
+                            </article>
+                        </template>
+                    </div>
+                </fieldset>
+
+                 <fieldset class="form__group">
+                    <legend class="form__legend">Choose the contexts the gift would be good for</legend>
+
+                    <div class="form__options" id="form__options__context">
+                        <template id="context_template">
+                            <article class="form__checkbox" data-contextId="">
+                                <input type="checkbox" value="" class="checkbox__input" name="" id="">
+                                <label for="" class="checkbox__label"></label>
+                            </article>
+                        </template>
+                    </div>
+                </fieldset> -->
+                
+                <button type="submit" class="btn btn--primary btn-add-gift">Add gift</button>
             </form>
         </template>
-
-        <!-- name:            $data['name'],
-            description:     $data['description'] ?? null,
-            price:           (float) $data['price'],
-            categoryId:      (int) $data['category_id'],
-            brandId:         isset($data['brand_id']) ? (int) $data['brand_id'] : null,
-            specifications:  $data['specifications'] ?? null,
-            tagIds:          $this->normalizeIntArray($data['tags'] ?? []),
-            circumstanceIds: $this->normalizeIntArray($data['circumstances'] ?? []),
-            contextIds:      $this->normalizeIntArray($data['contexts'] ?? []), -->
 
         <div id="buttons" class="invisible">
             <button type="button" class="btn btn--accent" id="btn__prev">Prev</button>

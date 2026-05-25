@@ -3,6 +3,7 @@ const giftsBtn = document.getElementById("gifts");
 const prevBtn  = document.getElementById("btn__prev");
 const nextBtn  = document.getElementById("btn__next");
 const ordersBtn = document.getElementById("orders");
+const addGiftBtn=document.getElementById("addGift");
 const paginationBox = document.getElementById("buttons");
 
 const elemNumber = 10;
@@ -65,6 +66,90 @@ async function deleteGift(id){
     const data = await res.json();
     return { ok: res.ok, body: data };
 }
+
+async function getFormData(){
+    const res = await apiFetch("/api/forms");
+    if(!res.ok) throw new Error("Couldn't fetch form data");
+    const data = await res.json();
+    return data.success;
+}
+
+async function addGift(data){
+    const res = await apiFetch("/api/admin/gifts", {
+        method:"POST",
+        headers: {"Content-Type" : "application/json"},
+        body: JSON.stringify(data)
+    });
+    const body = await res.json();
+    return { ok: res.ok, body };
+}
+
+function collectGiftFormData(form){
+    const name = form.querySelector("#name").value.trim();
+    const description = form.querySelector("#description").value.trim();
+    const price = parseFloat(form.querySelector("#price").value);
+    const category_id = parseInt(form.querySelector(".gift__category-select").value, 10);
+    const brandValue = form.querySelector(".gift__brand-select").value;
+    const brand_id = brandValue ? parseInt(brandValue, 10) : null;
+    const tags = Array.from(form.querySelectorAll("#form__options__tag .checkbox__input:checked")
+    ).map(input => parseInt(input.value, 10));
+
+    return {
+        name,
+        description: description || null,
+        price,
+        category_id,
+        brand_id,
+        specifications: null,
+        tags,
+        circumstances: [],
+        contexts: [],
+    };
+}
+
+function createTagCheckbox(template, tag){
+    const article = template.content.firstElementChild.cloneNode(true);
+    article.dataset.tagId = tag.id;
+    const input = article.querySelector(".checkbox__input");
+    input.value = tag.id;
+    input.name = "tags[]";
+    input.id = `tag-${tag.id}`;
+    const label = article.querySelector(".checkbox__label");
+    label.htmlFor = `tag-${tag.id}`;
+    label.textContent = tag.name;
+    return article;
+}
+
+function createCategoryOption(category){
+    const option = document.createElement("option");
+    option.value = category.id;
+    option.dataset.categoryId = category.id;
+    option.textContent = category.name;
+    return option;
+}
+
+function createCategorySelect(categories){
+    const template = document.getElementById("category_template");
+    const select = template.content.firstElementChild.cloneNode(true);
+    select.append(...categories.map(createCategoryOption));
+    return select;
+}
+
+function createBrandOption(brand){
+    const option = document.createElement("option");
+    option.value = brand.id;
+    option.dataset.brandId = brand.id;
+    option.textContent = brand.name;
+    return option;
+}
+
+function createBrandSelect(brands){
+    const template = document.getElementById("brand_template");
+    const select = template.content.firstElementChild.cloneNode(true);
+    select.append(...brands.map(createBrandOption));
+    return select;
+}
+
 
 function createUserRow(user){
     const template = document.getElementById("user__row");
@@ -158,6 +243,47 @@ function updatePaginationUI(){
     nextBtn.disabled = pageNumber >= totalPages;
 }
 
+async function renderGiftForm(){
+    const dataBox = document.getElementById("admin__data_container");
+    try{
+        hidePagination();
+        const { categories, brands, tags } = await getFormData();
+
+        const formTpl = document.getElementById("add_gift__container");
+        const form = formTpl.content.firstElementChild.cloneNode(true);
+
+        const catSelect = form.querySelector("#category_template").content.firstElementChild.cloneNode(true);
+        catSelect.name = "category_id";
+        catSelect.append(...categories.map(createCategoryOption));
+        form.querySelector("#form__options__category").append(catSelect);
+
+        const brandSelect = form.querySelector("#brand_template").content.firstElementChild.cloneNode(true);
+        brandSelect.name = "brand_id";
+        brandSelect.append(...brands.map(createBrandOption));
+        form.querySelector("#form__options__brand").append(brandSelect);
+
+        const tagTpl = form.querySelector("#tag_template");
+        const tagBox = form.querySelector("#form__options__tag");
+        tags.forEach(tag => tagBox.append(createTagCheckbox(tagTpl, tag)));
+
+        dataBox.replaceChildren(form);
+
+        form.addEventListener("submit", async(e) =>{
+            e.preventDefault();
+            const data = collectGiftFormData(form);
+            const { ok, body } = await addGift(data);
+            if(!ok){
+                alert(body?.error ?? "Couldn't add the gift.");
+                return;
+            }
+            form.reset();
+            alert("Gift added!");
+        });
+    }
+    catch(err){
+        dataBox.innerHTML="<p>Couldn't render the form!</p>";
+    }
+}
 async function renderGifts(){
     const dataBox = document.getElementById("admin__data_container");
     try{
@@ -247,11 +373,17 @@ giftsBtn.addEventListener("click", async (e) => {
 
 ordersBtn.addEventListener("click", async(e) =>{
     e.preventDefault();
-    console.log("Am dat click");
     onGifts = false; onOrders=true;
     pageNumber=1;
     showPagination();
     await renderOrders();
+});
+
+addGiftBtn.addEventListener("click", async(e) => {
+    e.preventDefault();
+    onGifts=false; onOrders=true;
+    hidePagination();
+    await renderGiftForm();
 });
 
 prevBtn.addEventListener("click", async (e) => {
