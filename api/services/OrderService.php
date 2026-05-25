@@ -5,7 +5,7 @@ class OrderService {
         'placed'    => ['shipped', 'cancelled'],
         'shipped'   => ['delivered'],
         'delivered' => [],
-        'cancelled' => [],
+        'cancelled' => ['placed'],
     ];
 
     public function __construct(
