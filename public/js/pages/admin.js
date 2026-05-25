@@ -187,7 +187,22 @@ function createGiftRow(gift){
     if (changeBtn) {
         changeBtn.dataset.giftId = gift.id;
     }
+    const imageInput = row.querySelector(".gift__image-input");
+    if (imageInput) {
+        imageInput.dataset.giftId = gift.id;
+    }
     return row;
+}
+
+async function uploadGiftImage(giftId, file){
+    const fd = new FormData();
+    fd.append("image", file);
+    const res = await apiFetch(`/api/admin/gifts/${giftId}/image`, {
+        method: "POST",
+        body: fd,
+    });
+    const body = await res.json().catch(() => ({}));
+    return { ok: res.ok, body };
 }
 
 function createOrderRow(order){
@@ -394,6 +409,21 @@ async function renderGifts(){
                     console.error(err);
                     alert("Couldn't load the gift to edit.");
                 }
+            });
+        });
+
+        const imageInputs = document.querySelectorAll(".gift__image-input");
+        imageInputs.forEach((imageInput) => {
+            imageInput.addEventListener("change", async() => {
+                if(!imageInput.files.length) return;
+                const giftId = imageInput.dataset.giftId;
+                const { ok, body } = await uploadGiftImage(giftId, imageInput.files[0]);
+                imageInput.value = "";
+                if(!ok){
+                    alert(body?.error ?? "Couldn't upload the image.");
+                    return;
+                }
+                alert("Image uploaded!");
             });
         });
     }
