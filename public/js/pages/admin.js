@@ -66,6 +66,18 @@ async function getFormData(){
     return data.success;
 }
 
+async function getContexts(){
+    const URL = "/api/admin/contexts";
+    const res = await apiFetch(URL);
+    const data = await res.json();
+    return data.success;
+}
+async function getCircumstances(){
+    const URL = "/api/admin/circumstances";
+    const res = await apiFetch(URL);
+    const data = await res.json();
+    return data.success;
+}
 async function addGift(data){
     const res = await apiFetch("/api/admin/gifts", {
         method:"POST",
@@ -102,7 +114,10 @@ function collectGiftFormData(form){
     const brand_id = brandValue ? parseInt(brandValue, 10) : null;
     const tags = Array.from(form.querySelectorAll("#form__options__tag .checkbox__input:checked")
     ).map(input => parseInt(input.value, 10));
-
+    const circumstances=Array.from(form.querySelectorAll("#form__options__circumstance .checkbox__input:checked"))
+    .map(input => parseInt(input.value, 10));
+     const contexts=Array.from(form.querySelectorAll("#form__options__context .checkbox__input:checked"))
+    .map(input => parseInt(input.value, 10));
     return {
         name,
         description: description || null,
@@ -111,8 +126,8 @@ function collectGiftFormData(form){
         brand_id,
         specifications: null,
         tags,
-        circumstances: [],
-        contexts: [],
+        circumstances,
+        contexts,
     };
 }
 
@@ -129,6 +144,31 @@ function createTagCheckbox(template, tag){
     return article;
 }
 
+function createCircumstanceCheckbox(template, circumstance){
+    const article = template.content.firstElementChild.cloneNode(true);
+    article.dataset.circumstanceId = circumstance.id;
+    const input = article.querySelector(".checkbox__input");
+    input.value = circumstance.id;
+    input.name = "circumstances[]";
+    input.id = `circumstance-${circumstance.id}`;
+    const label = article.querySelector(".checkbox__label");
+    label.htmlFor = `circumstance-${circumstance.id}`;
+    label.textContent = circumstance.name;
+    return article;
+}
+
+function createContextCheckbox(template, context){
+    const article = template.content.firstElementChild.cloneNode(true);
+    article.dataset.contextId = context.id;
+    const input = article.querySelector(".checkbox__input");
+    input.value = context.id;
+    input.name = "contexts[]";
+    input.id = `context-${context.id}`;
+    const label = article.querySelector(".checkbox__label");
+    label.htmlFor = `context-${context.id}`;
+    label.textContent = context.name;
+    return article;
+}
 function createCategoryOption(category){
     const option = document.createElement("option");
     option.value = category.id;
@@ -325,7 +365,8 @@ async function renderGiftForm(gift = null){
     try{
         hidePagination();
         const { categories, brands, tags } = await getFormData();
-
+        const contexts = await getContexts();
+        const circumstances = await getCircumstances();
         const formTpl = document.getElementById("add_gift__container");
         const form = formTpl.content.firstElementChild.cloneNode(true);
 
@@ -343,6 +384,14 @@ async function renderGiftForm(gift = null){
         const tagBox = form.querySelector("#form__options__tag");
         tags.forEach(tag => tagBox.append(createTagCheckbox(tagTpl, tag)));
 
+        const contextTpl=form.querySelector("#context_template");
+        const contextBox = form.querySelector("#form__options__context");
+        contexts.forEach(context => contextBox.append(createContextCheckbox(contextTpl, context)));
+
+        const circumstanceTpl=form.querySelector("#circumstance_template");
+        const circumstanceBox = form.querySelector("#form__options__circumstance");
+        circumstances.forEach(circumstance => circumstanceBox.append(createCircumstanceCheckbox(circumstanceTpl, circumstance)));
+
         if(gift){
             form.querySelector("#name").value        = gift.name ?? "";
             form.querySelector("#description").value = gift.description ?? "";
@@ -356,6 +405,16 @@ async function renderGiftForm(gift = null){
             const tagIds = new Set((gift.tags ?? []).map(t => t.id));
             form.querySelectorAll("#form__options__tag .checkbox__input").forEach(cb => {
                 cb.checked = tagIds.has(parseInt(cb.value, 10));
+            });
+
+            const contextIds = new Set((gift.contexts ?? []).map(c => parseInt(c, 10)));
+            form.querySelectorAll("#form__options__context .checkbox__input").forEach(cb => {
+                cb.checked = contextIds.has(parseInt(cb.value, 10));
+            });
+
+            const circumstanceIds = new Set((gift.circumstances ?? []).map(c => parseInt(c, 10)));
+            form.querySelectorAll("#form__options__circumstance .checkbox__input").forEach(cb => {
+                cb.checked = circumstanceIds.has(parseInt(cb.value, 10));
             });
 
             const submitBtn = form.querySelector(".btn-add-gift");

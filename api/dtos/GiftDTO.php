@@ -10,6 +10,8 @@ readonly class GiftDTO {
         public ?string $brand_name,
         public ?string $category_name,
         public ?array $tags,
+        public ?array $circumstances = null,
+        public ?array $contexts = null,
     ) {}
 
 }

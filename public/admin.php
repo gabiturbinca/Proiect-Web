@@ -222,7 +222,7 @@
                     </div>
                 </fieldset>
 
-<!-- 
+
                 <fieldset class="form__group">
                     <legend class="form__legend">Choose the circumstances the gift would be good for</legend>
 
@@ -247,7 +247,7 @@
                             </article>
                         </template>
                     </div>
-                </fieldset> -->
+                </fieldset>
                 
                 <button type="submit" class="btn btn--primary btn-add-gift">Add gift</button>
             </form>

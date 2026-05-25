@@ -109,6 +109,8 @@ class GiftRepository {
         }
         $gift = $this->hydrate($row);
         $this->loadTags([$gift]);
+        $this->loadCircumstanceIds([$gift]);
+        $this->loadContextIds([$gift]);
         return $gift;
     }
 
