@@ -83,3 +83,8 @@ $router->delete("/api/admin/gifts/{id}/image", [GiftController::class, "deleteIm
 $router->post("/api/admin/categories", [CategoryController::class, "create"], [AuthMiddleware::class, CsrfMiddleware::class, AdminMiddleware::class]);
 $router->patch("/api/admin/categories/{id}", [CategoryController::class, "update"], [AuthMiddleware::class, CsrfMiddleware::class, AdminMiddleware::class]);
 $router->delete("/api/admin/categories/{id}", [CategoryController::class, "delete"], [AuthMiddleware::class, CsrfMiddleware::class, AdminMiddleware::class]);
+
+//context
+$router->get("/api/admin/contexts", [ContextController::class,"index"],[AuthMiddleware::class, AdminMiddleware::class]);
+//circumstance
+$router->get("/api/admin/circumstances", [CircumstanceController::class,"index"],[AuthMiddleware::class, AdminMiddleware::class]);
