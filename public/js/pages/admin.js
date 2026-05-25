@@ -58,15 +58,6 @@ async function changeOrderStatus(orderId, status){
     return { ok: res.ok, body: data };
 }
 
-async function deleteGift(id){
-    const URL=`/api/admin/gifts/${id}`;
-    const res = await apiFetch(URL, {
-        method : "DELETE"
-    });
-    const data = await res.json();
-    return { ok: res.ok, body: data };
-}
-
 async function getFormData(){
     const res = await apiFetch("/api/forms");
     if(!res.ok) throw new Error("Couldn't fetch form data");
@@ -77,6 +68,23 @@ async function getFormData(){
 async function addGift(data){
     const res = await apiFetch("/api/admin/gifts", {
         method:"POST",
+        headers: {"Content-Type" : "application/json"},
+        body: JSON.stringify(data)
+    });
+    const body = await res.json();
+    return { ok: res.ok, body };
+}
+
+async function getGift(id){
+    const res = await apiFetch(`/api/gifts/${id}`);
+    if(!res.ok) throw new Error("Couldn't fetch the gift");
+    const data = await res.json();
+    return data.success;
+}
+
+async function updateGift(id, data){
+    const res = await apiFetch(`/api/admin/gifts/${id}`, {
+        method:"PATCH",
         headers: {"Content-Type" : "application/json"},
         body: JSON.stringify(data)
     });
@@ -174,9 +182,9 @@ function createGiftRow(gift){
     row.querySelector(".cell__description").textContent = gift.description;
     row.querySelector(".cell__price").textContent = gift.price;
     row.querySelector(".cell__score").textContent = gift.score;
-    const deleteBtn = row.querySelector(".gift__delete-btn");
-    if (deleteBtn) {
-        deleteBtn.dataset.giftId = gift.id;
+    const changeBtn = row.querySelector(".gift__change-btn");
+    if (changeBtn) {
+        changeBtn.dataset.giftId = gift.id;
     }
     return row;
 }
@@ -243,7 +251,7 @@ function updatePaginationUI(){
     nextBtn.disabled = pageNumber >= totalPages;
 }
 
-async function renderGiftForm(){
+async function renderGiftForm(gift = null){
     const dataBox = document.getElementById("admin__data_container");
     try{
         hidePagination();
@@ -266,18 +274,44 @@ async function renderGiftForm(){
         const tagBox = form.querySelector("#form__options__tag");
         tags.forEach(tag => tagBox.append(createTagCheckbox(tagTpl, tag)));
 
+        if(gift){
+            form.querySelector("#name").value        = gift.name ?? "";
+            form.querySelector("#description").value = gift.description ?? "";
+            form.querySelector("#price").value       = gift.price ?? "";
+
+            const categoryId = categories.find(c => c.name === gift.category_name)?.id ?? "";
+            const brandId    = brands.find(b => b.name === gift.brand_name)?.id ?? "";
+            catSelect.value   = categoryId;
+            brandSelect.value = brandId;
+
+            const tagIds = new Set((gift.tags ?? []).map(t => t.id));
+            form.querySelectorAll("#form__options__tag .checkbox__input").forEach(cb => {
+                cb.checked = tagIds.has(parseInt(cb.value, 10));
+            });
+
+            const submitBtn = form.querySelector(".btn-add-gift");
+            if(submitBtn) submitBtn.textContent = "Save changes";
+        }
+
         dataBox.replaceChildren(form);
 
         form.addEventListener("submit", async(e) =>{
             e.preventDefault();
             const data = collectGiftFormData(form);
-            const { ok, body } = await addGift(data);
+            const { ok, body } = gift
+                ? await updateGift(gift.id, data)
+                : await addGift(data);
             if(!ok){
-                alert(body?.error ?? "Couldn't add the gift.");
+                alert(body?.error ?? (gift ? "Couldn't update the gift." : "Couldn't add the gift."));
                 return;
             }
-            form.reset();
-            alert("Gift added!");
+            if(gift){
+                alert("Gift updated!");
+                await renderGifts();
+            } else {
+                form.reset();
+                alert("Gift added!");
+            }
         });
     }
     catch(err){
@@ -295,16 +329,19 @@ async function renderGifts(){
         dataBox.replaceChildren(buildGiftsTable(gifts));
         updatePaginationUI();
 
-        const deleteGiftBtns = document.querySelectorAll(".gift__delete-btn");
-        deleteGiftBtns.forEach((deleteGiftBtn) => {
-        deleteGiftBtn.addEventListener("click", async(e) =>{
-            if(!confirm("Are you sure you want to delete this gift?")) return;
-            const giftId = deleteGiftBtn.dataset.giftId;
-            await deleteGift(giftId);
-            showPagination();
-            await renderGifts();
+        const changeGiftBtns = document.querySelectorAll(".gift__change-btn");
+        changeGiftBtns.forEach((changeGiftBtn) => {
+            changeGiftBtn.addEventListener("click", async(e) =>{
+                const giftId = changeGiftBtn.dataset.giftId;
+                try {
+                    const gift = await getGift(giftId);
+                    await renderGiftForm(gift);
+                } catch(err){
+                    console.error(err);
+                    alert("Couldn't load the gift to edit.");
+                }
+            });
         });
-});
     }
     catch(err){
         console.error(err);

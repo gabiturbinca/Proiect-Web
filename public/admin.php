@@ -55,7 +55,7 @@
                         <th>Description</th>
                         <th>Price</th>
                         <th>Score</th>
-                        <th>Delete</th>
+                        <th>Change properties</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -86,7 +86,7 @@
                 <td class="cell__description"></td>
                 <td class="cell__price"></td>
                 <td class="cell__score"></td>
-                <td class="cell__delete"><button type="button" class="btn btn--accent gift__delete-btn" data-giftId="">Delete</button></td>
+                <td class="cell__change"><button type="button" class="btn btn--accent gift__change-btn" data-giftId="">Modify</button></td>
             </tr>
         </template>
 
