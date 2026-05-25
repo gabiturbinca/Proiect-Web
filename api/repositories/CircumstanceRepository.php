@@ -3,7 +3,7 @@
 
 class CircumstanceRepository {
     
-    public function __construct(public PDO $db) {}
+    public function __construct(private PDO $db) {}
     public function hydrate(array $row) : Circumstance {
         $c = new Circumstance();
         $c->setId((int) $row["id"]);

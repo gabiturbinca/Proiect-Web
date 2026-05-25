@@ -5,6 +5,7 @@ class AuthService {
     public function __construct(
         private UserRepository $userRepository,
         private JwtService $jwtService,
+        private PasswordResetRequestRepository $resetRequestRepository,
     ) {}
     public function register(RegisterUserDTO $dto) :UserDTO {
         $errors = [];
@@ -53,6 +54,43 @@ class AuthService {
                 $user->getEmail(),
                 $user->getUserRole(),
             ),
+            'must_change_password' => $user->getMustChangePassword(),
         ];
+    }
+
+    public function changePassword(int $userId, ChangePasswordRequestDTO $dto) : array {
+        $user = $this->userRepository->findById($userId);
+        if(! password_verify($dto->oldPassword, $user->getPasswordHash())) {
+            throw new AuthException("Incorrect current pasword");
+        }
+        // if(!password_verify($dto->newPassword,$user->getPasswordHash())) {
+        //     throw new ValidationException(['new_password' => ['New password must differ from current']]);
+        // }
+        // vedem daca poate la fel sau nu
+
+        $newHash = password_hash($dto->newPassword, PASSWORD_BCRYPT);
+        $this->userRepository->updatePassword($userId, $newHash);
+        $this->userRepository->setMustChangePassword($userId, false);
+        $token = $this->jwtService->encode([
+            'sub' => $user->getId(),
+            'role' => $user->getUserRole(),
+            'username' => $user->getUsername(),
+        ]);
+        CsrfService::putCookie(CsrfService::generateToken());
+        return [
+            'token'=> $token,
+        ];
+    }
+
+    public function registerResetRequest(ResetAsUnkownDTO $dto): void {
+        $user = filter_var($dto->identifier, FILTER_VALIDATE_EMAIL)
+            ? $this->userRepository->findByEmail($dto->identifier)
+            : $this->userRepository->findByUsername($dto->identifier);
+
+        // ANTI-ENUMERATION: nu spunem dacă utilizatorul există sau nu.
+        // Caller-ul returnează mereu 200 cu "Request submitted" indiferent.
+        if ($user !== null) {
+            $this->resetRequestRepository->create($user->getId(), $dto->message);
+        }
     }
 }

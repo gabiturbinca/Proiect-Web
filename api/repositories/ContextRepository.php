@@ -3,7 +3,7 @@
 
 class ContextRepository {
     
-    public function __construct(public PDO $db) {}
+    public function __construct(private PDO $db) {}
     public function hydrate(array $row) : Context {
         $c = new Context();
         $c->setId((int) $row["id"]);

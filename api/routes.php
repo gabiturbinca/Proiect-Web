@@ -88,3 +88,28 @@ $router->delete("/api/admin/categories/{id}", [CategoryController::class, "delet
 $router->get("/api/admin/contexts", [ContextController::class,"index"],[AuthMiddleware::class, AdminMiddleware::class]);
 //circumstance
 $router->get("/api/admin/circumstances", [CircumstanceController::class,"index"],[AuthMiddleware::class, AdminMiddleware::class]);
+//pass change cand logat de catre user
+$router->post("/api/auth/password", [AuthController::class,"changePassword"], [AuthMiddleware::class,CsrfMiddleware::class]);
+
+//admin reseteaza direct (fara request)
+$router->post("/api/admin/users/{id}/password-reset",
+    [AdminAuthController::class, "resetPassword"],
+    [AuthMiddleware::class, CsrfMiddleware::class, AdminMiddleware::class]);
+
+//user cere reset (cand nu e logat, a uitat parola)
+$router->post("/api/auth/password/reset-request",
+    [AuthController::class, "requestReset"]);
+
+//admin vede pending requests
+$router->get("/api/admin/password-reset-requests",
+    [AdminAuthController::class, "listPendingResets"],
+    [AuthMiddleware::class, AdminMiddleware::class]);
+
+//admin aproba sau respinge un request
+$router->post("/api/admin/password-reset-requests/{id}/approve",
+    [AdminAuthController::class, "approveReset"],
+    [AuthMiddleware::class, CsrfMiddleware::class, AdminMiddleware::class]);
+
+$router->post("/api/admin/password-reset-requests/{id}/deny",
+    [AdminAuthController::class, "denyReset"],
+    [AuthMiddleware::class, CsrfMiddleware::class, AdminMiddleware::class]);
