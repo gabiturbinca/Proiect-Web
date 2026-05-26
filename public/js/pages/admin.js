@@ -4,6 +4,7 @@ const prevBtn  = document.getElementById("btn__prev");
 const nextBtn  = document.getElementById("btn__next");
 const ordersBtn = document.getElementById("orders");
 const addGiftBtn=document.getElementById("addGift");
+const resetPasswordBtn = document.getElementById("resetPassword");
 const reportBtn=document.getElementById("report");
 const paginationBox = document.getElementById("buttons");
 
@@ -13,7 +14,7 @@ let totalPages = 1;
 
 let onGifts = false;
 let onOrders=false;
-
+let onRequests=false;
 
 async function getAllUsers(){
     const URL = "/api/users";
@@ -103,6 +104,45 @@ async function updateGift(id, data){
     });
     const body = await res.json();
     return { ok: res.ok, body };
+}
+
+async function changeUserPassword(userId){
+    const URL=`/api/admin/users/${userId}/password-reset`;
+    const res = await apiFetch(URL, {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+    });
+    const result = await res.json();
+    return result;
+}
+
+async function getPasswordRequests(page){
+    const URL = `/api/admin/password-reset-requests?elemNumber=${elemNumber}&pageNumber=${page}`;
+    const res = await apiFetch(URL);
+    if(!res.ok)
+        throw new Error("Couldn't fetch the requests!");
+    const result = await res.json();
+    return result.success;
+}
+
+async function acceptRequest(requestId){
+    const URL = `/api/admin/password-reset-requests/${requestId}/approve`;
+    const res = await apiFetch(URL, {
+        method:"POST",
+        headers:{"Content-Type":"application/json"}
+    });
+    const result = await res.json();
+    return result;
+}
+
+async function denyRequest(requestId){
+    const URL = `/api/admin/password-reset-requests/${requestId}/deny`;
+    const res = await apiFetch(URL, {
+        method:"POST",
+        headers:{"Content-Type":"application/json"}
+    });
+    const result = await res.json();
+    return result;
 }
 
 function collectGiftFormData(form){
@@ -207,10 +247,31 @@ function createUserRow(user){
     row.querySelector(".cell__id").textContent = user.id;
     row.querySelector(".cell__username").textContent = user.username;
     row.querySelector(".cell__email").textContent = user.email;
+    const button = row.querySelector(".change-password");
+    if(button)
+        button.dataset.userId=user.id;
 
     const badge = row.querySelector(".role-badge");
     badge.textContent = user.user_role;
     badge.classList.add(`role-badge--${user.user_role}`);
+
+    return row;
+}
+
+function createRequestRow(request){
+    const template = document.getElementById("user__requests_row");
+    const row = template.content.firstElementChild.cloneNode(true);
+
+    row.querySelector(".cell__id").textContent=request.id;
+    row.querySelector(".cell__identifier").textContent=request.username;
+    row.querySelector(".cell__message").textContent=request.message;
+    row.querySelector(".cell__status").textContent=request.status;
+    const acceptBtn = row.querySelector(".accept");
+    const denyBtn = row.querySelector(".deny");
+    if(acceptBtn)
+        acceptBtn.dataset.requestId=request.id;
+    if(denyBtn)
+        denyBtn.dataset.requestId=request.id;
 
     return row;
 }
@@ -289,6 +350,14 @@ function buildGiftsTable(gifts){
     const table = template.content.firstElementChild.cloneNode(true);
     const tbody = table.querySelector("tbody");
     tbody.append(...gifts.map(createGiftRow));
+    return table;
+}
+
+function buildRequestsTable(requests){
+    const template = document.getElementById("users__requests__container");
+    const table = template.content.firstElementChild.cloneNode(true);
+    const tbody = table.querySelector("tbody");
+    tbody.append(...requests.map(createRequestRow));
     return table;
 }
 
@@ -393,9 +462,9 @@ async function renderGiftForm(gift = null){
         circumstances.forEach(circumstance => circumstanceBox.append(createCircumstanceCheckbox(circumstanceTpl, circumstance)));
 
         if(gift){
-            form.querySelector("#name").value        = gift.name ?? "";
+            form.querySelector("#name").value = gift.name ?? "";
             form.querySelector("#description").value = gift.description ?? "";
-            form.querySelector("#price").value       = gift.price ?? "";
+            form.querySelector("#price").value = gift.price ?? "";
 
             const categoryId = categories.find(c => c.name === gift.category_name)?.id ?? "";
             const brandId    = brands.find(b => b.name === gift.brand_name)?.id ?? "";
@@ -527,12 +596,75 @@ async function renderOrders(page){
         dataBox.innerHTML = "<p>Couldn't fetch the orders. Try again next time!</p>";
     }
 }
+async function renderPasswordRequests(){
+    const dataBox = document.getElementById("admin__data_container");
+    try{
+        const {requests, requests_count} = await getPasswordRequests(pageNumber);
+        totalPages = Math.max(1, Math.ceil(requests_count / elemNumber));
+        if (pageNumber > totalPages) {
+            pageNumber = totalPages;
+        }
+        dataBox.replaceChildren(buildRequestsTable(requests));
+        updatePaginationUI();
+        const acceptButtons=document.querySelectorAll(".accept");
+        const denyButtons=document.querySelectorAll(".deny");
+        acceptButtons.forEach(acceptButton => {
+            acceptButton.addEventListener("click", async(e) =>{
+                e.preventDefault();
+                if(!confirm("Are you sure you want to accept their request?")) return;
+                const res= await acceptRequest(acceptButton.dataset.requestId);
+                if(res.success){
+                    alert("Request accepted");
+                }
+                if(res.error){
+                    alert("Request couldn't be accepted!");
+                }
+                await renderPasswordRequests();
+            });
+        });
 
-async function onEnter(){
+        denyButtons.forEach(denyButton => {
+            denyButton.addEventListener("click", async(e) => {
+                e.preventDefault();
+                if(!confirm("Are you sure you want to deny their request?")) return;
+                const res= await denyRequest(denyButton.dataset.requestId);
+                if(res.success){
+                    alert("Request denied!");
+                }
+                if(res.error){
+                    alert("Request couldn't be denied!");
+                }
+                await renderPasswordRequests();
+            });
+        });
+    }
+    catch(err){
+        console.error(err);
+        dataBox.innerHTML = "<p>Couldn't fetch the requests. Try again next time!</p>";
+    }
+}
+
+async function onClickUsers(){
+    hidePagination();
+    onGifts=false; onOrders=false; onRequests=false;
     const dataBox = document.getElementById("admin__data_container");
     try{
         const users = await getAllUsers();
         dataBox.replaceChildren(buildUsersTable(users));
+        const changePasswordBtns = document.querySelectorAll(".change-password");
+        changePasswordBtns.forEach(changePasswordBtn => {
+            changePasswordBtn.addEventListener("click", async(e) =>{
+                e.preventDefault();
+                if(!confirm("Are you sure you want to change the password of this user?")) return;
+                const res = await changeUserPassword(changePasswordBtn.dataset.userId);
+                if(res.success){
+                    alert(`Success. Their temporary password is ${res.success.tempPassword}`);
+                }
+                if(res.error){
+                    alert("Error changing their password. Try again");
+                }
+            });
+        });
     }
     catch(err){
         console.error(err);
@@ -540,25 +672,16 @@ async function onEnter(){
     }
 }
 
-onEnter();
+onClickUsers();
+
 usersBtn.addEventListener("click", async (e) => {
     e.preventDefault();
-    hidePagination();
-    onGifts=false; onOrders=false;
-    const dataBox = document.getElementById("admin__data_container");
-    try{
-        const users = await getAllUsers();
-        dataBox.replaceChildren(buildUsersTable(users));
-    }
-    catch(err){
-        console.error(err);
-        dataBox.innerHTML = "<p>Couldn't fetch the users. Try again next time!</p>";
-    }
+    onClickUsers();
 });
 
 giftsBtn.addEventListener("click", async (e) => {
     e.preventDefault();
-    onGifts=true; onOrders=false;
+    onGifts=true; onOrders=false; onRequests=false;
     pageNumber = 1;
     showPagination();
     await renderGifts();
@@ -567,7 +690,7 @@ giftsBtn.addEventListener("click", async (e) => {
 
 ordersBtn.addEventListener("click", async(e) =>{
     e.preventDefault();
-    onGifts = false; onOrders=true;
+    onGifts = false; onOrders=true;  onRequests=false;
     pageNumber=1;
     showPagination();
     await renderOrders();
@@ -575,16 +698,24 @@ ordersBtn.addEventListener("click", async(e) =>{
 
 addGiftBtn.addEventListener("click", async(e) => {
     e.preventDefault();
-    onGifts=false; onOrders=true;
+    onGifts=false; onOrders=true;  onRequests=false;
     hidePagination();
     await renderGiftForm();
 });
 
 reportBtn.addEventListener("click", async(e) => {
     e.preventDefault();
-    onGifts=false; onOrders=false;
+    onGifts=false; onOrders=false;  onRequests=false;
     hidePagination();
     await renderReportForm();
+});
+
+resetPasswordBtn.addEventListener("click", async(e) =>{
+    e.preventDefault();
+    onGifts = false; onOrders=false;  onRequests=true;
+    pageNumber=1;
+    showPagination();
+    await renderPasswordRequests();
 });
 
 prevBtn.addEventListener("click", async (e) => {
@@ -595,6 +726,8 @@ prevBtn.addEventListener("click", async (e) => {
             await renderGifts();
         else if(onOrders)
             await renderOrders();
+        else if(onRequests)
+            await renderPasswordRequests();
     }
 });
 
@@ -606,5 +739,7 @@ nextBtn.addEventListener("click", async (e) => {
             await renderGifts();
         else if(onOrders)
             await renderOrders();
+        else if(onRequests)
+            await renderPasswordRequests();
     }
 });
