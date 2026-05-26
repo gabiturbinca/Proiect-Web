@@ -57,11 +57,7 @@
     font-size: var(--text-base);
 }
 
-.admin__table thead{
-    position: sticky;
-    top: 2;
-    z-index: var(--z-sticky);
-}
+
 
 .admin__table thead th {
     text-align: left;
