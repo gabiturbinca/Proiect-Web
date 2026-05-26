@@ -113,3 +113,5 @@ $router->post("/api/admin/password-reset-requests/{id}/approve",
 $router->post("/api/admin/password-reset-requests/{id}/deny",
     [AdminAuthController::class, "denyReset"],
     [AuthMiddleware::class, CsrfMiddleware::class, AdminMiddleware::class]);
+$router->get("/api/admin/unsplash", [UnsplashController::class, "search"], 
+    [AuthMiddleware::class, AdminMiddleware::class]);
