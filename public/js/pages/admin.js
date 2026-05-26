@@ -105,6 +105,16 @@ async function updateGift(id, data){
     return { ok: res.ok, body };
 }
 
+async function changeUserPassword(userId){
+    const URL=`/api/admin/users/${userId}/password-reset`;
+    const res = await apiFetch(URL, {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+    });
+    const result = await res.json();
+    return result;
+}
+
 function collectGiftFormData(form){
     const name = form.querySelector("#name").value.trim();
     const description = form.querySelector("#description").value.trim();
@@ -207,6 +217,9 @@ function createUserRow(user){
     row.querySelector(".cell__id").textContent = user.id;
     row.querySelector(".cell__username").textContent = user.username;
     row.querySelector(".cell__email").textContent = user.email;
+    const button = row.querySelector(".change-password");
+    if(button)
+        button.dataset.userId=user.id;
 
     const badge = row.querySelector(".role-badge");
     badge.textContent = user.user_role;
@@ -528,11 +541,27 @@ async function renderOrders(page){
     }
 }
 
-async function onEnter(){
+async function onClickUsers(){
+    hidePagination();
+    onGifts=false; onOrders=false;
     const dataBox = document.getElementById("admin__data_container");
     try{
         const users = await getAllUsers();
         dataBox.replaceChildren(buildUsersTable(users));
+        const changePasswordBtns = document.querySelectorAll(".change-password");
+        changePasswordBtns.forEach(changePasswordBtn => {
+            changePasswordBtn.addEventListener("click", async(e) =>{
+                e.preventDefault();
+                if(!confirm("Are you sure you want to change the password of this user?")) return;
+                const res = await changeUserPassword(changePasswordBtn.dataset.userId);
+                if(res.success){
+                    alert(`Success. Their temporary password is ${res.success.tempPassword}`);
+                }
+                if(res.error){
+                    alert("Error changing their password. Try again");
+                }
+            });
+        });
     }
     catch(err){
         console.error(err);
@@ -540,20 +569,11 @@ async function onEnter(){
     }
 }
 
-onEnter();
+onClickUsers();
+
 usersBtn.addEventListener("click", async (e) => {
     e.preventDefault();
-    hidePagination();
-    onGifts=false; onOrders=false;
-    const dataBox = document.getElementById("admin__data_container");
-    try{
-        const users = await getAllUsers();
-        dataBox.replaceChildren(buildUsersTable(users));
-    }
-    catch(err){
-        console.error(err);
-        dataBox.innerHTML = "<p>Couldn't fetch the users. Try again next time!</p>";
-    }
+    onClickUsers();
 });
 
 giftsBtn.addEventListener("click", async (e) => {

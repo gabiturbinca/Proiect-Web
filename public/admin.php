@@ -33,6 +33,7 @@
                         <th>Username</th>
                         <th>Email</th>
                         <th>Role</th>
+                        <th>Change password</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -45,6 +46,7 @@
                 <td class="cell__username"></td>
                 <td class="cell__email"></td>
                 <td class="cell__role"><span class="role-badge"></span></td>
+                <td class="cell_change_password"><button type="button" class="btn btn--accent change-password" data-userId="">Change their password</button></td>
             </tr>
         </template>
 
