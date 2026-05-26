@@ -25,7 +25,7 @@ class UnsplashService {
     private function getCache(string $key) : ?array {
         $cache = file_exists($this->cacheFile) ? json_decode(file_get_contents($this->cacheFile), true) : [];
 
-        if($cache === null) {
+        if($cache === null || !is_array($cache)) {
             return null;
         }
         if(!isset($cache[$key])) {
@@ -75,15 +75,15 @@ class UnsplashService {
 
         $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         $error = curl_error($ch);
-
+        curl_close($ch);
         if($response === false || $status >= 400) {
-            throw new RuntimeException("Unsplash API error: $error (status $status)");
+            throw new ExternalServiceException("Unsplash API error: $error (status $status)");
         }
-
+        
         $data = json_decode($response, true);
 
         if (!is_array($data) || !isset($data['results'])) 
-            throw new RuntimeException("Invalid Unsplash response");
+            throw new ExternalServiceException("Invalid Unsplash response");
         return $data;
     }
     private function fetchedToDTO(array $photo) : UnsplashImageDTO {
@@ -97,6 +97,6 @@ class UnsplashService {
         );
     }
     private function makeCacheKey(string $query, int $elemNumber = self::LIMIT) : string {
-        return sprintf('search_%s_%d', urlencode($query), $elemNumber);
+        return md5(mb_strtolower($query, 'UTF-8') . '_' . $elemNumber);
     }
 }

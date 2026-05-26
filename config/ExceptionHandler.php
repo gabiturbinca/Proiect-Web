@@ -62,6 +62,14 @@ class ExceptionHandler {
             ]);
             return;
         }
+        if($e instanceof ExternalServiceException) {
+            error_log("[ExternalService] " . $e->getMessage());  
+            http_response_code(502);
+            echo json_encode([
+                'error' => ['message' => 'External service temporarily unavailable']
+            ]);
+            return;     
+        }
         http_response_code(500);
 
         $payload = ['message' => 'Internal server error'];
