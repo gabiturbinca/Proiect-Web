@@ -31,6 +31,6 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction
 # directory / permissions
 RUN mkdir -p /var/www/html/public/uploads/gifts \
     && chown -R www-data:www-data /var/www/html/public/uploads \
-    && chmod -R 755 /var/www/html/public/uploads
-
+    && chmod -R 755 /var/www/html/public/uploads \
+    && chown -R www-data:www-data /var/www/html/db/logs
 EXPOSE 80

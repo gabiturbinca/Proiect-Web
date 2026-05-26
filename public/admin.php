@@ -21,6 +21,7 @@
              <button class ="btn btn--primary" type="button" id="gifts">Gifts</button>
              <button class ="btn btn--primary" type="button" id="orders">Orders</button>
              <button class ="btn btn--primary" type="button" id="addGift">Add a new gift</button>
+             <button class ="btn btn--primary" type="button" id="resetPassword">Passwords requests</button>
              <button class ="btn btn--accent admin__buttons__report" type="button" id="report">Generate report</button>
         </div>
 
@@ -33,6 +34,7 @@
                         <th>Username</th>
                         <th>Email</th>
                         <th>Role</th>
+                        <th>Change password</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -45,6 +47,35 @@
                 <td class="cell__username"></td>
                 <td class="cell__email"></td>
                 <td class="cell__role"><span class="role-badge"></span></td>
+                <td class="cell_change_password"><button type="button" class="btn btn--accent change-password" data-userId="">Change their password</button></td>
+            </tr>
+        </template>
+        
+        
+        <template id="users__requests__container">
+            <table class="admin__table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Identifier</th>
+                        <th>Message</th>
+                        <th>Status</th>
+                        <th>Accept</th>
+                        <th>Deny</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </template>
+
+        <template id="user__requests_row">
+            <tr>
+                <td class="cell__id"></td>
+                <td class="cell__identifier"></td>
+                <td class="cell__message"></td>
+                <td class="cell__status"></td>
+                <td class="cell_accept"><button type="button" class="btn btn--accent accept" data-requestId="">Accept</button></td>
+                <td class="cell_deny"><button type="button" class="btn btn--accent deny" data-requestId="">Deny</button></td>
             </tr>
         </template>
 

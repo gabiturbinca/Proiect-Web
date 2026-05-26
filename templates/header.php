@@ -46,6 +46,7 @@
                                 <?php
                             }
                         ?>
+                        <li><a href="/changePassword.php">Change password</a></li>
                         <li id="navbar1"><a href="/recomandare.php" id="navbara1">Search gift</a></li>
                         <li id="navbar2"><a href="/comenzileMele.php" id="navbara2">My orders</a></li>
                         <li id="navbar3"><a href="#" id="navbara3">Logout</a></li>

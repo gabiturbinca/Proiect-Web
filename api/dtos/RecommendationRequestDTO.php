@@ -2,8 +2,8 @@
 
 final readonly class RecommendationRequestDTO {
     public function __construct(
-        public ?int   $categoryId,
-        public ?int   $brandId,
+        public array   $categoryIds,
+        public array   $brandIds,
         public ?int   $circumstanceId,
         public ?int   $contextId,
         public ?float $budgetMin,

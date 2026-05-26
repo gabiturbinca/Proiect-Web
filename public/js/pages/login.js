@@ -24,6 +24,12 @@ form.addEventListener('submit', async (e) => {
     }
     else{
       message_user.textContent="";
+      const flagHasToChangePassword=json.success.must_change_password;
+      if(flagHasToChangePassword===true)
+      {
+          window.location.href = '/changePassword.php';
+          return;
+      }
       message_user.classList.remove("error__message");
       window.location.href = '/home.php';
     }

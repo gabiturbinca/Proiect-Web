@@ -6,8 +6,8 @@ class RecommendationService {
 
     public function __construct(private GiftRepository $giftRepository) {
         $this->scorer = new Scorer([new BonusPopularityRule(),
-        new BrandMatchRule(),
-        new CategoryMatchRule(),
+        //new BrandMatchRule(),
+        //new CategoryMatchRule(),
         new CircumstanceMatchRule(),
         new ContextMatchRule(),
         new TagOverlapRule(),

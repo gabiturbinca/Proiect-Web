@@ -168,13 +168,21 @@ class GiftRepository {
         $where = ["c.is_active = true"];
         $params = [];
         
-        if ($req->categoryId !== null) {
-            $where[] = "g.category_id = ?";
-            $params[] = $req->categoryId;
+        if ($req->categoryIds !== null && count($req->categoryIds) > 0) {
+            $miniWhere = [];
+            foreach($req->categoryIds as $categoryId) {
+                $miniWhere[] = "g.category_id = ?";
+                $params[] = $categoryId;
+            }
+            $where[] = " ( " . implode(" OR ", $miniWhere) . " ) ";
         }
-        if ($req->brandId !== null) {
-            $where[] = "g.brand_id = ?";
-            $params[] = $req->brandId;
+        if ($req->brandIds !== null && count($req->brandIds) > 0) {
+            $miniWhere = [];
+            foreach($req->brandIds as $brandId) {
+                $miniWhere[] = "g.brand_id = ?";
+                $params[] = $brandId;
+            }
+            $where[] = " ( " . implode(" OR ", $miniWhere) . " ) ";
         }
         if ($req->budgetMin !== null) {
             $where[] = "g.price >= ?";

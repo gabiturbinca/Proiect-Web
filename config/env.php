@@ -1,7 +1,7 @@
 <?php
 function loadEnv($path) {
     //in prod variabilele vin din render, deci trebuie sa populez
-    foreach (['DB_HOST', 'DB_PORT', 'DB_NAME', 'DB_USER', 'DB_PASS', 'APP_ENV', 'JWT_SECRET'] as $key) {
+    foreach (['DB_HOST', 'DB_PORT', 'DB_NAME', 'DB_USER', 'DB_PASS', 'APP_ENV', 'JWT_SECRET', 'UNSPLASH_ACCESS_KEY'] as $key) {
         $value = getenv($key);
         if ($value !== false && !isset($_ENV[$key])) {
             $_ENV[$key] = $value;

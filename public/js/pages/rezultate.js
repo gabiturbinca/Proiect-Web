@@ -7,12 +7,30 @@ async function getGifts(page){
     let CATEGORIES_GIFTS_URL=`/api/gifts/category/${categoryId}?pageNumber=${page}&elemNumber=${perPage}`;
     const response = await apiFetch(CATEGORIES_GIFTS_URL);
     if(!response.ok){
-        let API_FORM=`api/gifts/recommend?pageNumber=${page}&elemNumber=${perPage}`;
-        const response1 = await apiFetch(API_FORM);
+          const recUrl = new URL("/api/gifts/recommend", window.location.origin);
+        const form = new URLSearchParams(window.location.search);
+
+        if(form.get("min"))  recUrl.searchParams.set("budget_min", form.get("min"));
+        if(form.get("max"))  recUrl.searchParams.set("budget_max", form.get("max"));
+
+        const categories = form.getAll("categories[]");
+        if(categories.length) recUrl.searchParams.set("categories", categories.join(","));
+
+        const brands = form.getAll("brands[]");
+        if(brands.length) recUrl.searchParams.set("brands", brands.join(","));
+
+        const tags = form.getAll("tags[]");
+        if(tags.length) recUrl.searchParams.set("tags", tags.join(","));
+
+        recUrl.searchParams.set("page", page);
+        recUrl.searchParams.set("limit", perPage);
+
+        const response1 = await apiFetch(recUrl.pathname + recUrl.search);
         if(!response1.ok){
-             throw new Error("Couldn't fetch the gifts!");
+            throw new Error("Couldn't fetch the gifts!");
         }
-         const rez = await response1.json();
+
+        const rez = await response1.json();
         return rez.success;
     }
     const rez = await response.json();

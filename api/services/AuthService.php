@@ -86,9 +86,6 @@ class AuthService {
         $user = filter_var($dto->identifier, FILTER_VALIDATE_EMAIL)
             ? $this->userRepository->findByEmail($dto->identifier)
             : $this->userRepository->findByUsername($dto->identifier);
-
-        // ANTI-ENUMERATION: nu spunem dacă utilizatorul există sau nu.
-        // Caller-ul returnează mereu 200 cu "Request submitted" indiferent.
         if ($user !== null) {
             $this->resetRequestRepository->create($user->getId(), $dto->message);
         }

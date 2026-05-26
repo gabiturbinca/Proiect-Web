@@ -33,6 +33,9 @@
                 <p class="auth__alt">
                     Don't have an account yet? <a href="/register.php">Register</a>
                 </p>
+                <p class="auth__alt">
+                    Forgot your password? <a href="/changePasswordRequest.php">Change password</a>
+                </p>
             </form>
         </div>
     </section>
