@@ -6,6 +6,6 @@ class CategoryMatchRule implements ScoringRule {
     {
         if($req->categoryId === null)
              return 0;
-        return $gift->getCategoryId() === $req->categoryId ? 5 : 0;
+        return $gift->getCategoryId() === $req->categoryId ? 50 : 0;
     }
 }
