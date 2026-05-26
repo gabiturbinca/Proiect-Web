@@ -32,13 +32,13 @@
 
                 <div class="auth__field">
                     <label for="password">Password</label>
-                    <input id="password" type="password" placeholder="Parola..." name="password" minlength="8" required>
+                    <input id="password" type="password" placeholder="Password..." name="password" minlength="8" required>
                 </div>
 
 
                 <div class="auth__field">
                     <label for="password_confirmation">Confirm password</label>
-                    <input id="password_confirmation" type="password" placeholder="Confirma parola..." name="password_confirmation" minlength="8" required>
+                    <input id="password_confirmation" type="password" placeholder="Confirm password..." name="password_confirmation" minlength="8" required>
                 </div>
 
                 <button type="submit" class="btn btn--primary auth__submit">Register!</button>

@@ -393,9 +393,9 @@ async function renderGiftForm(gift = null){
         circumstances.forEach(circumstance => circumstanceBox.append(createCircumstanceCheckbox(circumstanceTpl, circumstance)));
 
         if(gift){
-            form.querySelector("#name").value        = gift.name ?? "";
+            form.querySelector("#name").value = gift.name ?? "";
             form.querySelector("#description").value = gift.description ?? "";
-            form.querySelector("#price").value       = gift.price ?? "";
+            form.querySelector("#price").value = gift.price ?? "";
 
             const categoryId = categories.find(c => c.name === gift.category_name)?.id ?? "";
             const brandId    = brands.find(b => b.name === gift.brand_name)?.id ?? "";
