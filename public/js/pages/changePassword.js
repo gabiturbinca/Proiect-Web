@@ -31,15 +31,15 @@ form.addEventListener("submit", async(e) => {
     const data = Object.fromEntries(new FormData(form));
     const res = await changePassword(data);
     if(res.error){
-        message.textContent=res.error.message;  
         message.classList.remove(".success__messsage");
         message.classList.add("error__message");
+        message.textContent=res.error.message;  
+       
     }
     if(res.success){
-        message.textContent=res.success.message;  
         message.classList.remove("error__message");
         message.classList.add(".success__messsage");
-        
+        message.textContent=res.success.message;  
     }
          
 });
