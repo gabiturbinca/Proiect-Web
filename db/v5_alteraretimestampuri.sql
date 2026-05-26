@@ -1,20 +1,4 @@
--- v5: convert all TIMESTAMP columns to TIMESTAMPTZ
--- Preserves existing values by interpreting them as local time (Europe/Bucharest)
--- and converting to UTC-aware TIMESTAMPTZ.
---
--- After migration:
---   - All datetime values are TZ-aware (no more interpretation ambiguity)
---   - EXTRACT(EPOCH FROM ...) always returns UTC Unix epoch
---   - NOW() / CURRENT_TIMESTAMP work natively without `AT TIME ZONE 'UTC'` wrapping
---
--- IMPORTANT: this assumes existing TIMESTAMP values were stored as Bucharest local
--- (PostgreSQL default behavior with session TZ = Europe/Bucharest).
--- For password_changed_at rows that were updated AFTER the AT TIME ZONE 'UTC' fix,
--- the value would be in UTC, not Bucharest. To normalize, we reset it first.
 
--- 0. Normalize password_changed_at — reset everyone to NOW() (Bucharest local
---    while column is still TIMESTAMP, before migration). All existing JWT tokens
---    will be invalidated; users need to re-login. Acceptable for migration.
 UPDATE users SET password_changed_at = NOW();
 
 -- 1. users
