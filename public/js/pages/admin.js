@@ -614,7 +614,7 @@ async function renderPasswordRequests(){
                 if(!confirm("Are you sure you want to accept their request?")) return;
                 const res= await acceptRequest(acceptButton.dataset.requestId);
                 if(res.success){
-                    alert("Request accepted");
+                    alert(`Request accepted with the temporary password ${res.success.tempPassword}`);
                 }
                 if(res.error){
                     alert("Request couldn't be accepted!");
