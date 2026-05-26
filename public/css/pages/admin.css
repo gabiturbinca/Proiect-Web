@@ -48,22 +48,19 @@
 
 #admin__data_container{
     margin-top: var(--space-4);
-    overflow-x: auto;
 }
 
 .admin__table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
     font-size: var(--text-base);
 }
 
-.admin__table thead{
-    position: sticky;
-    top: 2;
-    z-index: var(--z-sticky);
-}
-
 .admin__table thead th {
+    position: sticky;
+    top: var(--header-height, 64px);
+    z-index: var(--z-sticky);
     text-align: left;
     padding: var(--space-4) var(--space-4);
     background: var(--color-primary-600);
