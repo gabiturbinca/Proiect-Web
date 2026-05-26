@@ -82,6 +82,13 @@ class CategoryRepository {
         $stmt->execute([$id]);
     }
 
+    public function findByName(string $name): ?Category {
+        $stmt = $this->db->prepare("SELECT * FROM categories WHERE LOWER(name) = LOWER(?)");
+        $stmt->execute([$name]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row ? $this->hydrate($row) : null;
+    }
+
     public function existsByName(string $name, ?int $excludeId = null): bool {
         if ($excludeId === null) {
             $stmt = $this->db->prepare("SELECT 1 FROM categories WHERE name = ?");

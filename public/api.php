@@ -22,7 +22,6 @@ $container->factory(UnsplashService::class, fn() => new UnsplashService(
     apiKey: $_ENV['UNSPLASH_ACCESS_KEY'] ?? '',
     cacheFile: __DIR__ . '/../db/logs/unsplash_cache.json',
 ));
-
 $container->instance(Container::class, $container);
 $router = new Router($container);
 
