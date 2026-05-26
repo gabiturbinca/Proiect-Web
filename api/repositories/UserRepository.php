@@ -92,7 +92,7 @@ class UserRepository {
 
     public function updatePassword(int $userId, string $password_hash): void {
         $stmt = $this->db->prepare(
-            "UPDATE users SET password_hash = ?, password_changed_at = (NOW() AT TIME ZONE 'UTC') WHERE id = ?"
+            "UPDATE users SET password_hash = ?, password_changed_at = NOW() WHERE id = ?"
         );
         $stmt->execute([$password_hash, $userId]);
     }
