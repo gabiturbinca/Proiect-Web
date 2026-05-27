@@ -80,7 +80,7 @@
 
 .card__image{
   max-width:250px;
-  max-height: auto;
+  height:auto;
 }
 
 .card__title{
