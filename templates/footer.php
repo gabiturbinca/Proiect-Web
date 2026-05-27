@@ -11,8 +11,7 @@
             <nav class="site-footer__nav" aria-label="About the project">
                 <h3>About</h3>
                 <ul>
-                    <li><a href="/">About the project</a></li>
-                    <li><a href="/">Documentation</a></li>
+                    <li><a href="scholarlyHTML/index.html">About the project</a></li>
                 </ul>
             </nav>
 
