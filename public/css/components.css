@@ -74,6 +74,10 @@
   max-width:320px;
 }
 
+.card .btn{
+ margin-top:auto;
+}
+
 .card:hover {
   box-shadow: var(--shadow-md);
 }
