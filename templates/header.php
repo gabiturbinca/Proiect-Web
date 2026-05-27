@@ -1,5 +1,4 @@
 <?php
-    session_start();
     require_once __DIR__ . '/../templates/helper_current_user.php';
     $page_title = $page_title ?? 'Gift Web Manager';
     $page_css = $page_css ?? null;
