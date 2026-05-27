@@ -307,6 +307,10 @@ label:hover ~ input:checked ~ label /* highlight previous selected stars */ { co
         min-width:var(--container-md);
     }
 
+    .related__gifts__container{
+        max-width:var(--container-xl);
+    }
+
     .gift__container{
         margin-top:var(--space-12);
         background-color: var(--color-surface);
@@ -344,5 +348,10 @@ label:hover ~ input:checked ~ label /* highlight previous selected stars */ { co
     .result__gift{
         margin-top:var(--space-6);
         max-width: var(--container-xl);
+    }
+    .related_gifts{
+        display:flex;
+        flex-direction: row;
+        flex-wrap: wrap;
     }
 }
