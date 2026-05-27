@@ -126,7 +126,7 @@ function buildRelatedGiftsCard(gift){
     const template = document.getElementById("result__gift");
     const card = template.content.firstElementChild.cloneNode(true);
     card.querySelector('.card__title').textContent = gift.name;
-    card.querySelector('.gift__link"').href=`/cadou.php?gift_id=${gift.id}`;
+    card.href=`/cadou.php?gift_id=${gift.id}`;
     const img = card.querySelector('.card__image');
     img.src = gift.image_url;
     img.alt = gift.name;
