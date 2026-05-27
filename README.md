@@ -142,7 +142,7 @@ Lista completă: [`api/routes.php`](api/routes.php).
 
 ## Documentație
 
-Raportul proiectului — **[Specificarea cerințelor software](docs/index.html)** — în format
+Raportul proiectului — **[Specificarea cerințelor software](public/scholarlyHTML/index.html)** — în format
 Scholarly HTML după macheta IEEE SRS: funcționalități esențiale, interacțiunea cu
 utilizatorul, cerințe funcționale și non-funcționale, decizii de arhitectură și etapele
 dezvoltării.
