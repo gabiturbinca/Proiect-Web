@@ -1,12 +1,13 @@
 <?php
-    $page_title = 'Pagina admin';
-    $page_css   = 'admin';
-    $page_js = 'admin';
-    require __DIR__ . '/../templates/header.php';
+    require_once __DIR__ . '/../templates/helper_current_user.php';
     if (!$isAdmin) {
         header('Location: /home.php');
         exit;
     }
+    $page_title = 'Pagina admin';
+    $page_css   = 'admin';
+    $page_js = 'admin';
+    require __DIR__ . '/../templates/header.php';
 ?>
 
 <section class="admin__container">
