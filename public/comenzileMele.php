@@ -6,7 +6,7 @@
 ?>
     <section class="my_commands">
         <div class="my_commands__header">
-            <h1>Comenzile mele: </h1>
+            <h1>My orders: </h1>
         </div>
 
         <template id="commands_template">

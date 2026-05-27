@@ -211,6 +211,12 @@ class GiftRepository {
         return $gifts;
     }
 
+    public function existsByName(string $name): bool {
+        $stmt = $this->db->prepare("SELECT 1 FROM gifts WHERE LOWER(name) = LOWER(?)");
+        $stmt->execute([$name]);
+        return (bool) $stmt->fetchColumn();
+    }
+
     public function create(Gift $gift): Gift {
         $stmt = $this->db->prepare(
             "INSERT INTO gifts (name, description, price, category_id, brand_id, specifications, image_url)

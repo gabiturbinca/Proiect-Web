@@ -92,7 +92,7 @@
 
                 <div class="field">
                     <label class="field__label" for="comment">Comment:</label>
-                    <textarea class="field__input" id="comment" name="comment" placeholder="Spune-ne ce crezi despre acest produs..." required></textarea>
+                    <textarea class="field__input" id="comment" name="comment" placeholder="Tell us what you think about the product.." required></textarea>
                 </div>
 
                 <span id="message__review"></span>

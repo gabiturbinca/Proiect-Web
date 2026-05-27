@@ -1,5 +1,4 @@
 <?php
-    session_start();
     require_once __DIR__ . '/../templates/helper_current_user.php';
     $page_title = $page_title ?? 'Gift Web Manager';
     $page_css = $page_css ?? null;
@@ -30,7 +29,7 @@
          <button class="navbar__toggle" 
                     aria-expanded="false" 
                     aria-controls="primary-menu"
-                    aria-label="Deschide meniu">
+                    aria-label="Open menu">
                 <span></span>
                 <span></span>
                 <span></span>

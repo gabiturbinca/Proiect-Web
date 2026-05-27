@@ -16,6 +16,14 @@ let onGifts = false;
 let onOrders=false;
 let onRequests=false;
 
+function syncHeaderHeight(){
+    const header = document.querySelector(".site-header");
+    if(!header) return;
+    document.documentElement.style.setProperty("--header-height", `${header.offsetHeight}px`);
+}
+syncHeaderHeight();
+window.addEventListener("resize", syncHeaderHeight);
+
 async function getAllUsers(){
     const URL = "/api/users";
     const res = await apiFetch(URL);

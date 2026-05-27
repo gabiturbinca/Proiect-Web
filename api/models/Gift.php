@@ -6,7 +6,7 @@ class Gift {
     private ?string $description;
     private float $price;
     private ?int $category_id;
-    private ?array $specifications;
+    private ?array $specifications = null;
     private string $created_at;
     private ?int $brand_id;
     private ?string $image_url;
