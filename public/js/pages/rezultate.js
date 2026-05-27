@@ -46,7 +46,7 @@ function createGiftCard(gift){
     card.querySelector('.card__image').alt=gift.name;
     card.querySelector('.card__title').textContent=gift.name;
     card.querySelector('.card__desc__gift').textContent=gift.description;
-    card.querySelector('.card__price__gift').textContent="Preț : "+ gift.price;
+    card.querySelector('.card__price__gift').textContent="Price : "+ gift.price;
 
     return card;
 }
@@ -61,7 +61,8 @@ async function renderGiftPage(page){
         const { gifts, gifts_count } = await getGifts(page);
         const totalPages = Math.ceil(gifts_count / perPage);
         if(page > totalPages && totalPages > 0) return;
-
+        if(gifts_count==0)
+            giftBox.innerHTML='<p>We could not find any gifts for your requirements. Pleasy try again!</p>';
         currentPage = page;
         const giftCards = gifts.map(createGiftCard);
         giftBox.replaceChildren(...giftCards);
