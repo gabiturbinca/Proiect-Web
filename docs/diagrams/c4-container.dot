@@ -1,0 +1,37 @@
+// C4 — Nivel 2: Container · GiW
+// dot -Tsvg c4-container.dot -o c4-container.svg
+digraph C4Container {
+    graph [bgcolor="white", fontname="Helvetica", rankdir=TB, nodesep=0.6, ranksep=0.9, pad=0.3, compound=true];
+    node  [fontname="Helvetica", fontsize=10, style="filled,rounded", shape=box, margin="0.22,0.16"];
+    edge  [fontname="Helvetica", fontsize=9, color="#525252", fontcolor="#404040"];
+
+    admin [label=<<B>Utilizator / Administrator</B>>, fillcolor="#0B4F4A", fontcolor="white"];
+
+    subgraph cluster_giw {
+        label=<<B>GiW — Gift Web Manager</B>>;
+        labeljust="l";
+        fontname="Helvetica";
+        fontsize=12;
+        style="rounded,dashed";
+        color="#00786F";
+        margin=16;
+
+        browser [label=<<B>Browser (client)</B><BR/><FONT POINT-SIZE="9">Pagini PHP randate server-side<BR/>+ JavaScript vanilla (Ajax, fetch)<BR/>[Container: HTML/CSS/JS]</FONT>>, fillcolor="#3DA9A5", fontcolor="white", width=3.0];
+
+        api [label=<<B>Server de aplicații</B><BR/><FONT POINT-SIZE="9">Apache + PHP 8.3 (fără framework)<BR/>Router, middleware, servicii, repository<BR/>[Container: PHP]</FONT>>, fillcolor="#00786F", fontcolor="white", width=3.0];
+
+        db [label=<<B>Bază de date</B><BR/><FONT POINT-SIZE="9">PostgreSQL · 18 tabele<BR/>[Container]</FONT>>, fillcolor="#00786F", fontcolor="white", shape=cylinder, width=2.2];
+
+        storage [label=<<B>Stocare imagini</B><BR/><FONT POINT-SIZE="9">filesystem /uploads/gifts<BR/>[Container: disc]</FONT>>, fillcolor="#3DA9A5", fontcolor="white", shape=folder];
+    }
+
+    dummyjson [label=<<B>DummyJSON</B><BR/><FONT POINT-SIZE="9">[Sistem extern]</FONT>>, fillcolor="#9CA3AF", fontcolor="white"];
+    unsplash  [label=<<B>Unsplash</B><BR/><FONT POINT-SIZE="9">[Sistem extern]</FONT>>, fillcolor="#9CA3AF", fontcolor="white"];
+
+    admin   -> browser [label="HTTPS"];
+    browser -> api     [label="JSON / Ajax\n(JWT în cookie HttpOnly, CSRF token)", color="#EA6C00", fontcolor="#EA6C00"];
+    api     -> db      [label="SQL parametrizat (PDO)"];
+    api     -> storage [label="scrie/citește fișiere"];
+    api     -> dummyjson [label="cURL HTTPS", color="#EA6C00", fontcolor="#EA6C00"];
+    api     -> unsplash  [label="cURL HTTPS", color="#EA6C00", fontcolor="#EA6C00"];
+}

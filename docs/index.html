@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="ro" prefix="dcterms: http://purl.org/dc/terms/">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GiW — Specificarea cerințelor software</title>
+    <meta name="description" content="Specificarea cerințelor software pentru aplicația Web GiW (Gift Web Manager), în format Scholarly HTML, conform machetei IEEE SRS.">
+
+    <!-- Metadata de citare (Highwire / Google Scholar) -->
+    <meta name="citation_title" content="GiW — Gift Web Manager: Specificarea cerințelor software">
+    <meta name="citation_author" content="[Nume Persoana A]">
+    <meta name="citation_author" content="[Nume Persoana B]">
+    <meta name="citation_publication_date" content="2026/05/27">
+    <meta name="citation_technical_report_institution" content="Universitate — curs Tehnologii Web">
+
+    <!-- Dublin Core -->
+    <link rel="schema.DCTERMS" href="http://purl.org/dc/terms/">
+    <meta name="DCTERMS.title" content="GiW — Gift Web Manager: Specificarea cerințelor software">
+    <meta name="DCTERMS.creator" content="[Nume Persoana A]">
+    <meta name="DCTERMS.creator" content="[Nume Persoana B]">
+    <meta name="DCTERMS.type" content="Text">
+    <meta name="DCTERMS.created" content="2026-05-27">
+    <meta name="DCTERMS.language" content="ro">
+
+    <link rel="stylesheet" href="css/report.css">
+</head>
+<body>
+<div class="report-layout">
+
+    <nav class="report-toc" aria-label="Cuprins">
+        <h2>Cuprins</h2>
+        <ol>
+            <li><a href="#introducere">1. Introducere</a></li>
+            <li><a href="#descriere">2. Descriere generală</a></li>
+            <li><a href="#interactiune">3. Interacțiunea cu utilizatorul</a></li>
+            <li><a href="#functionale">4. Cerințe funcționale</a></li>
+            <li><a href="#nefunctionale">5. Cerințe non-funcționale</a></li>
+            <li><a href="#arhitectura">6. Decizii de arhitectură</a></li>
+            <li><a href="#evolutie">7. Evoluția arhitecturii</a></li>
+            <li><a href="#referinte">Referințe</a></li>
+            <li><a href="#glosar">Glosar</a></li>
+        </ol>
+    </nav>
+
+    <article class="report" typeof="schema:ScholarlyArticle" vocab="http://schema.org/">
+        <header class="report-header">
+            <p class="doc-kicker">Raport · GiW — Gift Web Manager</p>
+            <h1 property="name headline">Specificarea cerințelor software</h1>
+            <p class="authors">
+                <span property="author" typeof="Person"><span property="name">[Nume Persoana A]</span></span> &amp;
+                <span property="author" typeof="Person"><span property="name">[Nume Persoana B]</span></span>
+            </p>
+            <p class="meta">
+                Format Scholarly HTML · macheta IEEE System Requirements Specification ·
+                versiunea <span property="version">1.0</span>,
+                <time property="datePublished" datetime="2026-05-27">27 mai 2026</time>
+            </p>
+        </header>
+
+        <section class="abstract" role="doc-abstract">
+            <h2>Rezumat</h2>
+            <p property="abstract">Documentul specifică cerințele software ale aplicației Web
+            <dfn>GiW (Gift Web Manager)</dfn>, un asistent digital care recomandă cadouri în
+            funcție de preferințe, circumstanță, context social, buget, ofertant și anotimp.
+            Sunt descrise interacțiunea cu utilizatorul, cerințele funcționale și
+            non-funcționale, deciziile de arhitectură și etapele dezvoltării, conform machetei
+            IEEE pentru specificarea cerințelor.</p>
+        </section>
+
+        <section id="introducere" role="doc-introduction" property="articleSection">
+            <h2>1. Introducere</h2>
+            <p><strong>Scop.</strong> GiW asistă utilizatorul în alegerea unui cadou pentru o
+            persoană sau un grup, filtrând și ordonând un catalog de produse după buget,
+            categorie, marcă, ocazie și relația socială cu destinatarul. Sistemul oferă și
+            recenzii, simularea comenzii (cu expediere anonimă opțională) și un modul de
+            administrare cu rapoarte.</p>
+            <p><strong>Convenții.</strong> Cerințele funcționale sunt identificate prin
+            <span class="req">RF-x.y</span>, cele non-funcționale prin
+            <span class="req">RNF-x.y</span>. Termenii definiți apar în <dfn>stil
+            evidențiat</dfn> și sunt reluați în glosar; identificatorii tehnici apar
+            <code>monospațiat</code>.</p>
+            <p><strong>Domeniu.</strong> Aplicație Web de sine stătătoare, accesibilă din
+            browser. Serviciile externe (DummyJSON, Unsplash) sunt opționale — folosite la
+            popularea catalogului și a imaginilor — iar indisponibilitatea lor nu afectează
+            funcțiile esențiale.</p>
+        </section>
+
+        <section id="descriere" property="articleSection">
+            <h2>2. Descriere generală</h2>
+
+            <h3>2.1 Perspectiva produsului</h3>
+            <p>Produs nou, construit ca aplicație bazată pe servicii: un backend PHP expune un
+            API REST, iar un client (HTML/CSS/JavaScript vanilla) îl consumă asincron prin
+            Ajax. Persistența se face în PostgreSQL.</p>
+
+            <h3>2.2 Funcțiile produsului</h3>
+            <p>La nivel înalt, sistemul oferă:</p>
+            <ul>
+                <li>gestiunea contului — înregistrare, autentificare, schimbarea și resetarea parolei;</li>
+                <li>recomandarea de cadouri pe baza unui formular de criterii;</li>
+                <li>răsfoirea catalogului și vizualizarea detaliilor unui cadou, cu cadouri înrudite;</li>
+                <li>recenzii și note pentru cadouri;</li>
+                <li>plasarea și urmărirea comenzilor, cu expediere anonimă opțională;</li>
+                <li>administrarea aplicației — CRUD pe catalog, gestiunea comenzilor și a
+                utilizatorilor, rapoarte, import/export, integrări externe.</li>
+            </ul>
+
+            <h3>2.3 Clase de utilizatori</h3>
+            <table>
+                <caption>Tabelul 1 — Clasele de utilizatori și accesul tipic.</caption>
+                <thead><tr><th>Clasă</th><th>Descriere</th><th>Acces</th></tr></thead>
+                <tbody>
+                    <tr><td>Vizitator</td><td>Neautentificat</td><td>Răsfoire catalog, recomandări, citire recenzii, cerere de resetare parolă</td></tr>
+                    <tr><td>Utilizator</td><td>Cont autentificat</td><td>+ comenzi, recenzii proprii, schimbare parolă</td></tr>
+                    <tr><td>Administrator</td><td>Rol <code>admin</code></td><td>+ CRUD catalog, gestiune comenzi/utilizatori, rapoarte, import/export, integrări</td></tr>
+                </tbody>
+            </table>
+
+            <h3>2.4 Mediul de operare</h3>
+            <p>Server PHP 8.3 pe Apache, PostgreSQL, containerizat cu Docker și desfășurat pe
+            Render. Client: orice browser modern cu suport pentru <code>fetch</code>,
+            <code>&lt;template&gt;</code> și cookie-uri. Comunicație peste HTTPS.</p>
+
+            <h3>2.5 Constrângeri de proiectare</h3>
+            <ul>
+                <li>Fără framework la client sau server (cerință) — router, container DI,
+                middleware și validare implementate manual.</li>
+                <li>Arhitectură bazată pe servicii Web, cu invocare asincronă Ajax.</li>
+                <li>HTML și CSS valide W3C; design responsive.</li>
+                <li>Cod-sursă sub licență liberă; conținut conform Creative Commons.</li>
+            </ul>
+
+            <h3>2.6 Presupuneri și dependențe</h3>
+            <ul>
+                <li>Utilizatorul are JavaScript activat, pentru conținutul dinamic încărcat prin Ajax.</li>
+                <li>Serviciile externe DummyJSON și Unsplash sunt disponibile la momentul
+                importului administrativ; altfel, funcțiile esențiale rămân operaționale.</li>
+                <li>Aplicația rulează peste HTTPS, condiție pentru securitatea cookie-urilor.</li>
+            </ul>
+        </section>
+
+        <section id="interactiune" property="articleSection">
+            <h2>3. Interacțiunea cu utilizatorul</h2>
+            <p>Interfața este un set de pagini responsive randate server-side și îmbogățite cu
+            JavaScript, care consumă API-ul asincron prin Ajax. Navigarea se face printr-o bară
+            superioară al cărei conținut se adaptează rolului: vizitatorul vede „Search gift”,
+            „Login” și „Register”; utilizatorul autentificat vede în plus „My orders” și
+            „Change password”; administratorul vede și intrarea „Admin”. Pe ecrane înguste
+            meniul colapsează într-un buton hamburger accesibil
+            (<code>aria-expanded</code>/<code>aria-controls</code>).</p>
+
+            <h3>3.1 Convenții de interacțiune și feedback</h3>
+            <ul>
+                <li><strong>Validare în doi pași.</strong> Formularele validează intrarea pe
+                client (tipuri, câmpuri obligatorii, interval de buget) înainte de trimitere;
+                serverul revalidează și întoarce erori structurate pe câmp (cod 422).</li>
+                <li><strong>Feedback explicit.</strong> Fiecare acțiune confirmă rezultatul
+                prin mesaj de succes sau eroare; acțiunile distructive sau sensibile (anulare
+                comandă, resetare parolă, aprobare/respingere cerere) cer confirmare prealabilă.</li>
+                <li><strong>Paginare.</strong> Listele lungi (rezultate, cadouri, comenzi,
+                utilizatori, cereri) oferă navigare înainte/înapoi, cu butoanele dezactivate la
+                capete.</li>
+                <li><strong>Degradare grațioasă.</strong> La eșecul unei cereri, doar zona
+                afectată afișează un mesaj prietenos, fără a bloca restul paginii.</li>
+                <li><strong>Sesiune.</strong> Autentificarea se transmite printr-un cookie
+                <code>HttpOnly</code> cu token JWT; cererile de modificare poartă automat
+                antetul <code>X-CSRF-Token</code>. Delogarea invalidează sesiunea.</li>
+            </ul>
+
+            <h3>3.2 Pagini și acțiuni</h3>
+            <table>
+                <caption>Tabelul 2 — Paginile principale și interacțiunile utilizatorului.</caption>
+                <thead><tr><th>Pagină</th><th>Cine</th><th>Interacțiune</th></tr></thead>
+                <tbody>
+                    <tr><td>Start</td><td>toți</td><td>Prezentarea aplicației și acces rapid la căutarea de cadouri</td></tr>
+                    <tr><td>Înregistrare / Autentificare</td><td>vizitator</td><td>Completează formularul; la succes este redirecționat; la eșec primește mesaj de eroare</td></tr>
+                    <tr><td>Formular recomandare</td><td>toți</td><td>Stabilește bugetul (min/max) și bifează categorii, mărci și tag-uri, apoi trimite</td></tr>
+                    <tr><td>Rezultate</td><td>toți</td><td>Parcurge cardurile de cadouri paginate și deschide un cadou</td></tr>
+                    <tr><td>Pagina cadoului</td><td>toți / autentificat</td><td>Vede detalii, imagine, recenzii și cadouri înrudite; autentificat: lasă recenzie sau plasează comandă</td></tr>
+                    <tr><td>Plasare comandă</td><td>utilizator</td><td>Introduce cantitate, adresă și destinatar, alege opțiunea anonimă și trimite comanda</td></tr>
+                    <tr><td>Comenzile mele</td><td>utilizator</td><td>Listează comenzile proprii și le anulează în stările permise</td></tr>
+                    <tr><td>Schimbare parolă</td><td>utilizator</td><td>Introduce parola curentă și pe cea nouă</td></tr>
+                    <tr><td>Cerere resetare parolă</td><td>vizitator</td><td>Trimite o cerere cu identificator și mesaj către administratori</td></tr>
+                    <tr><td>Panou administrare</td><td>admin</td><td>Comută între utilizatori, cadouri, comenzi, cereri, rapoarte și import/export; acționează inline (editare, încărcare imagine, schimbare status, aprobare/respingere)</td></tr>
+                </tbody>
+            </table>
+
+            <h3>3.3 Fluxul principal: descoperirea unui cadou</h3>
+            <p>Fluxul central pornește din formularul de recomandare: utilizatorul stabilește
+            intervalul de buget și selectează categoriile, mărcile și tag-urile dorite. La
+            trimitere, aplicația cere API-ului lista de cadouri candidate, le ordonează după
+            scor și le afișează paginat ca un set de carduri (imagine, titlu, descriere, preț).
+            Selectarea unui card deschide pagina cadoului, de unde utilizatorul autentificat
+            poate lăsa o recenzie sau iniția o comandă; tot acolo sunt sugerate cadouri
+            înrudite, permițând explorarea în continuare. Astfel, interacțiunea acoperă întregul
+            parcurs: de la criterii → rezultate → detaliu → acțiune (comandă/recenzie).</p>
+        </section>
+
+        <section id="functionale" property="articleSection">
+            <h2>4. Cerințe funcționale</h2>
+
+            <h3>4.1 Autentificare și cont</h3>
+            <p><span class="req">RF-1.1</span> Înregistrare cu nume, e-mail și parolă, cu
+            unicitatea numelui și e-mailului (conflict 409 altfel).</p>
+            <p><span class="req">RF-1.2</span> Autentificare cu nume sau e-mail + parolă; la
+            succes se emit token JWT (cookie) și token CSRF.</p>
+            <p><span class="req">RF-1.3</span> Limitarea autentificării la 5 încercări / 5 minute
+            per adresă IP.</p>
+            <p><span class="req">RF-1.4</span> Schimbarea parolei de către utilizator;
+            token-urile emise anterior devin invalide.</p>
+            <p><span class="req">RF-1.5</span> Trei fluxuri de resetare: cerere aprobată de
+            admin; resetare directă de către admin; schimbare forțată la prima autentificare
+            cu parolă temporară.</p>
+            <p><span class="req">RF-1.6</span> Răspuns identic la cererile de resetare,
+            indiferent dacă identificatorul există (anti-enumerare).</p>
+
+            <h3>4.2 Motorul de recomandare</h3>
+            <p><span class="req">RF-2.1</span> Formular de criterii: interval de buget,
+            categorii, mărci, tag-uri.</p>
+            <p><span class="req">RF-2.2</span> Filtrarea candidaților și ordonarea după un scor
+            compus (potrivire buget, categorie, marcă, popularitate, context, circumstanță).</p>
+            <p><span class="req">RF-2.3</span> Rezultate paginate.</p>
+            <p><span class="req">RF-2.4</span> Afișarea cadourilor înrudite (similare, care se
+            potrivesc împreună, care includ).</p>
+
+            <h3>4.3 Recenzii</h3>
+            <p><span class="req">RF-3.1</span> Citirea publică a recenziilor unui cadou.</p>
+            <p><span class="req">RF-3.2</span> Adăugarea, modificarea și ștergerea propriei
+            recenzii (notă 1–5 + comentariu), cel mult una per cadou.</p>
+
+            <h3>4.4 Comenzi și simulare expediere</h3>
+            <p><span class="req">RF-4.1</span> Plasarea unei comenzi cu cantitate, adresă și
+            destinatar.</p>
+            <p><span class="req">RF-4.2</span> Marcarea comenzii ca anonimă.</p>
+            <p><span class="req">RF-4.3</span> Vizualizarea propriilor comenzi și anularea în
+            stările permise.</p>
+            <p><span class="req">RF-4.4</span> Ciclu de viață controlat al statusului, cu
+            respingerea tranzițiilor nepermise.</p>
+
+            <h3>4.5 Administrare</h3>
+            <p><span class="req">RF-5.1</span> CRUD cadouri și categorii, inclusiv încărcarea și
+            ștergerea imaginii unui cadou.</p>
+            <p><span class="req">RF-5.2</span> Lista utilizatorilor și resetarea parolei oricăruia.</p>
+            <p><span class="req">RF-5.3</span> Vizualizarea tuturor comenzilor și schimbarea
+            statusului.</p>
+            <p><span class="req">RF-5.4</span> Gestiunea cererilor de resetare în așteptare
+            (aprobare/respingere).</p>
+            <p><span class="req">RF-5.5</span> Validarea tipului real (MIME) la încărcarea
+            imaginilor și securizarea numelui fișierului.</p>
+
+            <h3>4.6 Rapoarte</h3>
+            <p><span class="req">RF-6.1</span> Rapoarte privind cadourile recomandate și cele
+            alese, filtrabile pe categorie și interval de timp.</p>
+            <p><span class="req">RF-6.2</span> Generare în formatele HTML, JSON, CSV și PDF.</p>
+
+            <h3>4.7 Import și export</h3>
+            <p><span class="req">RF-7.1</span> Export de cadouri și categorii în CSV și JSON.</p>
+            <p><span class="req">RF-7.2</span> Import din aceleași formate, compatibil cu
+            exportul (round-trip).</p>
+
+            <h3>4.8 Integrări externe</h3>
+            <p><span class="req">RF-8.1</span> Import unic de produse din DummyJSON, cu creare
+            automată a mărcilor/categoriilor lipsă, idempotent și tolerant la erori per-produs.</p>
+            <p><span class="req">RF-8.2</span> Obținerea automată a unei imagini din Unsplash
+            pentru categoriile noi fără imagine; eșecul serviciului nu blochează importul.</p>
+        </section>
+
+        <section id="nefunctionale" property="articleSection">
+            <h2>5. Cerințe non-funcționale</h2>
+
+            <h3>5.1 Securitate</h3>
+            <p><span class="req">RNF-1.1</span> Parolele stocate doar ca hash bcrypt; verificare
+            în timp constant, cu hash fals la eșec pentru uniformizarea timpului de răspuns.</p>
+            <p><span class="req">RNF-1.2</span> Toate interogările SQL parametrizate — prevenire
+            a injecției SQL.</p>
+            <p><span class="req">RNF-1.3</span> Randarea datelor prin <code>textContent</code>
+            (client) și <code>htmlspecialchars</code> (server) — prevenire XSS.</p>
+            <p><span class="req">RNF-1.4</span> Protecție CSRF prin tiparul double-submit cookie;
+            JWT în cookie <code>HttpOnly</code> + <code>SameSite=Lax</code>.</p>
+            <p><span class="req">RNF-1.5</span> Autorizare prin lanț de middleware
+            (autentificare → CSRF → rol admin); invalidarea sesiunilor la schimbarea parolei.</p>
+
+            <h3>5.2 Performanță</h3>
+            <p><span class="req">RNF-2.1</span> Listări paginate.</p>
+            <p><span class="req">RNF-2.2</span> Indecși dedicați pentru interogările frecvente
+            (ex. rate limiting).</p>
+            <p><span class="req">RNF-2.3</span> Cache pe disc pentru răspunsurile serviciilor
+            externe.</p>
+
+            <h3>5.3 Atribute de calitate</h3>
+            <p><span class="req">RNF-3.1</span> Mentenabilitate: cod modular, stratificat, cu
+            șabloane de proiectare și responsabilități separate.</p>
+            <p><span class="req">RNF-3.2</span> Robustețe: handler global de excepții care
+            mapează tipurile de erori pe coduri HTTP; erorile serviciilor externe sunt izolate.</p>
+            <p><span class="req">RNF-3.3</span> Accesibilitate: HTML semantic, atribute ARIA,
+            contrast adecvat.</p>
+        </section>
+
+        <section id="arhitectura" property="articleSection">
+            <h2>6. Decizii de arhitectură</h2>
+            <p>Deciziile cheie și motivația lor (format ADR rezumat):</p>
+            <table>
+                <caption>Tabelul 3 — Decizii de arhitectură și motivația lor.</caption>
+                <thead><tr><th>Decizie</th><th>Motivație</th></tr></thead>
+                <tbody>
+                    <tr><td>API REST stratificat (Router → Middleware → Controller → Service → Repository → PDO)</td><td>Separarea responsabilităților, testabilitate, izolarea SQL-ului de logica de business</td></tr>
+                    <tr><td>Aplicație multi-pagină (MPA) cu randare server-side</td><td>Fără framework de UI, MPA e mai robust decât un router JS manual; conținutul critic e util înainte de execuția JavaScript</td></tr>
+                    <tr><td>Progressive enhancement (Ajax peste pagini SSR)</td><td>Respectă cerința de invocare asincronă a serviciilor, păstrând o bază funcțională fără JS</td></tr>
+                    <tr><td>Autentificare JWT hibridă (cookie HttpOnly + verificare DB)</td><td>Structură JWT, dar cu posibilitatea de revocare la schimbarea parolei prin <code>password_changed_at</code></td></tr>
+                    <tr><td>Container de injecție a dependențelor prin reflexie</td><td>Construiește graful de dependențe automat, fără cablare manuală</td></tr>
+                    <tr><td>Șabloane de proiectare: Strategy + Composite (scoring), Factory (rapoarte), Repository, DTO</td><td>Extensibilitate (reguli de scoring și formate de raport noi se adaugă izolat)</td></tr>
+                    <tr><td>PostgreSQL cu TIMESTAMPTZ pe toate coloanele temporale</td><td>Normalizare internă la UTC; elimină o clasă de erori de fus orar la compararea timpilor</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="evolutie" property="articleSection">
+            <h2>7. Evoluția arhitecturii și a implementării</h2>
+            <p>Sistemul a fost construit incremental, pe etape de funcționalitate. Mai jos,
+            evoluția surprinde nu doar <em>ce</em> s-a implementat, ci și <em>cum</em> a crescut
+            arhitectura — ce strat sau șablon a fost introdus la fiecare pas.</p>
+            <ol>
+                <li><strong>Fundația de date și structura proiectului.</strong> S-a fixat
+                separarea dintre rădăcina publică și codul de aplicație și schema relațională
+                PostgreSQL: entitățile centrale (utilizatori, cadouri, categorii, mărci),
+                taxonomia (tag-uri, circumstanțe, contexte) și tabelele de legătură. Modelul de
+                date a stabilit de la început relațiile many-to-many și constrângerile de
+                integritate.</li>
+
+                <li><strong>Stratul de autentificare și securitate.</strong> Aici a luat formă
+                arhitectura stratificată: front controller, router manual și container de
+                injecție a dependențelor prin reflexie. S-au introdus lanțul de middleware
+                (autentificare → CSRF → rol), JWT în cookie <code>HttpOnly</code>, tiparul CSRF
+                double-submit și rate limiting-ul la autentificare. Securitatea a devenit un
+                strat transversal, nu cod împrăștiat prin controllere.</li>
+
+                <li><strong>Logica de business: recomandare, recenzii, comenzi.</strong> S-a
+                consolidat separarea Controller → Service → Repository. Motorul de recomandare a
+                fost construit cu șabloanele Strategy + Composite — fiecare criteriu de scoring
+                (buget, categorie, marcă, popularitate, context, circumstanță) este o regulă
+                independentă, compozabilă. Recenziile și comenzile au adăugat reguli de domeniu
+                (o recenzie per utilizator per cadou; ciclul de viață controlat al comenzii).</li>
+
+                <li><strong>Modulul de administrare și schimbul de date.</strong> A apărut
+                panoul de administrare (CRUD pe catalog, gestiunea comenzilor și a utilizatorilor)
+                și randarea server-side conștientă de rol (meniul adaptat prin decodarea JWT).
+                S-au adăugat exportul/importul în formate deschise (CSV/JSON) și relațiile de
+                cadouri înrudite.</li>
+
+                <li><strong>Rapoarte prin Factory.</strong> Generarea rapoartelor a fost izolată
+                într-o fabrică ce serializează același set de date în HTML, JSON, CSV și PDF;
+                adăugarea unui format nou nu afectează logica existentă.</li>
+
+                <li><strong>Resetarea parolei și revocarea sesiunilor.</strong> S-au implementat
+                cele trei fluxuri de resetare și invalidarea token-urilor prin
+                <code>password_changed_at</code>. Arhitectura de autentificare a trecut astfel de
+                la „pur stateless” la hibrid — o verificare în baza de date per cerere permite
+                revocarea sesiunilor la schimbarea parolei.</li>
+
+                <li><strong>Livrare și normalizarea timpului.</strong> Containerizare Docker și
+                desfășurare pe Render, cu încărcare tolerantă a configurației (mediul
+                containerului, apoi opțional fișierul <code>.env</code>). Migrarea tuturor
+                coloanelor temporale la <code>TIMESTAMPTZ</code> a eliminat o clasă de erori de
+                fus orar la compararea timpilor.</li>
+
+                <li><strong>Integrări cu servicii externe.</strong> S-au adăugat serviciile
+                pentru Unsplash și DummyJSON, fiecare izolat prin
+                <code>ExternalServiceException</code> și tratat centralizat (cod 502 + mesaj
+                generic). Importul DummyJSON populează catalogul (find-or-create pe mărci și
+                categorii, idempotent și tolerant la erori), iar categoriile noi primesc automat
+                o imagine din Unsplash.</li>
+            </ol>
+        </section>
+
+        <section id="referinte" role="doc-bibliography" property="articleSection">
+            <h2>Referințe</h2>
+            <ol>
+                <li property="citation" typeof="CreativeWork">
+                    <cite property="name">Enunțul proiectului GiW — Gift Web Manager</cite>.
+                    Curs Tehnologii Web, 2026.
+                </li>
+                <li property="citation" typeof="CreativeWork">
+                    IEEE, <cite property="name">Recommended Practice for Software Requirements
+                    Specifications (IEEE 830)</cite>.
+                </li>
+                <li property="citation" typeof="CreativeWork">
+                    W3C Scholarly HTML Community Group,
+                    <cite property="name">Scholarly HTML</cite>.
+                    <a property="url" href="https://www.w3.org/community/scholarlyhtml/">w3.org/community/scholarlyhtml</a>.
+                </li>
+                <li property="citation" typeof="CreativeWork">
+                    <cite property="name">schema.org vocabulary</cite>.
+                    <a property="url" href="https://schema.org/">schema.org</a>.
+                </li>
+            </ol>
+        </section>
+
+        <section id="glosar" role="doc-glossary" property="articleSection">
+            <h2>Glosar</h2>
+            <dl>
+                <dt><dfn>JWT</dfn></dt>
+                <dd>JSON Web Token — mecanism de autentificare bazat pe token semnat.</dd>
+                <dt><dfn>CSRF</dfn></dt>
+                <dd>Cross-Site Request Forgery — prevenit prin tiparul double-submit cookie.</dd>
+                <dt><dfn>DTO</dfn></dt>
+                <dd>Data Transfer Object — obiect imutabil pentru transferul datelor.</dd>
+                <dt><dfn>Middleware</dfn></dt>
+                <dd>Filtru compozabil aplicat cererii înainte de controller.</dd>
+                <dt><dfn>Repository</dfn></dt>
+                <dd>Strat care izolează accesul la baza de date.</dd>
+                <dt><dfn>SSR</dfn></dt>
+                <dd>Server-Side Rendering — randarea HTML pe server înainte de livrare.</dd>
+            </dl>
+        </section>
+
+        <footer class="report-footer">
+            <p>GiW — Gift Web Manager · Specificarea cerințelor software (machetă IEEE SRS,
+            format Scholarly HTML). Cod-sursă sub licență liberă; conținut conform Creative
+            Commons.</p>
+        </footer>
+    </article>
+</div>
+</body>
+</html>

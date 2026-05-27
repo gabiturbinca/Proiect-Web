@@ -1,0 +1,30 @@
+// C4 — Nivel 1: System Context · GiW
+// dot -Tsvg c4-context.dot -o c4-context.svg
+digraph C4Context {
+    graph [bgcolor="white", fontname="Helvetica", rankdir=TB, nodesep=0.7, ranksep=1.0, pad=0.3];
+    node  [fontname="Helvetica", fontsize=11, style="filled,rounded", shape=box, margin="0.25,0.18"];
+    edge  [fontname="Helvetica", fontsize=9, color="#525252", fontcolor="#404040"];
+
+    // Actori
+    visitor [label=<<B>Vizitator</B><BR/><FONT POINT-SIZE="9">utilizator anonim</FONT>>, shape=box, style="filled", fillcolor="#0B4F4A", fontcolor="white"];
+    user    [label=<<B>Utilizator</B><BR/><FONT POINT-SIZE="9">cont autentificat</FONT>>, shape=box, style="filled", fillcolor="#0B4F4A", fontcolor="white"];
+    admin   [label=<<B>Administrator</B><BR/><FONT POINT-SIZE="9">gestionează aplicația</FONT>>, shape=box, style="filled", fillcolor="#0B4F4A", fontcolor="white"];
+
+    // Sistemul central
+    giw [label=<<B>GiW — Gift Web Manager</B><BR/><FONT POINT-SIZE="9">Asistent digital pentru alegerea cadourilor<BR/>în funcție de preferințe, ocazie, buget</FONT>>,
+         fillcolor="#00786F", fontcolor="white", width=3.6];
+
+    // Sisteme externe
+    dummyjson [label=<<B>DummyJSON</B><BR/><FONT POINT-SIZE="9">API public de produse<BR/>[Sistem extern]</FONT>>, fillcolor="#9CA3AF", fontcolor="white"];
+    unsplash  [label=<<B>Unsplash</B><BR/><FONT POINT-SIZE="9">API public de imagini<BR/>[Sistem extern]</FONT>>, fillcolor="#9CA3AF", fontcolor="white"];
+
+    { rank=same; visitor; user; admin; }
+    { rank=same; dummyjson; unsplash; }
+
+    visitor -> giw [label="caută cadouri"];
+    user    -> giw [label="recomandări, comenzi, recenzii"];
+    admin   -> giw [label="CRUD, rapoarte, import/export"];
+
+    giw -> dummyjson [label="importă catalog (HTTPS/JSON)", color="#EA6C00", fontcolor="#EA6C00"];
+    giw -> unsplash  [label="imagini categorii (HTTPS/JSON)", color="#EA6C00", fontcolor="#EA6C00"];
+}
