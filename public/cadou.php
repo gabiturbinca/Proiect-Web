@@ -45,7 +45,7 @@
           <div id ="related_gifts" class="related_gifts"></div>
 
           <template id="result__gift" class="result__gift">
-                <a href ="" class ="card card__gift" id="gift__link">
+                <a href ="" class ="card card__gift gift__link">
                     <img src="" alt="" class ="card__image">
                     <p class="card__title"></p>
                     <p class="card__desc card__description"></p>
