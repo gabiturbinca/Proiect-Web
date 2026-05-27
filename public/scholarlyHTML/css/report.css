@@ -1,0 +1,409 @@
+/* ==========================================================================
+   GiW — Foaie de stiluri pentru raportul de proiect (Scholarly HTML)
+   Reutilizează limbajul vizual al aplicației (teal + orange).
+   CSS valid, responsive, fără dependențe externe.
+   ========================================================================== */
+
+:root {
+    --c-primary: #00786F;
+    --c-primary-dark: #0B4F4A;
+    --c-primary-light: #F0FDFA;
+    --c-accent: #EA6C00;
+    --c-text: #171717;
+    --c-text-muted: #525252;
+    --c-bg: #FFFFFF;
+    --c-bg-subtle: #FAFAFA;
+    --c-border: #D4D4D4;
+    --c-border-subtle: #ECECEC;
+    --c-code-bg: #F5F5F5;
+
+    --font-body: 'Manrope', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'SF Mono', 'Cascadia Code', Consolas, 'Liberation Mono', monospace;
+
+    --maxw: 50rem;
+    --radius: 8px;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--c-text);
+    background: var(--c-bg);
+}
+
+/* ---- Layout cu sidebar pentru cuprins -------------------------------- */
+
+.report-layout {
+    display: grid;
+    grid-template-columns: 16rem minmax(0, 1fr);
+    gap: 2rem;
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.report-toc {
+    position: sticky;
+    top: 0;
+    align-self: start;
+    max-height: 100vh;
+    overflow-y: auto;
+    padding: 2rem 0;
+    font-size: 0.875rem;
+    border-right: 1px solid var(--c-border-subtle);
+}
+
+.report-toc h2 {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--c-text-muted);
+    margin: 0 0 0.75rem;
+}
+
+.report-toc ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    counter-reset: toc;
+}
+
+.report-toc li { margin: 0.15rem 0; }
+
+.report-toc a {
+    display: block;
+    padding: 0.25rem 0.5rem;
+    color: var(--c-text-muted);
+    text-decoration: none;
+    border-radius: 4px;
+    border-left: 2px solid transparent;
+}
+
+.report-toc a:hover,
+.report-toc a:focus {
+    color: var(--c-primary);
+    background: var(--c-primary-light);
+    border-left-color: var(--c-primary);
+}
+
+.report-toc ol ol { padding-left: 0.85rem; }
+
+article.report {
+    max-width: var(--maxw);
+    padding: 2.5rem 0 5rem;
+}
+
+/* ---- Antet document --------------------------------------------------- */
+
+.report-header {
+    border-bottom: 3px solid var(--c-primary);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.report-header .doc-kicker {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--c-accent);
+    margin: 0 0 0.5rem;
+}
+
+.report-header h1 {
+    font-size: 2.25rem;
+    line-height: 1.15;
+    margin: 0 0 0.75rem;
+    color: var(--c-primary-dark);
+}
+
+.report-header .authors {
+    margin: 0.5rem 0 0;
+    color: var(--c-text-muted);
+    font-size: 0.95rem;
+}
+
+.report-header .meta {
+    margin: 0.25rem 0 0;
+    color: var(--c-text-muted);
+    font-size: 0.85rem;
+}
+
+/* ---- Abstract --------------------------------------------------------- */
+
+.abstract {
+    background: var(--c-bg-subtle);
+    border: 1px solid var(--c-border-subtle);
+    border-left: 4px solid var(--c-primary);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    margin: 0 0 2.5rem;
+}
+
+.abstract h2 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0 0 0.5rem;
+    color: var(--c-primary);
+}
+
+.abstract p { margin: 0; font-size: 0.95rem; }
+
+/* ---- Titluri ---------------------------------------------------------- */
+
+h2, h3, h4 {
+    line-height: 1.25;
+    color: var(--c-primary-dark);
+    scroll-margin-top: 1rem;
+}
+
+article.report > section > h2 {
+    font-size: 1.6rem;
+    margin: 3rem 0 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--c-border-subtle);
+}
+
+h3 { font-size: 1.2rem; margin: 2rem 0 0.75rem; }
+h4 { font-size: 1rem; margin: 1.5rem 0 0.5rem; color: var(--c-text); }
+
+p { margin: 0 0 1rem; }
+
+a { color: var(--c-primary); }
+
+/* ---- Termeni definiți ------------------------------------------------- */
+
+dfn {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--c-primary-dark);
+}
+
+/* ---- Cod -------------------------------------------------------------- */
+
+code {
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+    background: var(--c-code-bg);
+    padding: 0.1em 0.35em;
+    border-radius: 4px;
+}
+
+pre {
+    background: var(--c-code-bg);
+    border: 1px solid var(--c-border-subtle);
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+    overflow-x: auto;
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+pre code { background: none; padding: 0; }
+
+/* ---- Tabele ----------------------------------------------------------- */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0 1.5rem;
+    font-size: 0.9rem;
+}
+
+caption {
+    caption-side: bottom;
+    font-size: 0.8rem;
+    color: var(--c-text-muted);
+    text-align: left;
+    padding-top: 0.5rem;
+}
+
+th, td {
+    text-align: left;
+    padding: 0.55rem 0.75rem;
+    border: 1px solid var(--c-border-subtle);
+    vertical-align: top;
+}
+
+thead th {
+    background: var(--c-primary);
+    color: #fff;
+    font-weight: 600;
+}
+
+tbody tr:nth-child(even) { background: var(--c-bg-subtle); }
+
+/* ---- Cerințe (requirement IDs) --------------------------------------- */
+
+.req {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--c-accent);
+    background: #FFF7ED;
+    padding: 0.1em 0.45em;
+    border-radius: 4px;
+    border: 1px solid #FFEDD4;
+}
+
+/* ---- Note/casete ------------------------------------------------------ */
+
+.note {
+    background: var(--c-primary-light);
+    border-left: 4px solid var(--c-primary);
+    border-radius: var(--radius);
+    padding: 0.85rem 1.25rem;
+    margin: 1.25rem 0;
+    font-size: 0.92rem;
+}
+
+.note strong { color: var(--c-primary-dark); }
+
+/* ---- Figuri/diagrame -------------------------------------------------- */
+
+figure {
+    margin: 1.5rem 0;
+    text-align: center;
+}
+
+figure img,
+figure svg {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid var(--c-border-subtle);
+    border-radius: var(--radius);
+    background: #fff;
+}
+
+figcaption {
+    font-size: 0.82rem;
+    color: var(--c-text-muted);
+    margin-top: 0.6rem;
+    font-style: italic;
+}
+
+/* ---- Liste ------------------------------------------------------------ */
+
+ul, ol { padding-left: 1.4rem; }
+li { margin: 0.3rem 0; }
+
+/* ---- Footer ----------------------------------------------------------- */
+
+.report-footer {
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--c-border-subtle);
+    font-size: 0.82rem;
+    color: var(--c-text-muted);
+}
+
+/* ==========================================================================
+   Landing (index.html)
+   ========================================================================== */
+
+.landing {
+    max-width: 56rem;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 5rem;
+}
+
+.landing-hero {
+    text-align: center;
+    padding: 2rem 0 3rem;
+    border-bottom: 1px solid var(--c-border-subtle);
+    margin-bottom: 3rem;
+}
+
+.landing-hero .doc-kicker {
+    color: var(--c-accent);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.8rem;
+}
+
+.landing-hero h1 {
+    font-size: 2.75rem;
+    margin: 0.5rem 0;
+    color: var(--c-primary-dark);
+}
+
+.landing-hero p { color: var(--c-text-muted); font-size: 1.1rem; }
+
+.deliverables {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 1.25rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.deliverable-card {
+    display: block;
+    padding: 1.5rem;
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow 200ms ease, border-color 200ms ease, transform 200ms ease;
+}
+
+.deliverable-card:hover,
+.deliverable-card:focus {
+    border-color: var(--c-primary);
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    transform: translateY(-2px);
+}
+
+.deliverable-card .num {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--c-accent);
+    font-weight: 700;
+}
+
+.deliverable-card h2 {
+    font-size: 1.15rem;
+    margin: 0.35rem 0 0.5rem;
+    border: none;
+    padding: 0;
+}
+
+.deliverable-card p {
+    font-size: 0.9rem;
+    color: var(--c-text-muted);
+    margin: 0;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 60rem) {
+    .report-layout { grid-template-columns: 1fr; }
+    .report-toc {
+        position: static;
+        max-height: none;
+        border-right: none;
+        border-bottom: 1px solid var(--c-border-subtle);
+        padding: 1rem 0;
+    }
+    article.report { padding-top: 1.5rem; }
+}
+
+@media (max-width: 40rem) {
+    .report-header h1 { font-size: 1.75rem; }
+    .landing-hero h1 { font-size: 2rem; }
+    th, td { padding: 0.4rem 0.5rem; }
+    body { font-size: 0.95rem; }
+}

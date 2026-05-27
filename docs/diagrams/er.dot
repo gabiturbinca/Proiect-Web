@@ -1,0 +1,246 @@
+// Diagrama entitate-relație GiW — Gift Web Manager
+// Generare SVG:  dot -Tsvg er.dot -o er.svg
+digraph ER {
+    graph [
+        rankdir=LR,
+        bgcolor="white",
+        fontname="Helvetica",
+        nodesep=0.5,
+        ranksep=1.1,
+        splines=spline,
+        pad=0.3
+    ];
+    node [
+        shape=plaintext,
+        fontname="Helvetica",
+        fontsize=11
+    ];
+    edge [
+        color="#525252",
+        fontname="Helvetica",
+        fontsize=9,
+        arrowhead=crow,
+        arrowtail=none,
+        dir=both
+    ];
+
+    // ---- Entități principale ------------------------------------------
+
+    users [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+        <TR><TD BGCOLOR="#00786F" COLSPAN="2"><FONT COLOR="white"><B>users</B></FONT></TD></TR>
+        <TR><TD PORT="id" ALIGN="LEFT"><B>PK</B></TD><TD ALIGN="LEFT">id</TD></TR>
+        <TR><TD ALIGN="LEFT">U</TD><TD ALIGN="LEFT">username</TD></TR>
+        <TR><TD ALIGN="LEFT">U</TD><TD ALIGN="LEFT">email</TD></TR>
+        <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">password_hash</TD></TR>
+        <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">role (enum)</TD></TR>
+        <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">must_change_password</TD></TR>
+        <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">password_changed_at</TD></TR>
+        </TABLE>
+    >];
+
+    gifts [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+        <TR><TD BGCOLOR="#00786F" COLSPAN="2"><FONT COLOR="white"><B>gifts</B></FONT></TD></TR>
+        <TR><TD PORT="id" ALIGN="LEFT"><B>PK</B></TD><TD ALIGN="LEFT">id</TD></TR>
+        <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">name</TD></TR>
+        <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">price</TD></TR>
+        <TR><TD PORT="cat" ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">category_id</TD></TR>
+        <TR><TD PORT="brand" ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">brand_id</TD></TR>
+        <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">specifications (jsonb)</TD></TR>
+        <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">image_url</TD></TR>
+        <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">chosen_count</TD></TR>
+        <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">score</TD></TR>
+        </TABLE>
+    >];
+
+    categories [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+        <TR><TD BGCOLOR="#00786F" COLSPAN="2"><FONT COLOR="white"><B>categories</B></FONT></TD></TR>
+        <TR><TD PORT="id" ALIGN="LEFT"><B>PK</B></TD><TD ALIGN="LEFT">id</TD></TR>
+        <TR><TD ALIGN="LEFT">U</TD><TD ALIGN="LEFT">name</TD></TR>
+        <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">description</TD></TR>
+        <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">image_url</TD></TR>
+        <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">is_active</TD></TR>
+        <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">sort_order</TD></TR>
+        </TABLE>
+    >];
+
+    brands [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+        <TR><TD BGCOLOR="#00786F" COLSPAN="2"><FONT COLOR="white"><B>brands</B></FONT></TD></TR>
+        <TR><TD PORT="id" ALIGN="LEFT"><B>PK</B></TD><TD ALIGN="LEFT">id</TD></TR>
+        <TR><TD ALIGN="LEFT">U</TD><TD ALIGN="LEFT">name</TD></TR>
+        </TABLE>
+    >];
+
+    tags [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+        <TR><TD BGCOLOR="#00786F" COLSPAN="2"><FONT COLOR="white"><B>tags</B></FONT></TD></TR>
+        <TR><TD PORT="id" ALIGN="LEFT"><B>PK</B></TD><TD ALIGN="LEFT">id</TD></TR>
+        <TR><TD ALIGN="LEFT">U</TD><TD ALIGN="LEFT">name</TD></TR>
+        <TR><TD ALIGN="LEFT">U</TD><TD ALIGN="LEFT">slug</TD></TR>
+        </TABLE>
+    >];
+
+    circumstances [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+        <TR><TD BGCOLOR="#00786F" COLSPAN="2"><FONT COLOR="white"><B>circumstances</B></FONT></TD></TR>
+        <TR><TD PORT="id" ALIGN="LEFT"><B>PK</B></TD><TD ALIGN="LEFT">id</TD></TR>
+        <TR><TD ALIGN="LEFT">U</TD><TD ALIGN="LEFT">name</TD></TR>
+        </TABLE>
+    >];
+
+    contexts [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+        <TR><TD BGCOLOR="#00786F" COLSPAN="2"><FONT COLOR="white"><B>contexts</B></FONT></TD></TR>
+        <TR><TD PORT="id" ALIGN="LEFT"><B>PK</B></TD><TD ALIGN="LEFT">id</TD></TR>
+        <TR><TD ALIGN="LEFT">U</TD><TD ALIGN="LEFT">name</TD></TR>
+        </TABLE>
+    >];
+
+    reviews [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+        <TR><TD BGCOLOR="#EA6C00" COLSPAN="2"><FONT COLOR="white"><B>reviews</B></FONT></TD></TR>
+        <TR><TD PORT="id" ALIGN="LEFT"><B>PK</B></TD><TD ALIGN="LEFT">id</TD></TR>
+        <TR><TD PORT="gift" ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">gift_id</TD></TR>
+        <TR><TD PORT="user" ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">user_id</TD></TR>
+        <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">rating</TD></TR>
+        <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">comment</TD></TR>
+        </TABLE>
+    >];
+
+    orders [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+        <TR><TD BGCOLOR="#EA6C00" COLSPAN="2"><FONT COLOR="white"><B>orders</B></FONT></TD></TR>
+        <TR><TD PORT="id" ALIGN="LEFT"><B>PK</B></TD><TD ALIGN="LEFT">id</TD></TR>
+        <TR><TD PORT="user" ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">user_id</TD></TR>
+        <TR><TD PORT="gift" ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">gift_id</TD></TR>
+        <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">quantity</TD></TR>
+        <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">total_price</TD></TR>
+        <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">status (enum)</TD></TR>
+        <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">address</TD></TR>
+        <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">is_anonymous</TD></TR>
+        <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">recipient_name</TD></TR>
+        </TABLE>
+    >];
+
+    rec_log [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+        <TR><TD BGCOLOR="#EA6C00" COLSPAN="2"><FONT COLOR="white"><B>rec_log</B></FONT></TD></TR>
+        <TR><TD PORT="id" ALIGN="LEFT"><B>PK</B></TD><TD ALIGN="LEFT">id</TD></TR>
+        <TR><TD PORT="user" ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">user_id</TD></TR>
+        <TR><TD PORT="gift" ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">gift_id</TD></TR>
+        <TR><TD PORT="ctx" ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">context_id</TD></TR>
+        <TR><TD PORT="circ" ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">circumstance_id</TD></TR>
+        <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">action (enum)</TD></TR>
+        </TABLE>
+    >];
+
+    wishlists [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+        <TR><TD BGCOLOR="#EA6C00" COLSPAN="2"><FONT COLOR="white"><B>wishlists</B></FONT></TD></TR>
+        <TR><TD PORT="id" ALIGN="LEFT"><B>PK</B></TD><TD ALIGN="LEFT">id</TD></TR>
+        <TR><TD PORT="user" ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">user_id</TD></TR>
+        <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">name</TD></TR>
+        </TABLE>
+    >];
+
+    password_reset_requests [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+        <TR><TD BGCOLOR="#EA6C00" COLSPAN="2"><FONT COLOR="white"><B>password_reset_requests</B></FONT></TD></TR>
+        <TR><TD PORT="id" ALIGN="LEFT"><B>PK</B></TD><TD ALIGN="LEFT">id</TD></TR>
+        <TR><TD PORT="user" ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">user_id</TD></TR>
+        <TR><TD PORT="admin" ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">admin_user_id</TD></TR>
+        <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">status (enum)</TD></TR>
+        <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">message</TD></TR>
+        </TABLE>
+    >];
+
+    login_attempts [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+        <TR><TD BGCOLOR="#737373" COLSPAN="2"><FONT COLOR="white"><B>login_attempts</B></FONT></TD></TR>
+        <TR><TD PORT="id" ALIGN="LEFT"><B>PK</B></TD><TD ALIGN="LEFT">id</TD></TR>
+        <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">ip_address</TD></TR>
+        <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">attempted_at</TD></TR>
+        </TABLE>
+    >];
+
+    // ---- Tabele de legătură (junction) --------------------------------
+
+    gift_tags [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+        <TR><TD BGCOLOR="#0B4F4A"><FONT COLOR="white"><B>gift_tags</B></FONT></TD></TR>
+        <TR><TD PORT="gift" ALIGN="LEFT">FK gift_id</TD></TR>
+        <TR><TD PORT="tag" ALIGN="LEFT">FK tag_id</TD></TR>
+        </TABLE>
+    >];
+
+    gift_circumstances [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+        <TR><TD BGCOLOR="#0B4F4A"><FONT COLOR="white"><B>gift_circumstances</B></FONT></TD></TR>
+        <TR><TD PORT="gift" ALIGN="LEFT">FK gift_id</TD></TR>
+        <TR><TD PORT="circ" ALIGN="LEFT">FK circumstance_id</TD></TR>
+        </TABLE>
+    >];
+
+    gift_contexts [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+        <TR><TD BGCOLOR="#0B4F4A"><FONT COLOR="white"><B>gift_contexts</B></FONT></TD></TR>
+        <TR><TD PORT="gift" ALIGN="LEFT">FK gift_id</TD></TR>
+        <TR><TD PORT="ctx" ALIGN="LEFT">FK context_id</TD></TR>
+        </TABLE>
+    >];
+
+    gift_relations [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+        <TR><TD BGCOLOR="#0B4F4A"><FONT COLOR="white"><B>gift_relations</B></FONT></TD></TR>
+        <TR><TD PORT="gift" ALIGN="LEFT">FK gift_id</TD></TR>
+        <TR><TD PORT="rel" ALIGN="LEFT">FK related_gift_id</TD></TR>
+        <TR><TD ALIGN="LEFT">relation_type (enum)</TD></TR>
+        </TABLE>
+    >];
+
+    wishlist_items [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+        <TR><TD BGCOLOR="#0B4F4A"><FONT COLOR="white"><B>wishlist_items</B></FONT></TD></TR>
+        <TR><TD PORT="wl" ALIGN="LEFT">FK wishlist_id</TD></TR>
+        <TR><TD PORT="gift" ALIGN="LEFT">FK gift_id</TD></TR>
+        </TABLE>
+    >];
+
+    // ---- Relații (chei străine) ---------------------------------------
+
+    gifts:cat   -> categories:id;
+    gifts:brand -> brands:id;
+
+    reviews:gift -> gifts:id;
+    reviews:user -> users:id;
+
+    orders:user -> users:id;
+    orders:gift -> gifts:id;
+
+    rec_log:user -> users:id;
+    rec_log:gift -> gifts:id;
+    rec_log:ctx  -> contexts:id;
+    rec_log:circ -> circumstances:id;
+
+    wishlists:user -> users:id;
+    wishlist_items:wl   -> wishlists:id;
+    wishlist_items:gift -> gifts:id;
+
+    password_reset_requests:user  -> users:id;
+    password_reset_requests:admin -> users:id;
+
+    gift_tags:gift -> gifts:id;
+    gift_tags:tag  -> tags:id;
+
+    gift_circumstances:gift -> gifts:id;
+    gift_circumstances:circ -> circumstances:id;
+
+    gift_contexts:gift -> gifts:id;
+    gift_contexts:ctx  -> contexts:id;
+
+    gift_relations:gift -> gifts:id;
+    gift_relations:rel  -> gifts:id;
+}

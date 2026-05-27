@@ -39,7 +39,7 @@
 #admin__container_mini{
     box-shadow: var(--shadow-md);
     margin-inline:auto;
-    max-width:var(--container-lg);
+    max-width:var(--container-xl);
     min-height:var(--container-md);
     border:1px solid var(--color-neutral-100);
     border-radius: 10px;

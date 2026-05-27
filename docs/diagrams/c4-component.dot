@@ -1,0 +1,49 @@
+// C4 — Nivel 3: Component · Containerul "Server de aplicații" (PHP)
+// dot -Tsvg c4-component.dot -o c4-component.svg
+digraph C4Component {
+    graph [bgcolor="white", fontname="Helvetica", rankdir=TB, nodesep=0.45, ranksep=0.7, pad=0.3];
+    node  [fontname="Helvetica", fontsize=10, style="filled,rounded", shape=box, margin="0.2,0.14"];
+    edge  [fontname="Helvetica", fontsize=9, color="#525252"];
+
+    browser [label=<<B>Browser</B>>, fillcolor="#3DA9A5", fontcolor="white"];
+
+    front [label=<<B>Front controller</B><BR/><FONT POINT-SIZE="9">public/api.php</FONT>>, fillcolor="#85bbf0"];
+    router [label=<<B>Router</B><BR/><FONT POINT-SIZE="9">potrivire rută → handler</FONT>>, fillcolor="#85bbf0"];
+
+    container [label=<<B>DI Container</B><BR/><FONT POINT-SIZE="9">rezolvare prin reflexie</FONT>>, fillcolor="#FFB86A"];
+
+    subgraph cluster_mw {
+        label=<<B>Lanț de middleware</B>>;
+        labeljust="l"; style="rounded,dashed"; color="#00786F"; fontsize=10; margin=10;
+        mw [label=<RateLimiter · Auth · Csrf · Admin>, fillcolor="#46ECD5"];
+    }
+
+    controllers [label=<<B>Controllers</B><BR/><FONT POINT-SIZE="9">Auth, Gift, Recommendation, Order,<BR/>Review, Category, AdminReport,<BR/>Export/Import, DummyJson, Unsplash</FONT>>, fillcolor="#85bbf0", width=3.0];
+
+    subgraph cluster_svc {
+        label=<<B>Servicii (logică de business)</B>>;
+        labeljust="l"; style="rounded,dashed"; color="#00786F"; fontsize=10; margin=10;
+        services [label=<AuthService · RecommendationService · OrderService<BR/>ReportService · Export/Import · DummyJsonService · UnsplashService>, fillcolor="#85bbf0", width=3.4];
+        scoring [label=<<B>ScoringRule</B><BR/><FONT POINT-SIZE="9">Strategy + Composite</FONT>>, fillcolor="#CBFBF1"];
+        reportf [label=<<B>ReportFactory</B><BR/><FONT POINT-SIZE="9">HTML / JSON / CSV / PDF</FONT>>, fillcolor="#CBFBF1"];
+    }
+
+    repos [label=<<B>Repositories</B><BR/><FONT POINT-SIZE="9">User, Gift, Order, Review, Category,<BR/>Brand, Tag, Context, Circumstance, ...</FONT>>, fillcolor="#85bbf0", width=3.0];
+
+    pdo [label=<<B>PDO</B>>, fillcolor="#FFB86A"];
+    db  [label=<<B>PostgreSQL</B>>, fillcolor="#00786F", fontcolor="white", shape=cylinder];
+    ext [label=<<B>DummyJSON / Unsplash</B><BR/><FONT POINT-SIZE="9">[Sisteme externe]</FONT>>, fillcolor="#9CA3AF", fontcolor="white"];
+
+    browser -> front [label="HTTP"];
+    front -> router;
+    front -> container [label="construiește", style=dashed, color="#EA6C00"];
+    router -> mw [label="rulează în ordine"];
+    mw -> controllers [label="cerere validată"];
+    controllers -> services;
+    services -> scoring [style=dashed];
+    services -> reportf [style=dashed];
+    services -> repos;
+    repos -> pdo -> db;
+    services -> ext [label="cURL", color="#EA6C00"];
+    container -> controllers [style=dashed, color="#EA6C00", label="injectează"];
+}
