@@ -235,6 +235,12 @@ async function renderComments(page){
         const {reviews, reviews_count} = await getReviews(giftId,page);
         const totalPages = Math.max(1, Math.ceil(reviews_count/elemNumber));
         if(page < 1) return;
+        if(reviews_count==0){
+            container.innerHTML='<p class="result__message">No reviews yet. Be the first to share your thoughts!</p>';
+            prevBtnComm.style.display="none";
+            nextBtnComm.style.display="none";
+            return;
+        }
         prevBtnComm.disabled = page <= 1;
         nextBtnComm.disabled = page >= totalPages;
         const reviewCards = reviews.map(buildReviews);
@@ -250,6 +256,12 @@ async function renderRelatedGifts(page){
         const {gifts, gifts_count} = await getRelatedGifts(giftId,page);
         const totalPages = Math.ceil(gifts_count/elemNumber);
         if(page < 1) return;
+        if(gifts_count==0){
+            container.innerHTML='<p class="result__message">We could not find any related gifts. Explore our other categories!</p>';
+            prevBtn.style.display="none";
+            nextBtn.style.display="none";
+            return;
+        }
         if(page==1)
             prevBtn.disabled=true;
         else

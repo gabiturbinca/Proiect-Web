@@ -531,6 +531,11 @@ async function renderGifts(){
         if (pageNumber > totalPages) {
             pageNumber = totalPages;
         }
+        if(gifts_count==0){
+            dataBox.innerHTML='<p class="result__message">There are no gifts yet. Add one to get started!</p>';
+            hidePagination();
+            return;
+        }
         dataBox.replaceChildren(buildGiftsTable(gifts));
         updatePaginationUI();
 
@@ -577,6 +582,11 @@ async function renderOrders(page){
         if (pageNumber > totalPages) {
             pageNumber = totalPages;
         }
+        if(orders_count==0){
+            dataBox.innerHTML='<p class="result__message">There are no orders yet.</p>';
+            hidePagination();
+            return;
+        }
         dataBox.replaceChildren(buildOrdersTable(orders));
         updatePaginationUI();
         const changeStatusBtns = document.querySelectorAll(".order__change-status-btn");
@@ -611,6 +621,11 @@ async function renderPasswordRequests(){
         totalPages = Math.max(1, Math.ceil(requests_count / elemNumber));
         if (pageNumber > totalPages) {
             pageNumber = totalPages;
+        }
+        if(requests_count==0){
+            dataBox.innerHTML='<p class="result__message">There are no password reset requests.</p>';
+            hidePagination();
+            return;
         }
         dataBox.replaceChildren(buildRequestsTable(requests));
         updatePaginationUI();

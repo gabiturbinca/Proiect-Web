@@ -5,6 +5,7 @@
     margin-inline: auto;
     padding: var(--space-8) var(--space-6);
     max-width:var(--container-xl);
+    min-height:var(--container-md);
 }
 
 #result__header {
@@ -39,17 +40,6 @@
     max-width:var(--container-xl);
     justify-content:center;
     gap: var(--space-4);
-}
-
-.result__message{
-    flex-basis: 100%;
-    margin-inline: auto;
-    max-width: 40ch;
-    padding: var(--space-8) var(--space-4);
-    text-align: center;
-    font-size: var(--text-base);
-    line-height: 1.5;
-    color: var(--color-text-muted);
 }
 
 .buttons__pagination{

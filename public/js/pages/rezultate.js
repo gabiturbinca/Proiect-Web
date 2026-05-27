@@ -63,6 +63,8 @@ async function renderGiftPage(page){
         if(page > totalPages && totalPages > 0) return;
         if(gifts_count==0){
             giftBox.innerHTML='<p class="result__message">We could not find any gifts for your requirements. Please try other combinations!</p>';
+            nextBtn.style.display="none";
+            prevBtn.style.display="none";
             return;
         }
             

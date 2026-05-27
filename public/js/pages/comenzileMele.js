@@ -44,7 +44,13 @@ async function renderOrdersPage(page){
     try{
        const {orders, orders_count} = await getCommands(page);
        const nrPages = Math.ceil(orders_count/perPage);
-       if(page > nrPages) return;
+       if(page > nrPages && nrPages > 0) return;
+       if(orders_count==0){
+           commandBox.innerHTML='<p class="result__message">You have not placed any orders yet. Find the perfect gift to get started!</p>';
+           nextBtn.style.display="none";
+           prevBtn.style.display="none";
+           return;
+       }
        currentPage = page;
        const orderCards = orders.map(createCommandCard);
        commandBox.replaceChildren(...orderCards);

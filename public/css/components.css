@@ -107,6 +107,16 @@
 .message__null{
   display:none;
 }
+.result__message{
+  flex-basis: 100%;
+  margin-inline: auto;
+  max-width: 40ch;
+  padding: var(--space-8) var(--space-4);
+  text-align: center;
+  font-size: var(--text-base);
+  line-height: 1.5;
+  color: var(--color-text-muted);
+}
 .error__message{
   color:var(--color-error);
   padding:var(--space-2);
