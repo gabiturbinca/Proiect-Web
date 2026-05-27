@@ -25,7 +25,7 @@
 
                 <div class="auth__field">
                     <label for="password">Password</label>
-                    <input id="password" type="password" placeholder="Parola..." name="password" minlength="8" required>
+                    <input id="password" type="password" placeholder="Password.." name="password" minlength="8" required>
                 </div>
                  <span id="message__invalid_credentials"></span>
                 <button type="submit" class="btn btn--primary auth__submit">Login!</button>
