@@ -29,7 +29,7 @@
          <button class="navbar__toggle" 
                     aria-expanded="false" 
                     aria-controls="primary-menu"
-                    aria-label="Deschide meniu">
+                    aria-label="Open menu">
                 <span></span>
                 <span></span>
                 <span></span>
