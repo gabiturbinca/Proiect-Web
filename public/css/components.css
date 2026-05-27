@@ -80,7 +80,9 @@
 
 .card__image{
   max-width:250px;
-  height:auto;
+  height:250px;
+  object-fit: cover;
+  object-position: center;
 }
 
 .card__title{
