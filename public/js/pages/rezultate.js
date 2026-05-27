@@ -61,8 +61,11 @@ async function renderGiftPage(page){
         const { gifts, gifts_count } = await getGifts(page);
         const totalPages = Math.ceil(gifts_count / perPage);
         if(page > totalPages && totalPages > 0) return;
-        if(gifts_count==0)
+        if(gifts_count==0){
             giftBox.innerHTML='<p>We could not find any gifts for your requirements. Pleasy try again!</p>';
+            return;
+        }
+            
         currentPage = page;
         const giftCards = gifts.map(createGiftCard);
         giftBox.replaceChildren(...giftCards);
