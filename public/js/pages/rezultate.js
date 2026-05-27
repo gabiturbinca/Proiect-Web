@@ -62,7 +62,7 @@ async function renderGiftPage(page){
         const totalPages = Math.ceil(gifts_count / perPage);
         if(page > totalPages && totalPages > 0) return;
         if(gifts_count==0){
-            giftBox.innerHTML='<p>We could not find any gifts for your requirements. Pleasy try again!</p>';
+            giftBox.innerHTML='<p class="result__message">We could not find any gifts for your requirements. Please try other combinations!</p>';
             return;
         }
             
@@ -75,7 +75,7 @@ async function renderGiftPage(page){
     }
     catch(err){
         console.error(err);
-        giftBox.innerHTML='<p>We could not load the gifts!</p>';
+        giftBox.innerHTML='<p class="result__message">We could not load the gifts!</p>';
     }
 
 }
