@@ -114,9 +114,12 @@ function buildGiftCard(gift) {
         }
     }
 
-    card.querySelector('#send__gift').addEventListener('click', () => {
-        window.location.href = `/comanda.php?gift_id=${giftId}`;
-    });
+    const sendBtn = card.querySelector('#send__gift');
+    if (sendBtn) {
+        sendBtn.addEventListener('click', () => {
+            window.location.href = `/comanda.php?gift_id=${giftId}`;
+        });
+    }
 
     return card;
 }

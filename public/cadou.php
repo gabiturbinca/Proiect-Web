@@ -21,10 +21,15 @@
                     <p><strong>Category: </strong><span class="gift__category"></span></p>
                     <div class="gift__specs"></div>
                 </div>
-
-                <div class="gift__buttons">
-                    <button class="btn btn--primary" id="send__gift">Send gift</button>
-                </div>
+                <?php
+                if($isLoggedIn){
+                    ?>
+                        <div class="gift__buttons">
+                            <button class="btn btn--primary" id="send__gift">Send gift</button>
+                        </div>
+                    <?php
+                 }
+                ?>
                 <div class="gift__tags"></div>
 
             </div>
