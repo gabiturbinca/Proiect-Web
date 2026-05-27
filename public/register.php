@@ -8,7 +8,7 @@
     <section class="auth">
         <div class="auth__brand" aria-hidden="true">
             <img src="/images/logo_hero_section.png" alt="" class="auth__brand-logo">
-            <p class="auth__brand-tagline">Your digital assistent for finding the perfect gift.</p>
+            <p class="auth__brand-tagline">Your digital assistant for finding the perfect gift.</p>
         </div>
 
         <div class="auth__content">

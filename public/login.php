@@ -8,13 +8,13 @@
      <section class="auth">
         <div class="auth__brand" aria-hidden="true">
             <img src="/images/logo_hero_section.png" alt="" class="auth__brand-logo">
-            <p class="auth__brand-tagline">Your digital assistent for finding the best gift.</p>
+            <p class="auth__brand-tagline">Your digital assistant for finding the best gift.</p>
         </div>
 
         <div class="auth__content">
             <div class="auth__header">
                 <h1>Login:</h1>
-                <h2>Welcome! Find gifts for your loved ones with the help of our digital assistent.</h2>
+                <h2>Welcome! Find gifts for your loved ones with the help of our digital assistant.</h2>
             </div>
 
             <form class="auth__form" id="login_form">
