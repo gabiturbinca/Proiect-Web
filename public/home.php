@@ -29,7 +29,7 @@
     </div>
 
    <div id="categories_cards" class ="categories_cards" >
-        <h2>Recommandations per categories:</h2>
+        <p>Recommandations per categories:</p>
         <div id="categories_only_cards" class ="categories_only_cards">
             <template id ="category-card-template">
                     <a href ="" class ="card card__category">
