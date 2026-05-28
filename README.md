@@ -11,6 +11,8 @@ Tehnologii Web.
 
 🌐 **Site live:** [giw.onrender.com](https://giw.onrender.com)
 
+   **Videoclip de prezentare:** [Prezentare Proiect](https://youtu.be/O1jbvlFCVVc)
+
 ## Cuprins
 
 - [Funcționalități](#funcționalități)
