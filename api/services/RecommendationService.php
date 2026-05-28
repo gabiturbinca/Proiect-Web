@@ -36,6 +36,7 @@ class RecommendationService {
                     $scoredgift['gift']->getBrandName(),
                     $scoredgift['gift']->getCategoryName(),
                     $scoredgift['gift']->getTagDtos(),
+                    score: $scoredgift['gift']->getScore(),
                 ),
                 $pagedGifts,
             ),

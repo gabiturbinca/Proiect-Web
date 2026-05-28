@@ -124,6 +124,7 @@ class GiftService {
             $g->getTagDtos(),
             $g->getCircumstanceIds(),
             $g->getContextIds(),
+            $g->getScore(),
         );
     }
 }

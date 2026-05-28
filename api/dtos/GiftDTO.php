@@ -12,6 +12,7 @@ readonly class GiftDTO {
         public ?array $tags,
         public ?array $circumstances = null,
         public ?array $contexts = null,
+        public float $score = 0.0,
     ) {}
 
 }
