@@ -225,6 +225,16 @@ class GiftRepository {
         );
         $stmt->execute([$giftId, $giftId]);
     }
+    public function refreshChosenCount(int $giftId): void {
+        $stmt = $this->db->prepare(
+            "UPDATE gifts
+             SET chosen_count = COALESCE(
+                (SELECT COUNT(*) FROM orders WHERE gift_id = ? AND status <> 'cancelled'), 0
+             )
+             WHERE id = ?"
+        );
+        $stmt->execute([$giftId, $giftId]);
+    }
 
     public function create(Gift $gift): Gift {
         $stmt = $this->db->prepare(

@@ -27,9 +27,9 @@ class OrderService {
         $order->setGiftPrice($gift->getPrice());
         $order->setTotalPrice($gift->getPrice() * $oDTO->quantity);
         $order->setStatus(OrderStatus::PLACED->value);
-
         $order = $this->orderRepository->create($order);
         $full = $this->orderRepository->findById($order->getId());
+        $this->giftRepository->refreshChosenCount($oDTO->gift_id);
         return $this->toDTO($full);
     }
 
