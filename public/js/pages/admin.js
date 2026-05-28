@@ -561,13 +561,18 @@ async function renderGifts(){
             imageInput.addEventListener("change", async() => {
                 if(!imageInput.files.length) return;
                 const giftId = imageInput.dataset.giftId;
-                const { ok, body } = await uploadGiftImage(giftId, imageInput.files[0]);
-                imageInput.value = "";
-                if(!ok){
-                    alert(body?.error ?? "Couldn't upload the image.");
-                    return;
+                imageInput.disabled = true;
+                try {
+                    const { ok, body } = await uploadGiftImage(giftId, imageInput.files[0]);
+                    if(!ok){
+                        alert(body?.error ?? "Couldn't upload the image.");
+                        return;
+                    }
+                    alert("Image uploaded!");
+                } finally {
+                    imageInput.value = "";
+                    imageInput.disabled = false;
                 }
-                alert("Image uploaded!");
             });
         });
     }
