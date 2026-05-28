@@ -291,7 +291,10 @@ function createGiftRow(gift){
     row.querySelector(".cell__name").textContent = gift.name;
     row.querySelector(".cell__description").textContent = gift.description;
     row.querySelector(".cell__price").textContent = gift.price;
-    row.querySelector(".cell__score").textContent = gift.score;
+    if(gift.score===0)
+        row.querySelector(".cell__score").textContent = "No reviews yet";
+    else
+        row.querySelector(".cell__score").textContent = gift.score;
     const changeBtn = row.querySelector(".gift__change-btn");
     if (changeBtn) {
         changeBtn.dataset.giftId = gift.id;
