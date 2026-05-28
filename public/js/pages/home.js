@@ -29,7 +29,6 @@ async function renderCategories(){
   if (!categoriesBox) return;
   try{
     const categories = await getCategories();
-    console.log(categories);
     const cards = categories.map(createCategoryCard);
     categoriesBox.replaceChildren(...cards);
   }
