@@ -20,7 +20,7 @@
 
             <div class="auth__field">
                 <label for="message"> Message to the admin:</label>
-                <input id="message" type="textarea" placeholder="Write a message..." name="message">
+                <input id="message" type="text" placeholder="Write a message..." name="message">
             </div>
 
             <button type="submit" class="btn btn--primary change_pass__submit" id="change_pass__submit">Submit!</button>
