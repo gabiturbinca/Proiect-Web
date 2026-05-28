@@ -24,13 +24,13 @@
         </div>
 
         <div class="hero-section__image">
-            <img src="/images/logo_hero_section.png" alt="Cutie cadou" width="400" height="400">
+            <img src="/images/logo_hero_section.png" alt="Gift" width="400" height="400">
         </div>
    </section>
 
-   <section id="categories_cards" class ="categories_cards" >
+   <div id="categories_cards" class ="categories_cards" >
         <h2>Recommandations per categories:</h2>
-        <section id="categories_only_cards" class ="categories_only_cards">
+        <div id="categories_only_cards" class ="categories_only_cards">
             <template id ="category-card-template">
                     <a href ="" class ="card card__category">
                     <img src="" alt="" class ="card__image">
@@ -42,8 +42,8 @@
 
 
 
-        </section>
-   </section>
+    </div>
+</div>
 </section>
 
 <?php
