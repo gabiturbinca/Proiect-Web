@@ -29,6 +29,7 @@ class ReviewService {
         $review->setComment($dto->comment);
 
         $review = $this->reviewRepository->create($review);
+        $this->giftRepository->refreshScore($giftId);
         $full = $this->reviewRepository->findById($review->getId());
 
         return $this->toDTO($full);
@@ -46,6 +47,7 @@ class ReviewService {
         $review->setRating((float) $dto->rating);
         $review->setComment($dto->comment);
         $this->reviewRepository->update($review);
+        $this->giftRepository->refreshScore($review->getGiftId());
 
         return $this->toDTO($review);
     }
@@ -59,6 +61,7 @@ class ReviewService {
             throw new NotFoundException("Review not found");
         }
         $this->reviewRepository->delete($reviewId);
+        $this->giftRepository->refreshScore($review->getGiftId());
     }
 
     private function toDTO(Review $r): ReviewDTO {

@@ -217,6 +217,15 @@ class GiftRepository {
         return (bool) $stmt->fetchColumn();
     }
 
+    public function refreshScore(int $giftId): void {
+        $stmt = $this->db->prepare(
+            "UPDATE gifts
+             SET score = COALESCE((SELECT AVG(rating) FROM reviews WHERE gift_id = ?), 0)
+             WHERE id = ?"
+        );
+        $stmt->execute([$giftId, $giftId]);
+    }
+
     public function create(Gift $gift): Gift {
         $stmt = $this->db->prepare(
             "INSERT INTO gifts (name, description, price, category_id, brand_id, specifications, image_url)
