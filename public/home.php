@@ -5,13 +5,13 @@
     require __DIR__ . '/../templates/header.php';
 ?>
 
-<section class="home__container">
+<div class="home__container">
    <div class="hero-section">
         <div class="hero-section__text">
             <span class="hero-section__badge">Intelligent recommendation</span>
-            <h2 class="hero-section__title">
+            <p class="hero-section__title">
                 Find the perfect gift <span class="hero-section__title-accent">for every occasion.</span>
-            </h2>
+            </p>
             <p class="hero-section__lead">
                 Tell us about them — their hobbies, your budget, the occasion.
                 We'll choose with great care gifts they will love.
@@ -44,7 +44,7 @@
 
     </div>
 </div>
-</section>
+</div>
 
 <?php
     require __DIR__ . '/../templates/footer.php';
