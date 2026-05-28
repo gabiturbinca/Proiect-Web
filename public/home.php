@@ -6,12 +6,12 @@
 ?>
 
 <section class="home__container">
-   <section class="hero-section">
+   <div class="hero-section">
         <div class="hero-section__text">
-            <span class="hero-section__badge">Intelligent recommandation</span>
-            <h1 class="hero-section__title">
+            <span class="hero-section__badge">Intelligent recommendation</span>
+            <h2 class="hero-section__title">
                 Find the perfect gift <span class="hero-section__title-accent">for every occasion.</span>
-            </h1>
+            </h2>
             <p class="hero-section__lead">
                 Tell us about them — their hobbies, your budget, the occasion.
                 We'll choose with great care gifts they will love.
@@ -26,7 +26,7 @@
         <div class="hero-section__image">
             <img src="/images/logo_hero_section.png" alt="Gift" width="400" height="400">
         </div>
-   </section>
+    </div>
 
    <div id="categories_cards" class ="categories_cards" >
         <h2>Recommandations per categories:</h2>
