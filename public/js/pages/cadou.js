@@ -303,23 +303,23 @@ renderRelatedGifts(currentPage);
 renderComments(currentPageReviews);
 
 prevBtn.addEventListener("click", async(e) =>{
-    currentPage=-1;
+    currentPage-=1;
     renderRelatedGifts(currentPage);
 });
 
 nextBtn.addEventListener("click", async(e) =>{
-    currentPage=+1;
+    currentPage+=1;
     renderRelatedGifts(currentPage);
 });
 
 
 prevBtnComm.addEventListener("click", async(e) =>{
-    currentPageReviews=-1;
+    currentPageReviews-=1;
     renderComments(currentPageReviews);
 });
 
 nextBtnComm.addEventListener("click", async(e) =>{
-    currentPageReviews=+1;
+    currentPageReviews+=1;
     renderComments(currentPageReviews);
 });
 
