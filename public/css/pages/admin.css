@@ -314,3 +314,80 @@
 #report__category-field.invisible {
     display: none;
 }
+
+.admin__io {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-6);
+    max-width: var(--container-lg);
+    margin-inline: auto;
+    padding: var(--space-6);
+}
+
+.admin__io-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding: var(--space-6);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+}
+
+.admin__io-card h3 {
+    margin: 0;
+}
+
+.admin__io-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.admin__io-form .field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.admin__io-form .field label {
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--color-text-subtle);
+}
+
+.admin__io-form .field input,
+.admin__io-form .field select {
+    padding: 0.75rem var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    font: inherit;
+    transition: border-color var(--transition-fast),
+                box-shadow var(--transition-fast);
+}
+
+.admin__io-form .field input:focus-visible,
+.admin__io-form .field select:focus-visible {
+    outline: none;
+    border-color: var(--color-primary-500);
+    box-shadow: var(--focus-ring);
+}
+
+.admin__io-form > .btn {
+    align-self: flex-start;
+    min-width: 160px;
+}
+
+.admin__io-result {
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    background-color: var(--color-surface-muted, var(--color-surface));
+    border: 1px dashed var(--color-border);
+    font-size: var(--text-sm);
+}
+
+.admin__io-result.invisible {
+    display: none;
+}

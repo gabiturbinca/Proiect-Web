@@ -6,6 +6,7 @@ const ordersBtn = document.getElementById("orders");
 const addGiftBtn=document.getElementById("addGift");
 const resetPasswordBtn = document.getElementById("resetPassword");
 const reportBtn=document.getElementById("report");
+const importExportBtn = document.getElementById("importExport");
 const paginationBox = document.getElementById("buttons");
 
 const elemNumber = 10;
@@ -370,6 +371,84 @@ function buildRequestsTable(requests){
     const tbody = table.querySelector("tbody");
     tbody.append(...requests.map(createRequestRow));
     return table;
+}
+
+async function importData(resource, format, file){
+    const fd = new FormData();
+    fd.append("file", file);
+    const res = await apiFetch(`/api/admin/import/${resource}?format=${format}`, {
+        method: "POST",
+        body: fd,
+    });
+    const body = await res.json().catch(() => ({}));
+    return { ok: res.ok, body };
+}
+
+function renderImportResult(box, body){
+    const data = body?.success ?? body;
+    if(!data){
+        box.textContent = "Import finished.";
+        return;
+    }
+    const parts = [];
+    if(data.inserted !== undefined) parts.push(`Inserted: ${data.inserted}`);
+    if(data.updated !== undefined)  parts.push(`Updated: ${data.updated}`);
+    if(data.skipped !== undefined)  parts.push(`Skipped: ${data.skipped}`);
+    if(Array.isArray(data.errors) && data.errors.length){
+        parts.push(`Errors: ${data.errors.length}`);
+    }
+    box.textContent = parts.length ? parts.join(" | ") : "Import finished.";
+}
+
+async function renderImportExport(){
+    const dataBox = document.getElementById("admin__data_container");
+    hidePagination();
+
+    const tpl = document.getElementById("import_export__container");
+    const section = tpl.content.firstElementChild.cloneNode(true);
+    dataBox.replaceChildren(section);
+
+    const exportForm = section.querySelector("#export_form");
+    exportForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const resource = exportForm.querySelector("#export_resource").value;
+        const format   = exportForm.querySelector("#export_format").value;
+        window.location.href = `/api/admin/export/${resource}?format=${format}`;
+    });
+
+    const importForm = section.querySelector("#import_form");
+    const resultBox  = section.querySelector("#import_result");
+    const submitBtn  = importForm.querySelector(".btn-import");
+
+    importForm.addEventListener("submit", async(e) => {
+        e.preventDefault();
+        const fileInput = importForm.querySelector("#import_file");
+        if(!fileInput.files.length){
+            alert("Please choose a file to import.");
+            return;
+        }
+        const resource = importForm.querySelector("#import_resource").value;
+        const format   = importForm.querySelector("#import_format").value;
+        submitBtn.disabled = true;
+        resultBox.classList.add("invisible");
+        try{
+            const { ok, body } = await importData(resource, format, fileInput.files[0]);
+            if(!ok){
+                alert(body?.error ?? "Import failed.");
+                return;
+            }
+            renderImportResult(resultBox, body);
+            resultBox.classList.remove("invisible");
+            importForm.reset();
+        }
+        catch(err){
+            console.error(err);
+            alert("Import failed. Try again.");
+        }
+        finally{
+            submitBtn.disabled = false;
+        }
+    });
 }
 
 async function renderReportForm(){
@@ -739,6 +818,13 @@ reportBtn.addEventListener("click", async(e) => {
     onGifts=false; onOrders=false;  onRequests=false;
     hidePagination();
     await renderReportForm();
+});
+
+importExportBtn.addEventListener("click", async(e) => {
+    e.preventDefault();
+    onGifts=false; onOrders=false; onRequests=false;
+    hidePagination();
+    await renderImportExport();
 });
 
 resetPasswordBtn.addEventListener("click", async(e) =>{

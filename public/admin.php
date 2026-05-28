@@ -24,6 +24,7 @@
              <button class ="btn btn--primary" type="button" id="addGift">Add a new gift</button>
              <button class ="btn btn--primary" type="button" id="resetPassword">Passwords requests</button>
              <button class ="btn btn--accent admin__buttons__report" type="button" id="report">Generate report</button>
+             <button class ="btn btn--accent" type="button" id="importExport">Import / Export</button>
         </div>
 
         <div id="admin__data_container"></div>
@@ -189,6 +190,57 @@
 
                 <button type="submit" class="btn btn--primary btn-generate-report">Generate</button>
             </form>
+        </template>
+
+        <template id="import_export__container">
+            <section class="admin__io">
+                <article class="admin__io-card">
+                    <h3>Export</h3>
+                    <form id="export_form" class="admin__io-form">
+                        <div class="field">
+                            <label for="export_resource">Resource</label>
+                            <select id="export_resource" name="resource">
+                                <option value="gifts">Gifts</option>
+                                <option value="categories">Categories</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="export_format">Format</label>
+                            <select id="export_format" name="format">
+                                <option value="json">JSON</option>
+                                <option value="csv">CSV</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn--primary">Download</button>
+                    </form>
+                </article>
+
+                <article class="admin__io-card">
+                    <h3>Import</h3>
+                    <form id="import_form" class="admin__io-form" enctype="multipart/form-data">
+                        <div class="field">
+                            <label for="import_resource">Resource</label>
+                            <select id="import_resource" name="resource">
+                                <option value="gifts">Gifts</option>
+                                <option value="categories">Categories</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="import_format">Format</label>
+                            <select id="import_format" name="format">
+                                <option value="json">JSON</option>
+                                <option value="csv">CSV</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="import_file">File</label>
+                            <input type="file" id="import_file" name="file" accept=".json,.csv,application/json,text/csv" required>
+                        </div>
+                        <button type="submit" class="btn btn--primary btn-import">Upload</button>
+                    </form>
+                    <div id="import_result" class="admin__io-result invisible"></div>
+                </article>
+            </section>
         </template>
 
         <template id="add_gift__container">
